@@ -2,6 +2,8 @@
 <resources>
     <color name="colorPrimary">#CB502E</color>
     <color name="colorPrimaryDark">#A24025</color>
-    <color name="colorAccent">#FF4081</color>
+   <!-- <color name="colorAccent">#FF4081</color> Этот цвет создавал Руслан, но цвет с таким именем нужет для подчеркивания активных табов(внизу белая линия), пожалуйста не меняй.-->
+     <color name="colorAccent">#FFFFFF</color> <!--у тебя был розовый, я поменяла на белый -->
     <color name="mainBackground">#F5F5F5</color>
+    <color name="colorIndicatorsTabs">#FFFFFF</color>
 </resources>
