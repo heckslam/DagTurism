@@ -3,4 +3,5 @@
     <string name="search_title">search</string>
     <string name="array">Список</string>
     <string name="maps">Карта</string>
+    <string name="menu_item_category">Категории</string>
 </resources>

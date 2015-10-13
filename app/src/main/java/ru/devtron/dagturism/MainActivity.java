@@ -4,21 +4,28 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TabHost;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
+
+    private static final int MAINLAYOUT = R.layout.activity_main;
+
     private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(MAINLAYOUT);
         initToolbar();
+        initNavigationView();
         //initTabs();
     }
 
@@ -34,6 +41,25 @@ public class MainActivity extends AppCompatActivity{
         toolbar.inflateMenu(R.menu.menu);
 
     }
+
+    private void initNavigationView() {
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //
 //     private void initTabs() {
 //         //создаем табы
