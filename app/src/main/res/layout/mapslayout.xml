@@ -9,5 +9,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="текст карты"
         android:id="@+id/textView2"
+        android:textColor="#000"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

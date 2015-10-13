@@ -52,11 +52,5 @@ public class MainActivity extends TabActivity{
          tabHost.addTab(tabSpec);
 
      }
-    public static void setTabColor(TabHost tabhost) {
-        for(int i=0;i<tabhost.getTabWidget().getChildCount();i++)
-        {
-            tabhost.getTabWidget().getChildAt(i).setBackgroundResource(R.color.colorPrimary); //unselected
-        }
-        tabhost.getTabWidget().getChildAt(tabhost.getCurrentTab()).setBackgroundResource(R.color.colorIndicatorsTabs); // selected
-    }
+
 }
