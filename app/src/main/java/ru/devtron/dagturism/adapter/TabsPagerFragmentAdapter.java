@@ -5,7 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import ru.devtron.dagturism.fragment.ExampleFragment;
+import ru.devtron.dagturism.fragment.arrayFragment;
+import ru.devtron.dagturism.fragment.mapsFragment;
 
 public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
 
@@ -15,8 +16,7 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
         super(fm);
         tabs = new String[] {
                 "Список",
-                "Карта",
-                "Tab3"
+                "Карта"
         };
     }
 
@@ -29,11 +29,9 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return ExampleFragment.getInstance();
+                return arrayFragment.getInstance();
             case 1:
-                return ExampleFragment.getInstance();
-            case 2:
-                return ExampleFragment.getInstance();
+                return mapsFragment.getInstance();
         }
         return null;
     }

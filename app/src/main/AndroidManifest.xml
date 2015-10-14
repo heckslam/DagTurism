@@ -10,8 +10,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".arrayActivity"/>
-        <activity android:name=".mapsActivity"/>
     </application>
 
 </manifest>
