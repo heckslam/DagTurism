@@ -26,7 +26,6 @@ public class arrayFragment extends Fragment {
         Bundle args = new Bundle();
         arrayFragment fragment = new arrayFragment();
         fragment.setArguments(args);
-
         return fragment;
     }
 
@@ -35,15 +34,12 @@ public class arrayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(LAYOUT, container, false);
         listView = (ListView) view.findViewById(R.id.listView);
-        //List<String> item = initData();
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_dropdown_item_1line, item);
         SightAdapter sightAdapter = new SightAdapter(view.getContext(), initData());
         listView.setAdapter(sightAdapter);
         return view;
     }
     private List<Sight> initData(){
         List<Sight> list = new ArrayList<Sight>();
-        // Sight(long id, String img, String title, String descrition)
         list.add(new Sight(0, "", "Саракум", "Нарын-кала - древняя, доарабская крепость в нагорной части Дербента, соединеная с Каспийским морем двойными стенами, призваннимы перекрывать т. н. Каспийские ворота в"));
         list.add(new Sight(0, "", "Нарын-кала", "Нарын-кала - древняя, доарабская крепость в нагорной части Дербента, соединеная с Каспийским морем двойными стенами, призваннимы перекрывать т. н. Каспийские ворота в"));
         list.add(new Sight(0, "", "Заголовок 3", "Нарын-кала - древняя, доарабская крепость в нагорной части Дербента, соединеная с Каспийским морем двойными стенами, призваннимы перекрывать т. н. Каспийские ворота в"));
