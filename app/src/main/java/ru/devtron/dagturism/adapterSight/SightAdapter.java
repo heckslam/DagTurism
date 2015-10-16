@@ -1,4 +1,4 @@
-package ru.devtron.dagturism.adapterListView;
+package ru.devtron.dagturism.adapterSight;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import java.util.List;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.pojo.Sight;
 
-public class SightAdapter extends BaseAdapter{
+public class SightAdapter extends BaseAdapter {
     private List<Sight> list;
     private LayoutInflater layoutInflater;
 
@@ -44,7 +44,7 @@ public class SightAdapter extends BaseAdapter{
         }
 
 
-        Sight sight = (Sight) getSight(position);
+        Sight sight =  getSight(position);
         TextView textTitle = (TextView) view.findViewById(R.id.textView);
         TextView textDescription = (TextView) view.findViewById(R.id.textView2);
         textTitle.setText(sight.getTitle());

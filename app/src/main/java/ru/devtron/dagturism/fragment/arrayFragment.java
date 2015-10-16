@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.devtron.dagturism.R;
-import ru.devtron.dagturism.adapterListView.SightAdapter;
+import ru.devtron.dagturism.adapterSight.SightAdapter;
 import ru.devtron.dagturism.pojo.Sight;
 
 public class arrayFragment extends Fragment {
@@ -31,12 +31,12 @@ public class arrayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(LAYOUT, container, false);
         listView = (ListView) view.findViewById(R.id.listView);
-        SightAdapter sightAdapter = new SightAdapter(view.getContext(), initData());
+        SightAdapter  sightAdapter = new SightAdapter(view.getContext(), initData());
         listView.setAdapter(sightAdapter);
         return view;
     }
     private List<Sight> initData(){
-        List<Sight> list = new ArrayList<Sight>();
+        List<Sight> list = new ArrayList<>();
         list.add(new Sight(0, "", "Саракум", "Нарын-кала - древняя, доарабская крепость в нагорной части Дербента, соединеная с Каспийским морем двойными стенами, призваннимы перекрывать т. н. Каспийские ворота в"));
         list.add(new Sight(0, "", "Нарын-кала", "Нарын-кала - древняя, доарабская крепость в нагорной части Дербента, соединеная с Каспийским морем двойными стенами, призваннимы перекрывать т. н. Каспийские ворота в"));
         list.add(new Sight(0, "", "Заголовок 3", "Нарын-кала - древняя, доарабская крепость в нагорной части Дербента, соединеная с Каспийским морем двойными стенами, призваннимы перекрывать т. н. Каспийские ворота в"));
