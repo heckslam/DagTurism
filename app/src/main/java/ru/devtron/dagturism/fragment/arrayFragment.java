@@ -35,6 +35,7 @@ public class arrayFragment extends Fragment {
         listView.setAdapter(sightAdapter);
         return view;
     }
+
     private List<Sight> initData(){
         List<Sight> list = new ArrayList<>();
         list.add(new Sight(0, "", "Саракум", "Нарын-кала - древняя, доарабская крепость в нагорной части Дербента, соединеная с Каспийским морем двойными стенами, призваннимы перекрывать т. н. Каспийские ворота в"));

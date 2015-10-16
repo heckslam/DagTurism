@@ -21,6 +21,7 @@ public class SightAdapter extends BaseAdapter {
         layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
     }
 
+
     @Override
     public int getCount() {
         return list.size();
