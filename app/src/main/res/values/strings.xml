@@ -4,4 +4,6 @@
     <string name="array">Список</string>
     <string name="maps">Карта</string>
     <string name="menu_item_category">Категории</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>

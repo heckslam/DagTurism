@@ -1,13 +1,17 @@
 package ru.devtron.dagturism;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import ru.devtron.dagturism.adapterNavBar.TabsPagerFragmentAdapter;
 
@@ -54,5 +58,29 @@ public class MainActivity extends AppCompatActivity {
 
     private void initNavigationView() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        drawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                drawerLayout.closeDrawers();
+                switch (menuItem.getItemId()) {
+                    case R.id.categories:
+                        openCat();
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
+    public void openCat () {
+        Intent intent = new Intent(this, CategoriesActivity.class);
+        startActivity(intent);
     }
 }
