@@ -31,6 +31,8 @@ public class arrayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(LAYOUT, container, false);
         listView = (ListView) view.findViewById(R.id.listView);
+        listView.setDivider(null);
+        listView.setDividerHeight(0);
         SightAdapter  sightAdapter = new SightAdapter(view.getContext(), initData());
         listView.setAdapter(sightAdapter);
         return view;
