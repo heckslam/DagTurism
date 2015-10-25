@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openSettings () {
         Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, Constants.REQUEST_CODE_SETTINGS);
     }
 
     public void runSplash () {
