@@ -15,9 +15,8 @@
         android:layout_height="wrap_content"
         android:text="@string/enableSplash"
         android:id="@+id/enableSplash"
-        android:checked="true"
         android:textSize="20sp"
-        android:onClick="onCheckboxChecked"/>
+        android:onClick="onEnableSplash" />
     <CheckBox
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,5 +27,5 @@
         android:layout_below="@+id/enableSplash"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:onClick="onCheckboxChecked"/>
+        />
 </RelativeLayout>

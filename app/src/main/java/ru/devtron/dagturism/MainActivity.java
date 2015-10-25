@@ -12,7 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
 import ru.devtron.dagturism.adapterNavBar.TabsPagerFragmentAdapter;
 import ru.devtron.dagturism.fragment.SplashFragment;
@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ViewPager viewPager;
 
+    PreferenceHelper preferenceHelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +37,30 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initNavigationView();
         initTabs();
+
+        PreferenceHelper.getInstance().init(getApplicationContext());
+        preferenceHelper = PreferenceHelper.getInstance();
+
         fragmentManager = getFragmentManager();
         runSplash();
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Constants.REQUEST_CODE_SETTINGS:
+                    boolean splash = data.getBooleanExtra("enableSplash", true);
+                    preferenceHelper.putBoolean(PreferenceHelper.SPLASH_IS_VISIBLE, splash);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else {
+            Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initToolbar() {
@@ -99,13 +122,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void runSplash () {
-        SplashFragment splashFragment = new SplashFragment();
+        if (preferenceHelper.getBoolean(PreferenceHelper.SPLASH_IS_VISIBLE)) {
+            SplashFragment splashFragment = new SplashFragment();
 
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, splashFragment)
-                .addToBackStack(null)
-                .commit();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, splashFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
+
 
 
 }
