@@ -1,5 +1,6 @@
 package ru.devtron.dagturism;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,10 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import ru.devtron.dagturism.adapterNavBar.TabsPagerFragmentAdapter;
+import ru.devtron.dagturism.fragment.SplashFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int LAYOUT = R.layout.activity_main;
+    FragmentManager fragmentManager;
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -32,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initNavigationView();
         initTabs();
+        fragmentManager = getFragmentManager();
+        runSplash();
+
     }
 
     private void initToolbar() {
@@ -71,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.categories:
                         openCat();
                         break;
+                    case R.id.settings:
+                        openSettings();
+                        break;
                     default:
                         break;
                 }
@@ -83,4 +92,20 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CategoriesActivity.class);
         startActivity(intent);
     }
+
+    public void openSettings () {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    public void runSplash () {
+        SplashFragment splashFragment = new SplashFragment();
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, splashFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+
 }

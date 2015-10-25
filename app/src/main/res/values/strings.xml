@@ -1,9 +1,13 @@
 <resources>
-    <string name="app_name">DagTurism</string>
-    <string name="search_title">search</string>
-    <string name="array">Список</string>
+    <string name="app_name">Republic</string>
+    <string name="search_title">Поиск</string>
+    <string name="array">Популярные</string>
     <string name="maps">Карта</string>
     <string name="menu_item_category">Категории</string>
-    <string name="open">Open</string>
-    <string name="close">Close</string>
+    <string name="open">Открыть</string>
+    <string name="close">Закрыть</string>
+
+    <string name="enableSplash">Показывать заставку</string>
+    <string name="enableAnimation">Включить анимацию</string>
+    <string name="menu_item_settings">Настройки</string>
 </resources>

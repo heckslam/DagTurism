@@ -15,7 +15,7 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
     public TabsPagerFragmentAdapter(FragmentManager fm) {
         super(fm);
         tabs = new String[] {
-                "Список",
+                "Популярные",
                 "Карта"
         };
     }
