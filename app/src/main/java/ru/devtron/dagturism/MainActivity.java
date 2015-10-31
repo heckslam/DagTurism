@@ -15,9 +15,19 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import ru.devtron.dagturism.adapterNavBar.TabsPagerFragmentAdapter;
+
 import ru.devtron.dagturism.fragment.SplashFragment;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Стартовая активность приложения
+ *
+ * @created 07.10.2015
+ * @version $Revision 738 $
+ * @author AlievRuslan
+ * since 0.0.1
+ */
+
+public class MainActivity extends AppCompatActivity  {
 
     private static final int LAYOUT = R.layout.activity_main;
     FragmentManager fragmentManager;
@@ -27,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
 
     PreferenceHelper preferenceHelper;
+
 
 
     @Override
@@ -46,6 +57,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Получаем данные из активити настроек SettingsActivity для возможности отключения SplashScreen
+     *
+     *  <p>@param  requestCode</p>
+     *  <p>@param  resultCode</p>
+     *  <p>@param  data</p>
+     *
+     *  @return Toast
+     * since 0.0.3
+     *
+     */
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
@@ -59,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else {
-            Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Hello Tagir!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -111,15 +134,30 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Метод для открытия активности категорий CategoriesActivity
+     * В NavigationDrawer
+     */
     public void openCat () {
         Intent intent = new Intent(this, CategoriesActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Метод для открытия активности настроек SettingsActivity
+     * В NavigationDrawer
+     */
+
+
+
     public void openSettings () {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivityForResult(intent, Constants.REQUEST_CODE_SETTINGS);
     }
+
+    /**
+     * Метод для запуска SplashScreen
+     */
 
     public void runSplash () {
         if (preferenceHelper.getBoolean(PreferenceHelper.SPLASH_IS_VISIBLE)) {

@@ -1,5 +1,14 @@
 package ru.devtron.dagturism.pojo;
-
+/**
+ * Класс для создания типа для элементов ListView. Поля: id -Это идентификатор элемента.
+ * img -будет хронить url до картинок на сервере
+ * title  - будет хронить заголовки элементов списка из сервера
+ * descrition - описание достопримечательности
+ * @created 14.10.2015
+ * @version $Revision 738 $
+ * @author Эльвира Темирханова
+ * since 0.0.1
+ */
 public class Sight {
     private long id;
     private String img;

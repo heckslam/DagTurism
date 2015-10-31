@@ -8,6 +8,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 import ru.devtron.dagturism.fragment.arrayFragment;
 import ru.devtron.dagturism.fragment.mapsFragment;
 
+/**
+ *Адаптер для работы с табами. Хранит назвнаия табов, их обработчики на нажатие
+ *
+ * @created 10.10.2015
+ * @version $Revision 738 $
+ * @author Эльвира Темирханова
+ * since 0.0.1
+ */
+
 public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
 
     private String[] tabs;
@@ -24,6 +33,12 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return tabs[position];
     }
+
+    /**
+     * Устанавливает фрагменты табам
+     * @param position
+     * @return
+     */
 
     @Override
     public Fragment getItem(int position) {

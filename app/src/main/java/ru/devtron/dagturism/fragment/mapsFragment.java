@@ -9,6 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ru.devtron.dagturism.R;
+/**
+ * Фрагмент который загружается в MainActivity  при нажатии на таб Карты и загружает данные в него
+ * @created 10.10.2015
+ * @version $Revision 738 $
+ * @author Эльвира Темирханова
+ * since 0.0.1
+ */
 
 public class mapsFragment extends Fragment {
     private static final int LAYOUT = R.layout.fragment_maps;

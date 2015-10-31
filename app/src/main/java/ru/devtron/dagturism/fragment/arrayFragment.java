@@ -14,11 +14,23 @@ import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.adapterSight.SightAdapter;
 import ru.devtron.dagturism.pojo.Sight;
 
+/**
+ * Фрагмент который загружается в MainActivity  при нажатии на таб Популярное и загружает данные в ListView
+ * @created 10.10.2015
+ * @version $Revision 738 $
+ * @author Эльвира Темирханова
+ * since 0.0.1
+ */
 public class arrayFragment extends Fragment {
     private static final int LAYOUT = R.layout.fragment_array;
     private View view;
     private ListView listView;
 
+
+    /**
+     * Возрашает фрагмент
+      * @return
+     */
     public static arrayFragment getInstance() {
         Bundle args = new Bundle();
         arrayFragment fragment = new arrayFragment();
@@ -26,6 +38,14 @@ public class arrayFragment extends Fragment {
         return fragment;
     }
 
+
+    /**
+     * Инициализируется фрагмент Layout'ом, создается ListView и вызываются методы для заполнения и работы с ним
+      * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return Внешний вид фрагмента
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,6 +58,10 @@ public class arrayFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Инициализация ListView и заполнение данными
+     * @return Список данных
+     */
     private List<Sight> initData(){
         List<Sight> list = new ArrayList<>();
         list.add(new Sight(0, "", "Саракум", "Нарын-кала - древняя, доарабская крепость в нагорной части Дербента, соединеная с Каспийским морем двойными стенами, призваннимы перекрывать т. н. Каспийские ворота в"));
