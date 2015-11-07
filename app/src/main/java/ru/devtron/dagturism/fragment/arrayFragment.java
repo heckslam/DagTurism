@@ -2,6 +2,8 @@ package ru.devtron.dagturism.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,31 +16,60 @@ import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.adapterSight.SightAdapter;
 import ru.devtron.dagturism.pojo.Sight;
 
-public class arrayFragment extends Fragment {
+public class ArrayFragment extends Fragment {
+    public final static String ITEMS_COUNT_KEY = "ArrayFragment$ItemsCount";
     private static final int LAYOUT = R.layout.fragment_array;
+    private RecyclerView recyclerView;
     private View view;
     private ListView listView;
 
-    public static arrayFragment getInstance() {
+    public static ArrayFragment createInstance(int itemsCount){
+        ArrayFragment arrayFragment = new ArrayFragment();
         Bundle args = new Bundle();
-        arrayFragment fragment = new arrayFragment();
+        args.putInt(ITEMS_COUNT_KEY, itemsCount);
+        arrayFragment.setArguments(args);
+        return arrayFragment;
+    }
+
+   /* public static ArrayFragment getInstance() {
+        Bundle args = new Bundle();
+        ArrayFragment fragment = new ArrayFragment();
         fragment.setArguments(args);
         return fragment;
-    }
+    }*/
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(LAYOUT, container, false);
-        listView = (ListView) view.findViewById(R.id.listView);
-        listView.setDivider(null);
-        listView.setDividerHeight(0);
-        SightAdapter  sightAdapter = new SightAdapter(view.getContext(), initData());
-        listView.setAdapter(sightAdapter);
-        return view;
+        recyclerView = (RecyclerView) inflater.inflate(LAYOUT, container, false);
+        setupRecyclerView(recyclerView);
+        //view = inflater.inflate(LAYOUT, container, false);
+       // listView = (ListView) view.findViewById(R.id.listView);
+       // listView.setDivider(null);
+       // listView.setDividerHeight(0);
+       // SightAdapter  sightAdapter = new SightAdapter(view.getContext(), initData());
+       // listView.setAdapter(sightAdapter);
+       // return view;
+        return recyclerView;
     }
-
-    private List<Sight> initData(){
+    public void setupRecyclerView(RecyclerView recyclerView){
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(createItemList());
+        recyclerView.setAdapter(recyclerAdapter);
+    }
+    private List<Sight> createItemList() {
+        List<Sight> itemList = new ArrayList<>();
+        Bundle bundle = getArguments();
+        if(bundle!=null) {
+            int itemsCount = bundle.getInt(ITEMS_COUNT_KEY);
+            for (int i = 0; i < itemsCount; i++) {
+                itemList.add(new Sight(i, "", "Саракум", "Нарын-кала - древняя, доарабская крепость в нагорной части Дербента, соединеная с Каспийским морем двойными стенами, призваннимы перекрывать т. н. Каспийские ворота в"));
+                //itemList.add("Item " + i);
+            }
+        }
+        return itemList;
+    }
+/*    private List<Sight> initData(){
         List<Sight> list = new ArrayList<>();
         list.add(new Sight(0, "", "Саракум", "Нарын-кала - древняя, доарабская крепость в нагорной части Дербента, соединеная с Каспийским морем двойными стенами, призваннимы перекрывать т. н. Каспийские ворота в"));
         list.add(new Sight(0, "", "Нарын-кала", "Нарын-кала - древняя, доарабская крепость в нагорной части Дербента, соединеная с Каспийским морем двойными стенами, призваннимы перекрывать т. н. Каспийские ворота в"));
@@ -57,5 +88,5 @@ public class arrayFragment extends Fragment {
         list.add(new Sight(0, "", "Заголовок 15", "Нарын-кала - древняя, доарабская крепость в нагорной части Дербента, соединеная с Каспийским морем двойными стенами, призваннимы перекрывать т. н. Каспийские ворота в"));
         list.add(new Sight(0, "", "Заголовок 16", "Нарын-кала - древняя, доарабская крепость в нагорной части Дербента, соединеная с Каспийским морем двойными стенами, призваннимы перекрывать т. н. Каспийские ворота в"));
         return list;
-    }
+    }*/
 }

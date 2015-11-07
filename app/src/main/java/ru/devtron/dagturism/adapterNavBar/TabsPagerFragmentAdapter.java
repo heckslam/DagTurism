@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import ru.devtron.dagturism.fragment.arrayFragment;
-import ru.devtron.dagturism.fragment.mapsFragment;
+import ru.devtron.dagturism.fragment.ArrayFragment;
+import ru.devtron.dagturism.fragment.MapsFragment;
 
 public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
 
@@ -29,9 +29,9 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return arrayFragment.getInstance();
+                return ArrayFragment.createInstance(20);
             case 1:
-                return mapsFragment.getInstance();
+                return MapsFragment.createInstance(0);
         }
         return null;
     }

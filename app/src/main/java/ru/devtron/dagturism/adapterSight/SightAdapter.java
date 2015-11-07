@@ -51,7 +51,7 @@ public class SightAdapter extends BaseAdapter {
         textTitle.setText(sight.getTitle());
         textDescription.setText(sight.getDescrition());
         return view;
-    }
+    }//jhkhjkvhj
     private Sight getSight(int position){
         return (Sight) getItem(position);
     }
