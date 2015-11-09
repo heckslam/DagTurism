@@ -13,7 +13,11 @@ import java.util.concurrent.TimeUnit;
 import ru.devtron.dagturism.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Фрагмент для SplashScreen
+ * @created 26.10.2015
+ * @version $Revision 738 $
+ * @author Aliev Ruslan
+ * since 0.0.3
  */
 public class SplashFragment extends Fragment {
 

@@ -3,8 +3,20 @@ package ru.devtron.dagturism;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+
+/**
+ * Работа с SharedPreference
+ * функции для обработки данных о настройках от пользователя.
+ *
+ * @created 20.10.2015
+ * @version $Revision 738 $
+ * @author AlievRuslan
+ * since 0.0.3
+ */
+
 public class PreferenceHelper {
     public static final String SPLASH_IS_VISIBLE = "splash_is_visible";
+
     private static PreferenceHelper instance;
     private Context context;
     private SharedPreferences preferences;

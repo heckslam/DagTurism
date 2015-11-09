@@ -9,6 +9,15 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 import ru.devtron.dagturism.R;
 
+/**
+ * Активность настроек приложения
+ *
+ * @created 15.10.2015
+ * @version $Revision 738 $
+ * @author AlievRuslan
+ * since 0.0.2
+ */
+
 public class SettingsActivity extends AppCompatActivity {
     private CheckBox enableSplash;
     PreferenceHelper preferenceHelper;

@@ -15,41 +15,24 @@ import java.util.List;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.adapterSight.SightAdapter;
 import ru.devtron.dagturism.pojo.Sight;
-
-public class ArrayFragment extends Fragment {
+public class ArrayFragment extends Fragment{
     public final static String ITEMS_COUNT_KEY = "ArrayFragment$ItemsCount";
     private static final int LAYOUT = R.layout.fragment_array;
     private RecyclerView recyclerView;
     private View view;
     private ListView listView;
-
     public static ArrayFragment createInstance(int itemsCount){
-        ArrayFragment arrayFragment = new ArrayFragment();
         Bundle args = new Bundle();
         args.putInt(ITEMS_COUNT_KEY, itemsCount);
+        ArrayFragment arrayFragment = new ArrayFragment();
         arrayFragment.setArguments(args);
         return arrayFragment;
     }
-
-   /* public static ArrayFragment getInstance() {
-        Bundle args = new Bundle();
-        ArrayFragment fragment = new ArrayFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }*/
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         recyclerView = (RecyclerView) inflater.inflate(LAYOUT, container, false);
         setupRecyclerView(recyclerView);
-        //view = inflater.inflate(LAYOUT, container, false);
-       // listView = (ListView) view.findViewById(R.id.listView);
-       // listView.setDivider(null);
-       // listView.setDividerHeight(0);
-       // SightAdapter  sightAdapter = new SightAdapter(view.getContext(), initData());
-       // listView.setAdapter(sightAdapter);
-       // return view;
         return recyclerView;
     }
     public void setupRecyclerView(RecyclerView recyclerView){
@@ -69,7 +52,8 @@ public class ArrayFragment extends Fragment {
         }
         return itemList;
     }
-/*    private List<Sight> initData(){
+    /*private List<Sight> initData(){
+
         List<Sight> list = new ArrayList<>();
         list.add(new Sight(0, "", "Саракум", "Нарын-кала - древняя, доарабская крепость в нагорной части Дербента, соединеная с Каспийским морем двойными стенами, призваннимы перекрывать т. н. Каспийские ворота в"));
         list.add(new Sight(0, "", "Нарын-кала", "Нарын-кала - древняя, доарабская крепость в нагорной части Дербента, соединеная с Каспийским морем двойными стенами, призваннимы перекрывать т. н. Каспийские ворота в"));

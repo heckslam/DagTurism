@@ -14,6 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.devtron.dagturism.R;
+/**
+ * Фрагмент который загружается в MainActivity  при нажатии на таб Карты и загружает данные в него
+ * @created 10.10.2015
+ * @version $Revision 738 $
+ * @author Эльвира Темирханова
+ * since 0.0.1
+ */
 
 public class MapsFragment extends Fragment {
     public final static String ITEMS_COUNT_KEY = "PartThreeFragment$ItemsCount";
@@ -38,8 +45,8 @@ public class MapsFragment extends Fragment {
     }
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-      //  RecyclerAdapter recyclerAdapter = new RecyclerAdapter(createItemList());
-       // recyclerView.setAdapter(recyclerAdapter);
+        //  RecyclerAdapter recyclerAdapter = new RecyclerAdapter(createItemList());
+        // recyclerView.setAdapter(recyclerAdapter);
     }
     private List<String> createItemList() {
         List<String> itemList = new ArrayList<>();

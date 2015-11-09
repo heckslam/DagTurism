@@ -12,13 +12,25 @@ import java.util.List;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.pojo.Sight;
 
+/**
+ * Адаптер который позволяет читать даннные из элементов типа Sight из загружать их в соответствующие элементы в листвиь(TextView и тп)
+ *
+ * @created 10.10.2015
+ * @version $Revision 738 $
+ * @author Эльвира Темирханова
+ * since 0.0.1
+ */
+
 public class SightAdapter extends BaseAdapter {
     private List<Sight> list;
+
     private LayoutInflater layoutInflater;
+
 
     public SightAdapter(Context context, List<Sight> list) {
         this.list = list;
         layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+
     }
 
 
