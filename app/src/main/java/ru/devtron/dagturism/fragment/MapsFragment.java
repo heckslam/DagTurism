@@ -33,7 +33,7 @@ public class MapsFragment extends Fragment {
         Bundle args = new Bundle();
         args.putInt(ITEMS_COUNT_KEY, itemsCount);
         mapsFragment.setArguments(args);
-        return mapsFragment;//fgg
+        return mapsFragment;//fggdfd
 
     }
 
