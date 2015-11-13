@@ -30,6 +30,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         holder.setItemTitle(itemText.getTitle());
         holder.setItemDecsription(itemText.getDescrition());
         holder.setItemImage(itemText.getImg());
+
     }
 
     @Override

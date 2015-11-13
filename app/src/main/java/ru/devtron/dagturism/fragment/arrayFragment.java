@@ -34,6 +34,7 @@ public class ArrayFragment extends Fragment{
         recyclerView = (RecyclerView) inflater.inflate(LAYOUT, container, false);
         setupRecyclerView(recyclerView);
         return recyclerView;
+
     }
     public void setupRecyclerView(RecyclerView recyclerView){
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

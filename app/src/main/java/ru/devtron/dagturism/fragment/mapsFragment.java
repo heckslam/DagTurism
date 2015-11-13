@@ -34,6 +34,7 @@ public class MapsFragment extends Fragment {
         args.putInt(ITEMS_COUNT_KEY, itemsCount);
         mapsFragment.setArguments(args);
         return mapsFragment;
+
     }
 
     @Nullable
