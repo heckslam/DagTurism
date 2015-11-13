@@ -25,7 +25,7 @@ public class ArrayFragment extends Fragment{
         Bundle args = new Bundle();
         args.putInt(ITEMS_COUNT_KEY, itemsCount);
         ArrayFragment arrayFragment = new ArrayFragment();
-        arrayFragment.setArguments(args);
+        arrayFragment.setArguments(args); //fgf
         return arrayFragment;
     }
     @Nullable
