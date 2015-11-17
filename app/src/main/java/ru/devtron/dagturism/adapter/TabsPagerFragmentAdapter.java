@@ -45,10 +45,14 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 return ArrayFragment.createInstance(20);
+
             case 1:
                 return MapsFragment.createInstance(0);
+
+            default:
+                return null;
         }
-        return null;
+
     }
 
     @Override

@@ -2,13 +2,12 @@ package ru.devtron.dagturism.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +15,12 @@ import java.util.List;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.adapter.RecyclerAdapter;
 import ru.devtron.dagturism.pojo.Sight;
-public class ArrayFragment extends Fragment{
+
+public class ArrayFragment extends Fragment {
     public final static String ITEMS_COUNT_KEY = "ArrayFragment$ItemsCount";
     private static final int LAYOUT = R.layout.fragment_array;
 
     private RecyclerView recyclerView;
-    private View view;
     private RecyclerAdapter recyclerAdapter;
     public static ArrayFragment createInstance(int itemsCount){
         Bundle args = new Bundle();
@@ -42,9 +41,6 @@ public class ArrayFragment extends Fragment{
         setupRecyclerView(recyclerView);
         //recyclerView.setAdapter(recyclerAdapter);
 
-
-        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
-        fab.attachToRecyclerView(recyclerView);
 
         return v;
     }
@@ -69,6 +65,7 @@ public class ArrayFragment extends Fragment{
         return itemList;
 
     }
+
 
     /*private List<Sight> initData(){
 
