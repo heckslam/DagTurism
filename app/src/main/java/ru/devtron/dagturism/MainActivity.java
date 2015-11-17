@@ -5,19 +5,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import ru.devtron.dagturism.adapterNavBar.TabsPagerFragmentAdapter;
+import ru.devtron.dagturism.adapter.TabsPagerFragmentAdapter;
 
 import ru.devtron.dagturism.fragment.SplashFragment;
 
@@ -51,7 +48,6 @@ public class MainActivity extends AppCompatActivity  {
         initToolbar();
         initNavigationView();
         initTabs();
-        inirFab();
 
 
         PreferenceHelper.getInstance().init(getApplicationContext());
@@ -59,6 +55,8 @@ public class MainActivity extends AppCompatActivity  {
 
         fragmentManager = getFragmentManager();
         runSplash();
+
+
 
     }
 
@@ -189,15 +187,7 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
-    private void inirFab () {
-        final View content = findViewById(R.id.container);
-        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(content, "FAB", Snackbar.LENGTH_SHORT).show();
-            }
-        });
-    }
+
 
 
 

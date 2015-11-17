@@ -1,4 +1,4 @@
-package ru.devtron.dagturism.adapterSight;
+package ru.devtron.dagturism.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

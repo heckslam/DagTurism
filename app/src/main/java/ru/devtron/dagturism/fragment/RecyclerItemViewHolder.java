@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.melnykov.fab.FloatingActionButton;
+
 import ru.devtron.dagturism.R;
 
 public class RecyclerItemViewHolder extends RecyclerView.ViewHolder {
@@ -42,6 +44,7 @@ public class RecyclerItemViewHolder extends RecyclerView.ViewHolder {
         ImageView itemImageView = (ImageView) parent.findViewById(R.id.imageView);
         TextView itemTitleView = (TextView) parent.findViewById(R.id.textView);
         TextView itemDescriptionView = (TextView) parent.findViewById(R.id.textView2);
+
         return new RecyclerItemViewHolder(parent, itemImageView, itemTitleView, itemDescriptionView);
     }
 

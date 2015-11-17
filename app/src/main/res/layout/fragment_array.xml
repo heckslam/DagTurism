@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<android.support.v7.widget.RecyclerView
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/recyclerView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
 
-<android.support.design.widget.FloatingActionButton
-android:id="@+id/fab"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-app:layout_anchor="@id/recyclerView"
-app:layout_anchorGravity="bottom|right|end"
-android:src="@drawable/ic_map_marker_radius_white_24dp"
-android:layout_margin="@dimen/fab_margin"
-app:pressedTranslationZ="12dp"
-    />
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
-</LinearLayout>
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="72dp"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/ic_map_marker_radius_white_24dp"
+        fab:fab_colorNormal="@color/colorAccent"
+        fab:fab_colorPressed="@color/colorPrimaryDark"
+        fab:fab_colorRipple="@color/white"
+         />
+</FrameLayout>
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginRight="2dp"
+        android:layout_marginLeft="2dp"
+        android:dividerHeight="0dp"/>
+</LinearLayout>-->

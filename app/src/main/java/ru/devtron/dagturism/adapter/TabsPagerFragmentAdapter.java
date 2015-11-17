@@ -1,4 +1,4 @@
-package ru.devtron.dagturism.adapterNavBar;
+package ru.devtron.dagturism.adapter;
 
 
 import android.support.v4.app.Fragment;
