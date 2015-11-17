@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.devtron.dagturism.R;
+import ru.devtron.dagturism.adapter.RecyclerAdapter;
 import ru.devtron.dagturism.pojo.Sight;
 public class ArrayFragment extends Fragment{
     public final static String ITEMS_COUNT_KEY = "ArrayFragment$ItemsCount";

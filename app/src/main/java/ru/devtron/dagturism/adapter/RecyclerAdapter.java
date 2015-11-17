@@ -1,4 +1,4 @@
-package ru.devtron.dagturism.fragment;
+package ru.devtron.dagturism.adapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import ru.devtron.dagturism.R;
+import ru.devtron.dagturism.fragment.RecyclerItemViewHolder;
 import ru.devtron.dagturism.pojo.Sight;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
