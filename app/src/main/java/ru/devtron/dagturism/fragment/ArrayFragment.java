@@ -22,6 +22,7 @@ public class ArrayFragment extends Fragment{
 
     private RecyclerView recyclerView;
     private View view;
+    private RecyclerAdapter recyclerAdapter;
     public static ArrayFragment createInstance(int itemsCount){
         Bundle args = new Bundle();
         args.putInt(ITEMS_COUNT_KEY, itemsCount);
@@ -37,7 +38,10 @@ public class ArrayFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(LAYOUT, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
+
         setupRecyclerView(recyclerView);
+        //recyclerView.setAdapter(recyclerAdapter);
+
 
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
         fab.attachToRecyclerView(recyclerView);
@@ -47,7 +51,7 @@ public class ArrayFragment extends Fragment{
 
     public void setupRecyclerView(RecyclerView recyclerView){
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(createItemList());
+        recyclerAdapter = new RecyclerAdapter(createItemList());
         recyclerView.setAdapter(recyclerAdapter);
 
 
