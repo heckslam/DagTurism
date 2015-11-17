@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -13,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import ru.devtron.dagturism.adapterNavBar.TabsPagerFragmentAdapter;
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity  {
         initToolbar();
         initNavigationView();
         initTabs();
+        inirFab();
+
 
         PreferenceHelper.getInstance().init(getApplicationContext());
         preferenceHelper = PreferenceHelper.getInstance();
@@ -57,6 +61,8 @@ public class MainActivity extends AppCompatActivity  {
         runSplash();
 
     }
+
+
 
     /**
      * Получаем данные из активити настроек SettingsActivity для возможности отключения SplashScreen
@@ -181,6 +187,16 @@ public class MainActivity extends AppCompatActivity  {
                     .addToBackStack(null)
                     .commit();
         }
+    }
+
+    private void inirFab () {
+        final View content = findViewById(R.id.container);
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(content, "FAB", Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

@@ -25,7 +25,7 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
         super(fm);
         tabs = new String[] {
                 "Популярные",
-                "Карта"
+                "Мои"
         };
     }
 
