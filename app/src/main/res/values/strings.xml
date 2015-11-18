@@ -11,9 +11,9 @@
     <string name="enableAnimation">Включить анимацию</string>
     <string name="menu_item_settings">Настройки</string>
 
-    <string name="sort_by_place">Месту</string>
-    <string name="sort_by_rest">Виду отдыха</string>
-    <string name="sort_by">Сортировать по</string>
+    <string name="sort_by_place">Место отдыха</string>
+    <string name="sort_by_rest">Вид отдыха</string>
+    <string name="sort_by">Выберите</string>
     <string name="dialog_ok">ОК</string>
     <string name="dialog_cancel">Отмена</string>
 </resources>
