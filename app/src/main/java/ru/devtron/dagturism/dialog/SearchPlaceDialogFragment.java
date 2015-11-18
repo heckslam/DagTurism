@@ -16,13 +16,13 @@ import android.widget.Spinner;
 import ru.devtron.dagturism.R;
 
 /**
- * Created by user on 17.11.2015.
+ * Created by Ruslan Aliev on 17.11.2015.
  */
 public class SearchPlaceDialogFragment extends DialogFragment {
 
-    private AddingTaskListener addingTaskListener;
+    private SearchPlaceListener searchPlaceListener;
 
-    public interface AddingTaskListener {
+    public interface SearchPlaceListener {
         void onSearchStarted();
         void onSearchCanceled();
     }
@@ -31,10 +31,10 @@ public class SearchPlaceDialogFragment extends DialogFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            addingTaskListener = (AddingTaskListener) activity;
+            searchPlaceListener = (SearchPlaceListener) activity;
         }
         catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + "must Implement AddingTaskListener");
+            throw new ClassCastException(activity.toString() + "must Implement SearchPlaceListener");
         }
     }
 
@@ -73,7 +73,7 @@ public class SearchPlaceDialogFragment extends DialogFragment {
         builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                addingTaskListener.onSearchStarted();
+                searchPlaceListener.onSearchStarted();
                 dialog.dismiss();
             }
         });
@@ -81,7 +81,7 @@ public class SearchPlaceDialogFragment extends DialogFragment {
         builder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                addingTaskListener.onSearchCanceled();
+                searchPlaceListener.onSearchCanceled();
                 dialog.cancel();
             }
         });

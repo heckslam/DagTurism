@@ -8,12 +8,12 @@ import java.util.List;
 
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.fragment.RecyclerItemViewHolder;
-import ru.devtron.dagturism.pojo.Sight;
+import ru.devtron.dagturism.model.ModelPlace;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Sight> mItemList;
+    private List<ModelPlace> mItemList;
 
-    public RecyclerAdapter(List<Sight> itemList) {
+    public RecyclerAdapter(List<ModelPlace> itemList) {
         mItemList = itemList;
     }
 
@@ -26,10 +26,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         RecyclerItemViewHolder holder = (RecyclerItemViewHolder) viewHolder;
-        Sight sight =  getSight(position);
-        Sight itemText = mItemList.get(position);
+        ModelPlace modelPlace =  getSight(position);
+        ModelPlace itemText = mItemList.get(position);
         holder.setItemTitle(itemText.getTitle());
-        holder.setItemDecsription(itemText.getDescrition());
+        holder.setItemDecsription(itemText.getDescription());
         holder.setItemImage(itemText.getImg());
 
     }
@@ -41,7 +41,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public Object getItem(int position) {
         return mItemList.get(position);
     }
-    private Sight getSight(int position){
-        return (Sight) getItem(position);
+    private ModelPlace getSight(int position){
+        return (ModelPlace) getItem(position);
     }
 }

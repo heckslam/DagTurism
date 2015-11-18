@@ -10,10 +10,10 @@ import android.widget.TextView;
 import java.util.List;
 
 import ru.devtron.dagturism.R;
-import ru.devtron.dagturism.pojo.Sight;
+import ru.devtron.dagturism.model.ModelPlace;
 
 /**
- * Адаптер который позволяет читать даннные из элементов типа Sight из загружать их в соответствующие элементы в листвиь(TextView и тп)
+ * Адаптер который позволяет читать даннные из элементов типа ModelPlace из загружать их в соответствующие элементы в листвиь(TextView и тп)
  *
  * @created 10.10.2015
  * @version $Revision 738 $
@@ -21,13 +21,13 @@ import ru.devtron.dagturism.pojo.Sight;
  * since 0.0.1
  */
 
-public class SightAdapter extends BaseAdapter {
-    private List<Sight> list;
+public class ModelPlaceAdapter extends BaseAdapter {
+    private List<ModelPlace> list;
 
     private LayoutInflater layoutInflater;
 
 
-    public SightAdapter(Context context, List<Sight> list) {
+    public ModelPlaceAdapter(Context context, List<ModelPlace> list) {
         this.list = list;
         layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
 
@@ -57,14 +57,14 @@ public class SightAdapter extends BaseAdapter {
         }
 
 
-        Sight sight =  getSight(position);
+        ModelPlace modelPlace =  getModelPlace(position);
         TextView textTitle = (TextView) view.findViewById(R.id.textView);
         TextView textDescription = (TextView) view.findViewById(R.id.textView2);
-        textTitle.setText(sight.getTitle());
-        textDescription.setText(sight.getDescrition());
+        textTitle.setText(modelPlace.getTitle());
+        textDescription.setText(modelPlace.getDescription());
         return view;
     }//jhkhjkvhj
-    private Sight getSight(int position){
-        return (Sight) getItem(position);
+    private ModelPlace getModelPlace(int position){
+        return (ModelPlace) getItem(position);
     }
 }

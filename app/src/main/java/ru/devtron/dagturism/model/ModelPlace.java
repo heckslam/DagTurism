@@ -1,4 +1,4 @@
-package ru.devtron.dagturism.pojo;
+package ru.devtron.dagturism.model;
 /**
  * Класс для создания типа для элементов ListView. Поля: id -Это идентификатор элемента.
  * img -будет хронить url до картинок на сервере
@@ -9,17 +9,17 @@ package ru.devtron.dagturism.pojo;
  * @author Эльвира Темирханова
  * since 0.0.1
  */
-public class Sight {
+public class ModelPlace {
     private long id;
     private String img;
     private String title;
-    private String descrition;
+    private String description;
 
-    public Sight(long id, String img, String title, String descrition) {
+    public ModelPlace(long id, String img, String title, String description) {
         this.id = id;
         this.img = img;
         this.title = title;
-        this.descrition = descrition;
+        this.description = description;
     }
 
 
@@ -49,11 +49,11 @@ public class Sight {
         this.title = title;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescrition(String descrition) {
-        this.descrition = descrition;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
