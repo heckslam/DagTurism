@@ -15,6 +15,12 @@ public class ModelPlace {
     private String title;
     private String description;
 
+    public static final String[] PLACES = {"Махачкала", "Буйнакск", "Дагестанские огни", "Дербент"};
+    public static final String[] REST = {"Любой", "Активный отдых", "Религиозный отдых", "Исторический"};
+
+    public ModelPlace () {
+
+    }
     public ModelPlace(long id, String img, String title, String description) {
         this.id = id;
         this.img = img;

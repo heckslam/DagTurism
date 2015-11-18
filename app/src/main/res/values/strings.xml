@@ -16,4 +16,23 @@
     <string name="sort_by">Выберите</string>
     <string name="dialog_ok">ОК</string>
     <string name="dialog_cancel">Отмена</string>
+    
+    <string-array name="places">
+        <item>Махачкала</item>
+        <item>Буйнакск</item>
+        <item>Дагестанские огни</item>
+        <item>Дербент</item>
+        <item>Избербаш</item>
+        <item>Каспийск</item>
+        <item>Кизилюрт</item>
+        <item>Кизляр</item>
+        <item>Хасавюрт</item>
+        <item>Южносухокумск</item>
+    </string-array>
+
+    <string-array name="rest">
+        <item>Активный отдых</item>
+        <item>Религиозный отдых</item>
+        <item>Обучаемый</item>
+    </string-array>
 </resources>

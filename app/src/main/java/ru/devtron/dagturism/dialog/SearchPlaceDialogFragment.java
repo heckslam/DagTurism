@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import ru.devtron.dagturism.R;
+import ru.devtron.dagturism.model.ModelPlace;
 
 /**
  * Created by Ruslan Aliev on 17.11.2015.
@@ -54,7 +55,7 @@ public class SearchPlaceDialogFragment extends DialogFragment {
         builder.setView(container);
 
         ArrayAdapter<String> spPlaceAdapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_dropdown_item);
+                android.R.layout.simple_spinner_dropdown_item, ModelPlace.PLACES);
 
         spPlace.setAdapter(spPlaceAdapter);
 
@@ -69,6 +70,27 @@ public class SearchPlaceDialogFragment extends DialogFragment {
 
             }
         });
+
+
+        ArrayAdapter<String> spRestAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item, ModelPlace.REST);
+
+        spRest.setAdapter(spRestAdapter);
+
+        spRest.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
 
         builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
             @Override

@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/spDialogPlace"
             android:layout_below="@+id/tvSortPlace"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"/>
         <TextView
@@ -30,7 +30,7 @@
             android:id="@+id/tvSortRest"
             android:text="@string/sort_by_rest"
             android:layout_below="@+id/spDialogPlace"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"/>
         <Spinner
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/spDialogRest"
             android:layout_below="@+id/tvSortRest"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"/>
 
