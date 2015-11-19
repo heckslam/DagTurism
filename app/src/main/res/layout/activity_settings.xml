@@ -3,29 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ru.devtron.dagturism.SettingsActivity"
-    android:orientation="horizontal">
+    android:background="@color/white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_title"
+            android:id="@+id/textView3"
+            android:textSize="20dp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="10dp"
+            />
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/enableSplash"
+            android:layout_marginLeft="4dp"
+            android:textSize="15dp"
+            android:id="@+id/switchSplash"
+            android:onClick="onEnableSplash"
+            android:layout_below="@+id/textView3"></android.support.v7.widget.SwitchCompat>
 
-    <CheckBox
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/enableSplash"
-        android:id="@+id/enableSplash"
-        android:textSize="20sp"
-        android:onClick="onEnableSplash" />
-    <CheckBox
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/enableAnimation"
-        android:id="@+id/enableAnimation"
-        android:checked="true"
-        android:textSize="20sp"
-        android:layout_below="@+id/enableSplash"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        />
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/enableAnimation"
+            android:layout_marginLeft="4dp"
+            android:textSize="15dp"
+            android:id="@+id/switchAnimation"
+            android:layout_below="@+id/switchSplash"></android.support.v7.widget.SwitchCompat>
+    </RelativeLayout>
 </RelativeLayout>

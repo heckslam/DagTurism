@@ -50,9 +50,9 @@ public class MainActivity extends AppCompatActivity
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
-        initToolbar();
+       // initToolbar();
         initNavigationView();
-        initTabs();
+       // initTabs();
         initFab();
 
         PreferenceHelper.getInstance().init(getApplicationContext());
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case Constants.REQUEST_CODE_SETTINGS:
-                    boolean splash = data.getBooleanExtra("enableSplash", true);
+                    boolean splash = data.getBooleanExtra("switchSplash", true);
                     preferenceHelper.putBoolean(PreferenceHelper.SPLASH_IS_VISIBLE, splash);
                     break;
                 default:
