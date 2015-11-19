@@ -51,14 +51,10 @@ public class MainActivity extends AppCompatActivity
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
-<<<<<<< HEAD
        // initToolbar();
         initNavigationView();
        // initTabs();
         initFab();
-=======
-
->>>>>>> 3e31acaa460e43424e25149b2c9b77aaad519c97
 
         PreferenceHelper.getInstance().init(getApplicationContext());
         preferenceHelper = PreferenceHelper.getInstance();
