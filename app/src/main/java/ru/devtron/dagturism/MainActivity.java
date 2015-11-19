@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -50,10 +51,14 @@ public class MainActivity extends AppCompatActivity
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
+<<<<<<< HEAD
        // initToolbar();
         initNavigationView();
        // initTabs();
         initFab();
+=======
+
+>>>>>>> 3e31acaa460e43424e25149b2c9b77aaad519c97
 
         PreferenceHelper.getInstance().init(getApplicationContext());
         preferenceHelper = PreferenceHelper.getInstance();
@@ -61,7 +66,10 @@ public class MainActivity extends AppCompatActivity
         fragmentManager = getFragmentManager();
         runSplash();
 
-
+        initToolbar();
+        initNavigationView();
+        initTabs();
+        initFab();
 
     }
 
@@ -98,16 +106,13 @@ public class MainActivity extends AppCompatActivity
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setTitle(R.string.app_name);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return false;
-            }
-        });
-        toolbar.inflateMenu(R.menu.menu);
-     //   toolbar.isOverflowMenuShowing();
+        if (toolbar != null) {
+            toolbar.setTitleTextColor(Color.WHITE);
+            toolbar.setTitle(R.string.app_name);
+            setSupportActionBar(toolbar);
+        }
+
+
 
 
     }
