@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity
             }
         }
         else {
-            Toast.makeText(this, "Hello Tagir!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Hello from Settings!", Toast.LENGTH_SHORT).show();
         }
     }
 
