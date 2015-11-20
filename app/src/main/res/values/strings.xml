@@ -16,7 +16,9 @@
     <string name="sort_by">Выберите</string>
     <string name="dialog_ok">ОК</string>
     <string name="dialog_cancel">Отмена</string>
+
     <string name="settings_title">Основные</string>
+    <string name="activity_settings_title">Настройки</string>
     
     <string-array name="places">
         <item>Махачкала</item>

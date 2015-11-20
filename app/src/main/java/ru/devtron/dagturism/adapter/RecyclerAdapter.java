@@ -3,13 +3,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import java.util.List;
-
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.fragment.RecyclerItemViewHolder;
 import ru.devtron.dagturism.model.ModelPlace;
-
+/**
+ *Адаптер для работы с данными. Используестся для чтения данных достопримечательностей с определенного пункта 1
+ *
+ * @created 01.11.2015
+ * @version $Revision 738 $
+ * @author Эльвира Темирханова
+ * since 0.0.1
+ */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<ModelPlace> mItemList;
 

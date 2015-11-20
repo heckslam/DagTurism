@@ -37,7 +37,7 @@ public class MapsFragment extends Fragment {
         Bundle args = new Bundle();
         args.putInt(ITEMS_COUNT_KEY, itemsCount);
         mapsFragment.setArguments(args);
-        return mapsFragment;//fggdfd
+        return mapsFragment;
 
     }
 
@@ -47,7 +47,6 @@ public class MapsFragment extends Fragment {
         View v = inflater.inflate(LAYOUT, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         setupRecyclerView(recyclerView);
-        //recyclerView.setAdapter(recyclerAdapter);
         return recyclerView;
     }
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -63,11 +62,9 @@ public class MapsFragment extends Fragment {
             int itemsCount = bundle.getInt(ITEMS_COUNT_KEY);
             for (int i = 0; i < 10; i++) {
                 itemList.add(new ModelPlace(i, "", "Элементы в мои", "Нарын-кала - древняя, в моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив мои перекрывать т. н. Каспийские ворота в"));
-                //itemList.add("Item " + i);
             }
         }
         return itemList;
-
     }
 }
 
