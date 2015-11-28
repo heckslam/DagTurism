@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity
     private static final int LAYOUT = R.layout.activity_main;
     FragmentManager fragmentManager;
 
+
+
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ViewPager viewPager;
@@ -232,6 +234,7 @@ public class MainActivity extends AppCompatActivity
                             String name = c.getString(TAG_NAME);
                             Log.d("MyTag", id);
                             Log.d("MyTag", name);
+
                         }
                     }
 
@@ -244,7 +247,7 @@ public class MainActivity extends AppCompatActivity
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                System.out.println(error.getMessage());
             }
         }) {
             @Override
@@ -258,13 +261,18 @@ public class MainActivity extends AppCompatActivity
         requestQueue.add(jsonObjectRequest);
     }
 
+
     @Override
-    public void onSearchStarted() {
-        Toast.makeText(this, "Поиск начался, переходим на новое активити", Toast.LENGTH_SHORT).show();
+    public void onSearchStarted(String cityOrTown, String selectedRest) {
+        Intent intent = new Intent(MainActivity.this, FilteredActivity.class);
+        intent.putExtra("cityOrTown", cityOrTown);
+        intent.putExtra("selectedRest", selectedRest);
+        startActivity(intent);
     }
 
     @Override
     public void onSearchCanceled() {
         Toast.makeText(this, "Поиск мест по районам отменен", Toast.LENGTH_SHORT).show();
     }
+
 }

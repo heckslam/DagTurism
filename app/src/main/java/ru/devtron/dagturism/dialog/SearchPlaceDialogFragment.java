@@ -24,7 +24,7 @@ public class SearchPlaceDialogFragment extends DialogFragment {
     private SearchPlaceListener searchPlaceListener;
 
     public interface SearchPlaceListener {
-        void onSearchStarted();
+        void onSearchStarted(String cityOrTown, String selectedRest);
         void onSearchCanceled();
     }
 
@@ -43,16 +43,15 @@ public class SearchPlaceDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.sort_by);
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         View container = inflater.inflate(R.layout.dialog_select_place, null);
 
-        Spinner spPlace = (Spinner) container.findViewById(R.id.spDialogPlace);
-        Spinner spRest = (Spinner) container.findViewById(R.id.spDialogRest);
-
+        builder.setTitle(R.string.sort_by);
         builder.setView(container);
+
+        final Spinner spPlace = (Spinner) container.findViewById(R.id.spDialogPlace);
+        final Spinner spRest = (Spinner) container.findViewById(R.id.spDialogRest);
 
         ArrayAdapter<String> spPlaceAdapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, ModelPlace.PLACES);
@@ -95,7 +94,8 @@ public class SearchPlaceDialogFragment extends DialogFragment {
         builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                searchPlaceListener.onSearchStarted();
+
+                searchPlaceListener.onSearchStarted(spPlace.getSelectedItem().toString(), spRest.getSelectedItem().toString());
                 dialog.dismiss();
             }
         });

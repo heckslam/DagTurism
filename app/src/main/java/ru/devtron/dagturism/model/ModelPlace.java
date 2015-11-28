@@ -14,6 +14,7 @@ public class ModelPlace {
     private String img;
     private String title;
     private String description;
+    private String cityOrTown;
 
     public static final String[] PLACES = {"Махачкала", "Буйнакск", "Дагестанские огни", "Дербент"};
     public static final String[] REST = {"Любой", "Активный отдых", "Религиозный отдых", "Исторический"};
