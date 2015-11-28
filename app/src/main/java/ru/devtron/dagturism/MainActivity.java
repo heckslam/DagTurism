@@ -18,6 +18,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import ru.devtron.dagturism.adapter.TabsPagerFragmentAdapter;
 
 import ru.devtron.dagturism.dialog.SearchPlaceDialogFragment;
@@ -41,8 +56,19 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ViewPager viewPager;
+    RequestQueue requestQueue;
+    private final String getItemsUrl = "http://republic.tk/index.php/api/";
 
     PreferenceHelper preferenceHelper;
+
+    // JSON Node names
+    private static final String TAG_SUCCESS = "success";
+    private static final String TAG_ITEMS = "items";
+    private static final String TAG_PID = "place_id";
+    private static final String TAG_NAME = "place_name";
+    private static final String TAG_DESC = "place_desc";
+
+    JSONArray places = null;
 
 
 
@@ -63,6 +89,9 @@ public class MainActivity extends AppCompatActivity
         initNavigationView();
         initTabs();
         initFab();
+
+        makingRequest();
+
 
     }
 
@@ -104,10 +133,6 @@ public class MainActivity extends AppCompatActivity
             toolbar.setTitle(R.string.app_name);
             setSupportActionBar(toolbar);
         }
-
-
-
-
     }
 
     private void initTabs() {
@@ -189,6 +214,48 @@ public class MainActivity extends AppCompatActivity
                 searchPlaceDialogFragment.show(fragmentManager, "SearchPlaceDialogFragment");
             }
         });
+    }
+
+    private void makingRequest() {
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, getItemsUrl, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    int success = response.getInt(TAG_SUCCESS);
+                    if (success == 1) {
+                        places = response.getJSONArray(TAG_ITEMS);
+
+                        for (int i = 0; i < places.length(); i++) {
+                            JSONObject c = places.getJSONObject(i);
+                            String id = c.getString(TAG_PID);
+                            String name = c.getString(TAG_NAME);
+                            Log.d("MyTag", id);
+                            Log.d("MyTag", name);
+                        }
+                    }
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<String, String>();
+                parameters.put("key", "asdf");
+                parameters.put("method", "getListView");
+                return parameters;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
     }
 
     @Override
