@@ -6,19 +6,21 @@ package ru.devtron.dagturism.fragment;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import com.android.volley.toolbox.NetworkImageView;
 
 import ru.devtron.dagturism.R;
 
 public class RecyclerItemViewHolder extends RecyclerView.ViewHolder {
+    private static TextView itemCityView;
     /**
      *  в этом блоке описаны компоненты из которых состоит View */
-
-    private final ImageView imageView;
+    private final NetworkImageView imageView;
     private final TextView textTitle;
-    private final TextView textDescription;
+    private final TextView textCity;
+    private final TextView url;
 
     /**
      *
@@ -27,12 +29,17 @@ public class RecyclerItemViewHolder extends RecyclerView.ViewHolder {
      * @param itemTitleView
      * @param itemDescriptionView
      */
-    public RecyclerItemViewHolder(final View parent, ImageView itemImageView, TextView itemTitleView, TextView itemDescriptionView) {
+    public RecyclerItemViewHolder(final View parent, NetworkImageView itemImageView, TextView itemTitleView, TextView itemDescriptionView, TextView url) {
         super(parent);
         imageView = itemImageView;
         textTitle = itemTitleView;
-        textDescription = itemDescriptionView;
+        textCity = itemDescriptionView;
+        this.url = url;
     }
+
+
+
+
 
     /**
      * конструктор крторый инициализирует переменные типа RecyclerItemViewHolder
@@ -40,12 +47,16 @@ public class RecyclerItemViewHolder extends RecyclerView.ViewHolder {
      * @return
      */
     public static RecyclerItemViewHolder newInstance(View parent) {
-        ImageView itemImageView = (ImageView) parent.findViewById(R.id.imageView);
-        TextView itemTitleView = (TextView) parent.findViewById(R.id.textView);
-        TextView itemDescriptionView = (TextView) parent.findViewById(R.id.textView2);
+        NetworkImageView itemImageView = (NetworkImageView) parent.findViewById(R.id.imageView);
+        TextView itemTitleView = (TextView) parent.findViewById(R.id.namePlace);
+        itemCityView = (TextView) parent.findViewById(R.id.cityTextView);
+        TextView url = (TextView) parent.findViewById(R.id.url);
 
-        return new RecyclerItemViewHolder(parent, itemImageView, itemTitleView, itemDescriptionView);
+
+        return new RecyclerItemViewHolder(parent, itemImageView, itemTitleView, itemCityView, url);
     }
+
+
 
     /**
      * сетер для инициализации заголовка
@@ -60,7 +71,7 @@ public class RecyclerItemViewHolder extends RecyclerView.ViewHolder {
      * @param textDescripionSet
      */
     public void setItemDecsription(CharSequence textDescripionSet) {
-        textDescription.setText(textDescripionSet);
+        textCity.setText(textDescripionSet);
     }
 
     /**

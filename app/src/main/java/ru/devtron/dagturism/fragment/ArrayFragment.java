@@ -50,7 +50,7 @@ public class ArrayFragment extends Fragment {
         if(bundle!=null) {
             int itemsCount = bundle.getInt(ITEMS_COUNT_KEY);
             for (int i = 0; i < itemsCount; i++) {
-                itemList.add(new ModelPlace(i, "", "Саракум", "Нарын-кала - древняя, доарабская крепость в нагорной части Дербента, соединеная с Каспийским морем двойными стенами, призваннимы перекрывать т. н. Каспийские ворота в"));
+                itemList.add(new ModelPlace(i, "", "Саракум", "Дербент"));
             }
         }
         return itemList;
