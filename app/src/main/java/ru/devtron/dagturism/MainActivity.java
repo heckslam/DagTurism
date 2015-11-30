@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -30,13 +31,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import ru.devtron.dagturism.adapter.TabsPagerFragmentAdapter;
 
 import ru.devtron.dagturism.dialog.SearchPlaceDialogFragment;
 import ru.devtron.dagturism.fragment.SplashFragment;
+import ru.devtron.dagturism.model.ModelPlace;
 
 /**
  * Стартовая активность приложения
@@ -58,19 +62,8 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ViewPager viewPager;
-    RequestQueue requestQueue;
-    private final String getItemsUrl = "http://republic.tk/index.php/api/";
 
     PreferenceHelper preferenceHelper;
-
-    // JSON Node names
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_ITEMS = "items";
-    private static final String TAG_PID = "place_id";
-    private static final String TAG_NAME = "place_name";
-    private static final String TAG_DESC = "place_desc";
-
-    JSONArray places = null;
 
 
 
@@ -79,20 +72,16 @@ public class MainActivity extends AppCompatActivity
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
-
-
         PreferenceHelper.getInstance().init(getApplicationContext());
         preferenceHelper = PreferenceHelper.getInstance();
-
         fragmentManager = getFragmentManager();
         runSplash();
-
         initToolbar();
         initNavigationView();
         initTabs();
         initFab();
 
-        makingRequest();
+        //makingRequest();
 
 
     }
@@ -218,7 +207,7 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private void makingRequest() {
+    /*private void makingRequest() {
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, getItemsUrl, new Response.Listener<JSONObject>() {
             @Override
@@ -260,7 +249,7 @@ public class MainActivity extends AppCompatActivity
         };
         requestQueue.add(jsonObjectRequest);
     }
-
+*/
 
     @Override
     public void onSearchStarted(String cityOrTown, String selectedRest) {

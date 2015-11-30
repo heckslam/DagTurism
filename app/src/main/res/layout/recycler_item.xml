@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
+        android:id="@+id/relativeLayout"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
@@ -20,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:background="@android:color/holo_blue_light"
+            android:scaleType="fitXY"
             android:id="@+id/imageView"/>
 
 
@@ -29,19 +31,20 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:background="@drawable/background_city"
+            android:maxLines="1"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="6dp"
-            android:text="Москва"
             android:textColor="@android:color/white"
             android:id="@+id/cityTextView"
+            android:text="Махачкала"
             android:maxLength="25"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:layout_below="@+id/url"
+            android:layout_below="@+id/id"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
@@ -50,21 +53,21 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Название"
             android:id="@+id/namePlace"
+            android:text="Название места"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:paddingLeft="14dp"
             android:paddingBottom="10dp"
             android:textAlignment="inherit"
             android:layout_alignBottom="@+id/imageView"
-            android:layout_toRightOf="@+id/url"
-            android:layout_toEndOf="@+id/url" />
+            android:layout_toRightOf="@+id/id"
+            android:layout_toEndOf="@+id/id" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/url"
+            android:id="@+id/id"
             android:maxLines="0"
             android:layout_above="@id/textView"/>
 

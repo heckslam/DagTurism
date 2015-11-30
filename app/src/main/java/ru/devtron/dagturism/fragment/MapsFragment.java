@@ -30,7 +30,7 @@ public class MapsFragment extends Fragment {
     private static final int LAYOUT = R.layout.fragment_maps;
 
     private RecyclerView recyclerView;
-    private ru.devtron.dagturism.adapter.RecyclerAdapter recyclerAdapter;
+    private RecyclerAdapter recyclerAdapter;
 
     public static MapsFragment createInstance(int itemsCount) {
         MapsFragment mapsFragment = new MapsFragment();
@@ -51,8 +51,9 @@ public class MapsFragment extends Fragment {
     }
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerAdapter = new RecyclerAdapter(createItemList());
+        recyclerAdapter = new RecyclerAdapter(getContext(), createItemList());
         recyclerView.setAdapter(recyclerAdapter);
+
 
     }
     private List<ModelPlace> createItemList() {
@@ -61,7 +62,7 @@ public class MapsFragment extends Fragment {
         if(bundle!=null) {
             int itemsCount = bundle.getInt(ITEMS_COUNT_KEY);
             for (int i = 0; i < 10; i++) {
-                itemList.add(new ModelPlace(i, "", "Элементы в мои", "Нарын-кала - древняя, в моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив моив мои перекрывать т. н. Каспийские ворота в"));
+                itemList.add(new ModelPlace(i, "Элементы в мои", "Нарын-кала", ""));
             }
         }
         return itemList;

@@ -1,21 +1,10 @@
 package ru.devtron.dagturism.model;
-/**
- * Класс для создания типа для элементов ListView. Поля: id -Это идентификатор элемента.
- * img -будет хронить url до картинок на сервере
- * title  - будет хронить заголовки элементов списка из сервера
- * descrition - описание достопримечательности
- * @created 14.10.2015
- * @version $Revision 738 $
- * @author Эльвира Темирханова
- * since 0.0.1
- */
+
 public class ModelPlace {
-    private long id;
-    private String img;
+    private int id;
     private String title;
-    private String description;
-    private String cityOrTown;
-    private String url;
+    private String city;
+    private String firstImage;
 
 
     public static final String[] PLACES = {"Махачкала", "Буйнакск", "Дагестанские огни", "Дербент"};
@@ -24,30 +13,20 @@ public class ModelPlace {
     public ModelPlace () {
 
     }
-    public ModelPlace(long id, String img, String title, String description) {
+
+    public ModelPlace(int id, String title, String city, String firstImage) {
         this.id = id;
-        this.img = img;
         this.title = title;
-        this.description = description;
+        this.city = city;
+        this.firstImage = firstImage;
     }
 
-
-
-
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
     }
 
     public String getTitle() {
@@ -58,11 +37,20 @@ public class ModelPlace {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getCity() {
+        return city;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+
+    public String getFirstImage() {
+        return firstImage;
+    }
+
+    public void setFirstImage(String firstImage) {
+        this.firstImage = firstImage;
     }
 }
