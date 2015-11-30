@@ -36,7 +36,7 @@ public class ArrayFragment extends Fragment {
     private static final int LAYOUT = R.layout.fragment_array;
 
     public static final String TAG = "MyRecyclerList";
-    private List<ModelPlace> listItemsList = new ArrayList<ModelPlace>();
+    private List<ModelPlace> listItemsList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private RecyclerAdapter adapter;
     private ProgressDialog progressDialog;
@@ -127,7 +127,7 @@ public class ArrayFragment extends Fragment {
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<String, String>();
+                Map<String, String> parameters = new HashMap<>();
                 parameters.put("key", "asdf");
                 parameters.put("method", "getListView");
                 return parameters;
@@ -157,17 +157,4 @@ public class ArrayFragment extends Fragment {
             progressDialog = null;
         }
     }
-
-    /*private List<ModelPlace> createItemList() {
-        List<ModelPlace> itemList = new ArrayList<>();
-        Bundle bundle = getArguments();
-        if(bundle!=null) {
-            int itemsCount = bundle.getInt(ITEMS_COUNT_KEY);
-            for (int i = 0; i < itemsCount; i++) {
-                itemList.add(new ModelPlace(i, "", "Саракум", "Дербент", ""));
-            }
-        }
-        return itemList;
-
-    }*/
 }
