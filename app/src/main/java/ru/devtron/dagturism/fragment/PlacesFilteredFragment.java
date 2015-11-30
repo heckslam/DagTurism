@@ -44,7 +44,7 @@ public class PlacesFilteredFragment extends Fragment {
 
     public void setupRecyclerView(RecyclerView recyclerView){
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerAdapter = new RecyclerAdapter(createItemList());
+        recyclerAdapter = new RecyclerAdapter(getContext(), createItemList());
         recyclerView.setAdapter(recyclerAdapter);
     }
     private List<ModelPlace> createItemList() {
@@ -53,7 +53,7 @@ public class PlacesFilteredFragment extends Fragment {
         if(bundle!=null) {
             int itemsCount = bundle.getInt(ITEMS_COUNT_KEY);
             for (int i = 0; i < itemsCount; i++) {
-                itemList.add(new ModelPlace(i, "", "Саракум", "Дербент"));
+                itemList.add(new ModelPlace(i, "Саракум", "Махачкала", ""));
             }
         }
         return itemList;
