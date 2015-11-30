@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -61,7 +59,6 @@ public class ArrayFragment extends Fragment {
         ArrayFragment arrayFragment = new ArrayFragment();
         arrayFragment.setArguments(args);
         return arrayFragment;
-
     }
 
     @Nullable
@@ -71,21 +68,29 @@ public class ArrayFragment extends Fragment {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        queue = Volley.newRequestQueue(getContext());
-        setupRecyclerView(mRecyclerView);
+        updateList();
         return v;
+
+
     }
 
-    public void setupRecyclerView(RecyclerView recyclerView){
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new RecyclerAdapter(getContext(),listItemsList);
-        recyclerView.setAdapter(adapter);
+
+
+    private void updateList () {
+
+        queue = Volley.newRequestQueue(getContext());
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new RecyclerAdapter(getContext(), listItemsList);
+        mRecyclerView.setAdapter(adapter);
 
         adapter.clearAdapter();
+
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, getItemsUrl, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+
                 try {
                     int success = response.getInt(TAG_SUCCESS);
                     if (success == 1) {
@@ -131,6 +136,28 @@ public class ArrayFragment extends Fragment {
 
         queue.add(jsonObjectRequest);
     }
+
+
+
+
+
+    private void showPD() {
+        if (progressDialog == null) {
+            progressDialog= new ProgressDialog(getContext());
+            progressDialog.setMessage("Загрузка...");
+            progressDialog.setCancelable(false);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+    }
+
+    private void hidePD() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
+    }
+
     /*private List<ModelPlace> createItemList() {
         List<ModelPlace> itemList = new ArrayList<>();
         Bundle bundle = getArguments();
