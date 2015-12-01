@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -32,15 +33,17 @@ public class SettingsActivity extends AppCompatActivity  {
     FragmentManager fragmentManager;
 
     private Toolbar toolbar;
-    private DrawerLayout drawerLayout;
+
+
+
+    // private DrawerLayout drawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
         fragmentManager = getFragmentManager();
-
         initToolbar();
-        initNavigationView();
 
         switchSplash = (SwitchCompat) findViewById(R.id.switchSplash);
         PreferenceHelper.getInstance().init(getApplicationContext());
@@ -63,33 +66,25 @@ public class SettingsActivity extends AppCompatActivity  {
         if (toolbar != null) {
             toolbar.setTitleTextColor(Color.WHITE);
             toolbar.setTitle(R.string.activity_settings_title);
+            /*toolbar.setNavigationIcon(R.drawable.ic_map_marker_radius_black_48dp);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                    /*Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);*/
+              /*  }
+            });*/
             setSupportActionBar(toolbar);
         }
     }
 
-    private void initNavigationView() {
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                drawerLayout.closeDrawers();
-                switch (menuItem.getItemId()) {
-                    case R.id.categories:
-                        //openCat();
-                        break;
-                    case R.id.settings:
-                        //openSettings();
-                        break;
-                    default:
-                        break;
-                }
-                return true;
-            }
-        });
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        Log.i("onBackPressed", "нажата onBackPressed();");
     }
 }
