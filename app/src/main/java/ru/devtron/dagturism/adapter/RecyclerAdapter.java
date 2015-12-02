@@ -1,12 +1,11 @@
 package ru.devtron.dagturism.adapter;
 import android.content.Context;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 
@@ -19,8 +18,15 @@ import ru.devtron.dagturism.model.ModelPlace;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerItemViewHolder> {
     private List<ModelPlace> itemList;
+    public static final String TAG = "MyRecyclerList2";
+
     private Context mContext;
-    private ImageLoader mImageLoader;
+
+    int currentPage;
+
+    ViewPager viewPager;
+    ImageGaleryRecyclerAdapter adapterImages;
+
     private int focusedItem = 0;
 
     public RecyclerAdapter(Context context, List<ModelPlace> itemList) {
@@ -28,20 +34,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerItemViewHolder
         this.mContext = context;
     }
 
+
     @Override
     public RecyclerItemViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item, null);
+
+        viewPager = (ViewPager) v.findViewById(R.id.viewPagerForImages);
+
+
+
+
+
         RecyclerItemViewHolder holder = new RecyclerItemViewHolder(v);
-
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         return holder;
     }
+    
+
 
     @Override
     public void onBindViewHolder(final RecyclerItemViewHolder recyclerItemViewHolder, int position) {
@@ -50,12 +59,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerItemViewHolder
 
         recyclerItemViewHolder.getLayoutPosition();
 
-        mImageLoader = MySingleton.getInstance(mContext).getImageLoader();
+
         try {
             recyclerItemViewHolder.id.setId(modelPlaces.getId());
             recyclerItemViewHolder.title.setText(modelPlaces.getTitle());
             recyclerItemViewHolder.city.setText(modelPlaces.getCity());
-            recyclerItemViewHolder.firstImage.setImageUrl(modelPlaces.getFirstImage(), mImageLoader);
+
+            List<String> images1 = modelPlaces.getImages();
+            adapterImages = new ImageGaleryRecyclerAdapter(mContext, images1);
+
+
+            recyclerItemViewHolder.pager.setAdapter(adapterImages);
+
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

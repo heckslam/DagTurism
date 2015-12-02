@@ -50,12 +50,12 @@ public class PlacesFilteredFragment extends Fragment {
     private List<ModelPlace> createItemList() {
         List<ModelPlace> itemList = new ArrayList<>();
         Bundle bundle = getArguments();
-        if(bundle!=null) {
+        /*if(bundle!=null) {
             int itemsCount = bundle.getInt(ITEMS_COUNT_KEY);
             for (int i = 0; i < itemsCount; i++) {
                 itemList.add(new ModelPlace(i, "Саракум", "Махачкала", ""));
             }
-        }
+        }*/
         return itemList;
 
     }

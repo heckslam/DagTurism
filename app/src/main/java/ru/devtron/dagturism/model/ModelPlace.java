@@ -1,10 +1,14 @@
 package ru.devtron.dagturism.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ModelPlace {
     private int id;
     private String title;
     private String city;
-    private String firstImage;
+    private List<String> images;
+
 
 
     public static final String[] PLACES = {"Махачкала", "Буйнакск", "Дагестанские огни", "Дербент"};
@@ -14,11 +18,11 @@ public class ModelPlace {
 
     }
 
-    public ModelPlace(int id, String title, String city, String firstImage) {
+    public ModelPlace(int id, String title, String city, List<String> images) {
         this.id = id;
         this.title = title;
         this.city = city;
-        this.firstImage = firstImage;
+        this.images = images;
     }
 
     public int getId() {
@@ -46,11 +50,12 @@ public class ModelPlace {
     }
 
 
-    public String getFirstImage() {
-        return firstImage;
+    public List<String> getImages() {
+        return images;
     }
 
-    public void setFirstImage(String firstImage) {
-        this.firstImage = firstImage;
+    public void setImages(List<String> images) {
+        this.images = images;
     }
+
 }

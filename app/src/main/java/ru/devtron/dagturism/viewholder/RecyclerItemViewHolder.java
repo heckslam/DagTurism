@@ -4,6 +4,7 @@ package ru.devtron.dagturism.viewholder;
  *
  */
 
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -15,7 +16,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import ru.devtron.dagturism.R;
 
 public class RecyclerItemViewHolder extends RecyclerView.ViewHolder {
-    public NetworkImageView firstImage;
+    public ViewPager pager;
     public TextView id;
     public TextView title;
     public TextView city;
@@ -24,7 +25,7 @@ public class RecyclerItemViewHolder extends RecyclerView.ViewHolder {
 
     public RecyclerItemViewHolder(View view) {
         super(view);
-        this.firstImage = (NetworkImageView) view.findViewById(R.id.imageView);
+        this.pager = (ViewPager) view.findViewById(R.id.viewPagerForImages);
         this.city = (TextView) view.findViewById(R.id.cityTextView);
         this.id = (TextView) view.findViewById(R.id.id);
         this.title = (TextView) view.findViewById(R.id.namePlace);

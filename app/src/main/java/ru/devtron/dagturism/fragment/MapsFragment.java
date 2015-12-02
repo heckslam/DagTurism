@@ -59,12 +59,12 @@ public class MapsFragment extends Fragment {
     private List<ModelPlace> createItemList() {
         List<ModelPlace> itemList = new ArrayList<>();
         Bundle bundle = getArguments();
-        if(bundle!=null) {
+        /*if(bundle!=null) {
             int itemsCount = bundle.getInt(ITEMS_COUNT_KEY);
             for (int i = 0; i < 10; i++) {
                 itemList.add(new ModelPlace(i, "Элементы в мои", "Нарын-кала", ""));
             }
-        }
+        }*/
         return itemList;
     }
 }

@@ -10,6 +10,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+import ru.devtron.dagturism.adapter.ImageGaleryRecyclerAdapter;
+
 public class MySingleton {
     private static MySingleton mInstance;
     private RequestQueue mRequestQueue;
@@ -48,4 +50,6 @@ public class MySingleton {
     public ImageLoader getImageLoader() {
         return mImageLoader;
     }
+
+
 }

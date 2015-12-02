@@ -3,12 +3,14 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -31,7 +33,11 @@ import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.adapter.RecyclerAdapter;
 import ru.devtron.dagturism.model.ModelPlace;
 
-public class ArrayFragment extends Fragment {
+public class ArrayFragment extends Fragment  {
+
+    ViewPager imageGaleryPager;
+
+
     public final static String ITEMS_COUNT_KEY = "ArrayFragment$ItemsCount";
     private static final int LAYOUT = R.layout.fragment_array;
 
@@ -44,7 +50,7 @@ public class ArrayFragment extends Fragment {
     RequestQueue queue;
 
 
-    private final String getItemsUrl = "http://republic.tk/index.php/api/";
+    private static final String getItemsUrl = "http://republic.tk/index.php/api/";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -68,7 +74,13 @@ public class ArrayFragment extends Fragment {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
+
         updateList();
+
+        /*imageGaleryPager = (ViewPager) image.findViewById(R.id.viewPagerForImages);
+        PagerAdapter adapter = new ImageGaleryRecyclerAdapter(getContext());
+        imageGaleryPager.setAdapter(adapter);*/
+
         return v;
 
 
@@ -97,19 +109,30 @@ public class ArrayFragment extends Fragment {
 
                         JSONArray places = response.getJSONArray(TAG_ITEMS);
 
+
                         for (int i = 0; i < places.length(); i++) {
                             JSONObject post = places.getJSONObject(i);
+                            JSONArray images = post.getJSONArray("images");
+                            List<String> arrayImages = new ArrayList<>();
+                            for (int j = 0; j < images.length(); j++){
+                                arrayImages.add(images.getString(j));
+
+                            }
 
                             ModelPlace place = new ModelPlace();
+
 
                             place.setId(post.getInt("place_id"));
                             place.setTitle(post.getString("place_name"));
                             place.setCity(post.getString("place_city"));
-                            place.setFirstImage(post.getString("images"));
+                            place.setImages(arrayImages);
 
                             listItemsList.add(place);
 
+
+
                         }
+
                     }
                 }
                 catch (JSONException e) {
