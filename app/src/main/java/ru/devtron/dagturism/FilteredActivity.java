@@ -45,8 +45,6 @@ public class FilteredActivity extends AppCompatActivity {
     private void getDataFromMainActivity() {
         cityOrTown = getIntent().getExtras().getString("cityOrTown");
         selectedRest = getIntent().getExtras().getString("selectedRest");
-
-
         Toast.makeText(this, "Поиск начался" + cityOrTown + "\nВид отдыха - " + selectedRest, Toast.LENGTH_SHORT).show();
 
     }
@@ -109,11 +107,9 @@ public class FilteredActivity extends AppCompatActivity {
      * В NavigationDrawer
      */
 
-
-
     public void openSettings () {
         Intent intent = new Intent(this, SettingsActivity.class);
-        startActivityForResult(intent, Constants.REQUEST_CODE_SETTINGS);
+        startActivity(intent);
     }
 
 }

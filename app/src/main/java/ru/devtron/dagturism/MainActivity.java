@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity
     FragmentManager fragmentManager;
 
 
-
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ViewPager viewPager;
@@ -80,41 +79,6 @@ public class MainActivity extends AppCompatActivity
         initNavigationView();
         initTabs();
         initFab();
-
-        //makingRequest();
-
-
-    }
-
-
-
-    /**
-     * Получаем данные из активити настроек SettingsActivity для возможности отключения SplashScreen
-     *
-     *  <p>@param  requestCode</p>
-     *  <p>@param  resultCode</p>
-     *  <p>@param  data</p>
-     *
-     *  @return Toast
-     * since 0.0.3
-     *
-     */
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case Constants.REQUEST_CODE_SETTINGS:
-                    boolean splash = data.getBooleanExtra("switchSplash", true);
-                    preferenceHelper.putBoolean(PreferenceHelper.SPLASH_IS_VISIBLE, splash);
-                    break;
-                default:
-                    break;
-            }
-        }
-        else {
-            Toast.makeText(this, "Hello from Settings!", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void initToolbar() {
@@ -160,30 +124,17 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    /**
-     * Метод для открытия активности категорий CategoriesActivity
-     * В NavigationDrawer
-     */
     public void openCat () {
         Intent intent = new Intent(this, CategoriesActivity.class);
         startActivity(intent);
     }
 
-    /**
-     * Метод для открытия активности настроек SettingsActivity
-     * В NavigationDrawer
-     */
-
-
 
     public void openSettings () {
         Intent intent = new Intent(this, SettingsActivity.class);
-        startActivityForResult(intent, Constants.REQUEST_CODE_SETTINGS);
+        startActivity(intent);
     }
 
-    /**
-     * Метод для запуска SplashScreen
-     */
 
     public void runSplash () {
         if (preferenceHelper.getBoolean(PreferenceHelper.SPLASH_IS_VISIBLE)) {
@@ -207,49 +158,6 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    /*private void makingRequest() {
-        requestQueue = Volley.newRequestQueue(getApplicationContext());
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, getItemsUrl, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    int success = response.getInt(TAG_SUCCESS);
-                    if (success == 1) {
-                        places = response.getJSONArray(TAG_ITEMS);
-
-                        for (int i = 0; i < places.length(); i++) {
-                            JSONObject c = places.getJSONObject(i);
-                            String id = c.getString(TAG_PID);
-                            String name = c.getString(TAG_NAME);
-                            Log.d("MyTag", id);
-                            Log.d("MyTag", name);
-
-                        }
-                    }
-
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println(error.getMessage());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("key", "asdf");
-                parameters.put("method", "getListView");
-                return parameters;
-            }
-        };
-        requestQueue.add(jsonObjectRequest);
-    }
-*/
 
     @Override
     public void onSearchStarted(String cityOrTown, String selectedRest) {
