@@ -26,11 +26,15 @@ import ru.devtron.dagturism.model.ModelPlace;
  */
 
 public class MapsFragment extends Fragment {
-    public final static String ITEMS_COUNT_KEY = "PartThreeFragment$ItemsCount";
+    private final static String ITEMS_COUNT_KEY = "PartThreeFragment$ItemsCount";
     private static final int LAYOUT = R.layout.fragment_maps;
 
     private RecyclerView recyclerView;
     private RecyclerAdapter recyclerAdapter;
+
+    public MapsFragment() {
+        // Required empty public constructor
+    }
 
     public static MapsFragment createInstance(int itemsCount) {
         MapsFragment mapsFragment = new MapsFragment();

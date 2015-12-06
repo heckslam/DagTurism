@@ -17,17 +17,16 @@ import com.android.volley.RequestQueue;
 
 import ru.devtron.dagturism.adapter.TabsPagerFragmentAdapter;
 import ru.devtron.dagturism.adapter.TabsPagerFragmentAdapterFilteredActivity;
+import ru.devtron.dagturism.fragment.PlacesFilteredFragment;
 
 public class FilteredActivity extends AppCompatActivity {
 
-    private String cityOrTown, selectedRest;
+    public String cityOrTown, selectedRest;
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ViewPager viewPager;
 
-    RequestQueue requestQueue;
-    private final String getItemsUrl = "http://republic.tk/index.php/api/";
 
 
     @Override
@@ -36,19 +35,13 @@ public class FilteredActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtered);
 
+        cityOrTown = getIntent().getExtras().getString("cityOrTown");
+        selectedRest = getIntent().getExtras().getString("selectedRest");
+
         initToolbar();
         initNavigationView();
         initTabs();
-        getDataFromMainActivity();
     }
-
-    private void getDataFromMainActivity() {
-        cityOrTown = getIntent().getExtras().getString("cityOrTown");
-        selectedRest = getIntent().getExtras().getString("selectedRest");
-        Toast.makeText(this, "Поиск начался" + cityOrTown + "\nВид отдыха - " + selectedRest, Toast.LENGTH_SHORT).show();
-
-    }
-
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -61,7 +54,7 @@ public class FilteredActivity extends AppCompatActivity {
 
     private void initTabs() {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        TabsPagerFragmentAdapterFilteredActivity adapter = new TabsPagerFragmentAdapterFilteredActivity(getSupportFragmentManager());
+        TabsPagerFragmentAdapterFilteredActivity adapter = new TabsPagerFragmentAdapterFilteredActivity(getSupportFragmentManager(), cityOrTown, selectedRest);
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);

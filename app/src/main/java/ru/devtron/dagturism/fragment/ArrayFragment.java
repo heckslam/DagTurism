@@ -1,12 +1,9 @@
 package ru.devtron.dagturism.fragment;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,30 +31,29 @@ import ru.devtron.dagturism.adapter.RecyclerAdapter;
 import ru.devtron.dagturism.model.ModelPlace;
 
 public class ArrayFragment extends Fragment  {
-
-    ViewPager imageGaleryPager;
-
-
-    public final static String ITEMS_COUNT_KEY = "ArrayFragment$ItemsCount";
+    private final static String ITEMS_COUNT_KEY = "ArrayFragment$ItemsCount";
     private static final int LAYOUT = R.layout.fragment_array;
 
-    public static final String TAG = "MyRecyclerList";
+    private static final String TAG = "MyRecyclerList";
     private List<ModelPlace> listItemsList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private RecyclerAdapter adapter;
-    private ProgressDialog progressDialog;
 
-    RequestQueue queue;
+    private RequestQueue queue;
 
-
-    private static final String getItemsUrl = "http://republic.tk/index.php/api/";
+    private static final String getItemsUrl = "http://republic.tk/api/getListView/";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_ITEMS = "items";
     private static final String TAG_PID = "place_id";
     private static final String TAG_NAME = "place_name";
-    private static final String TAG_URL = "place_desc";
+    private static final String TAG_CITY = "place_city";
+
+
+    public ArrayFragment() {
+        // Required empty public constructor
+    }
 
     public static ArrayFragment createInstance(int itemsCount){
         Bundle args = new Bundle();
@@ -77,13 +73,7 @@ public class ArrayFragment extends Fragment  {
 
         updateList();
 
-        /*imageGaleryPager = (ViewPager) image.findViewById(R.id.viewPagerForImages);
-        PagerAdapter adapter = new ImageGaleryRecyclerAdapter(getContext());
-        imageGaleryPager.setAdapter(adapter);*/
-
         return v;
-
-
     }
 
 
@@ -121,18 +111,13 @@ public class ArrayFragment extends Fragment  {
 
                             ModelPlace place = new ModelPlace();
 
-
-                            place.setId(post.getInt("place_id"));
-                            place.setTitle(post.getString("place_name"));
-                            place.setCity(post.getString("place_city"));
+                            place.setId(post.getInt(TAG_PID));
+                            place.setTitle(post.getString(TAG_NAME));
+                            place.setCity(post.getString(TAG_CITY));
                             place.setImages(arrayImages);
 
                             listItemsList.add(place);
-
-
-
                         }
-
                     }
                 }
                 catch (JSONException e) {
@@ -147,37 +132,9 @@ public class ArrayFragment extends Fragment  {
             public void onErrorResponse(VolleyError error) {
                 System.out.println(error.getMessage());
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<>();
-                parameters.put("key", "asdf");
-                parameters.put("method", "getListView");
-                return parameters;
-            }
-        };
+        });
 
         queue.add(jsonObjectRequest);
     }
 
-
-
-
-
-    private void showPD() {
-        if (progressDialog == null) {
-            progressDialog= new ProgressDialog(getContext());
-            progressDialog.setMessage("Загрузка...");
-            progressDialog.setCancelable(false);
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
-        }
-    }
-
-    private void hidePD() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-            progressDialog = null;
-        }
-    }
 }

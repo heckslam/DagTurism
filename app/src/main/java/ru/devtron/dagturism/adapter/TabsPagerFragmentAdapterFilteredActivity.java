@@ -8,6 +8,7 @@ import ru.devtron.dagturism.fragment.ArrayFragment;
 import ru.devtron.dagturism.fragment.MapsFragment;
 import ru.devtron.dagturism.fragment.PlacesFilteredFragment;
 import ru.devtron.dagturism.fragment.WhereToEat;
+import ru.devtron.dagturism.fragment.WhereToSleep;
 
 /**
  * Created by Ruslan Aliev on 28.11.2015.
@@ -15,14 +16,20 @@ import ru.devtron.dagturism.fragment.WhereToEat;
 public class TabsPagerFragmentAdapterFilteredActivity extends FragmentPagerAdapter {
 
     private String[] tabs;
+    private String city;
+    private String rest;
 
-    public TabsPagerFragmentAdapterFilteredActivity(FragmentManager fm) {
+
+    public TabsPagerFragmentAdapterFilteredActivity(FragmentManager fm, String city, String rest) {
         super(fm);
         tabs = new String[] {
                 "Места",
                 "Где поесть",
                 "Где поспать"
         };
+
+        this.city = city;
+        this.rest = rest;
     }
 
     @Override
@@ -40,13 +47,13 @@ public class TabsPagerFragmentAdapterFilteredActivity extends FragmentPagerAdapt
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return PlacesFilteredFragment.createInstance(20);
+                return PlacesFilteredFragment.createInstance(3, city, rest);
 
             case 1:
-                return WhereToEat.createInstance(0);
+                return WhereToEat.createInstance(4, city, rest);
 
             case 2:
-                return WhereToEat.createInstance(2);
+                return WhereToSleep.createInstance(5, city, rest);
 
             default:
                 return null;

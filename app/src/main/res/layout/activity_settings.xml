@@ -47,16 +47,19 @@
                     android:layout_height="wrap_content"
                     android:text="@string/settings_title"
                     android:id="@+id/textView3"
-                    android:textSize="13dp"
+                    android:textSize="14sp"
                     android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="4dp"
                     />
                 <android.support.v7.widget.SwitchCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/enableSplash"
                     android:layout_marginLeft="4dp"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     android:id="@+id/switchSplash"
                     android:layout_below="@+id/textView3"/>
 
@@ -65,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/enableAnimation"
                     android:layout_marginLeft="4dp"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     android:id="@+id/switchAnimation"
                     android:layout_below="@+id/switchSplash"/>
 
