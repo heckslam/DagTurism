@@ -95,6 +95,9 @@ public class WhereToSleep extends Fragment {
         city = this.getArguments().getString("City");
         rest = this.getArguments().getString("Rest");
 
+        encodeCity = "";
+        encodeRest = "";
+
         try {
             if (rest != null && city != null) {
                 splitedRest = rest.split(" ");

@@ -92,7 +92,8 @@ public class PlacesFilteredFragment extends Fragment {
         city = this.getArguments().getString("City");
         rest = this.getArguments().getString("Rest");
 
-
+        encodeCity = "";
+        encodeRest = "";
 
         try {
             if (rest != null && city != null) {
@@ -139,10 +140,10 @@ public class PlacesFilteredFragment extends Fragment {
         mRecyclerView.setAdapter(adapter);
 
 
-
         showPD();
 
         getItemsUrl = "http://republic.tk/api/listview/filter/" + encodeCity + "/" + encodeRest + "/1";
+        Log.d("TAG0", getItemsUrl);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getItemsUrl, new Response.Listener<JSONObject>() {
             @Override
@@ -228,5 +229,10 @@ public class PlacesFilteredFragment extends Fragment {
         }
     }
 
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("City", city);
+        outState.putString("Rest", rest);
+    }
 }

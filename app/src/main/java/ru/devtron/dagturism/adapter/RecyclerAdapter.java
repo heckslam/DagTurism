@@ -69,6 +69,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerItemViewHolder
             adapterImages = new ImageGaleryRecyclerAdapter(mContext, images1);
 
             recyclerItemViewHolder.pager.setAdapter(adapterImages);
+            recyclerItemViewHolder.pager.setCurrentItem(ImageGaleryRecyclerAdapter.PAGER_PAGES_MIDDLE);
 
 
 

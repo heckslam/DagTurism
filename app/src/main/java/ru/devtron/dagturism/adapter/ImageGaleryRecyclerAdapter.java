@@ -29,6 +29,9 @@ public class ImageGaleryRecyclerAdapter extends PagerAdapter {
     List<String> arrayImages;
     private ImageLoader mImageLoader;
 
+    public static final int PAGER_PAGES = 10000;
+    public static final int PAGER_PAGES_MIDDLE = PAGER_PAGES / 2;
+
 
     public ImageGaleryRecyclerAdapter(Context context, List<String> arrayImages){
         this.context = context;
@@ -45,8 +48,18 @@ public class ImageGaleryRecyclerAdapter extends PagerAdapter {
 
         mImageLoader = MySingleton.getInstance(context).getImageLoader();
 
+        position = position - PAGER_PAGES_MIDDLE;
+        int imageNumber = position % arrayImages.size();
+
+        if (imageNumber == 0) {
+            imageNumber = 0;
+        } else if (imageNumber < 0) {
+            imageNumber += arrayImages.size();
+        }
+
+
         NetworkImageView imageView = (NetworkImageView) layout.findViewById(R.id.imageView5);
-        imageView.setImageUrl(arrayImages.get(position), mImageLoader);
+        imageView.setImageUrl(arrayImages.get(imageNumber), mImageLoader);
 
 
         layout.setOnClickListener(new View.OnClickListener() {
@@ -67,12 +80,20 @@ public class ImageGaleryRecyclerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return arrayImages.size();
+        int count;
+        if (arrayImages == null || arrayImages.isEmpty()) {
+            count = 0;
+        } else if (arrayImages.size() == 1) {
+            count = 1;
+        } else {
+            count = PAGER_PAGES;
+        }
+        return count;
     }
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == ((View)object);
+        return view == object;
     }
 
 
