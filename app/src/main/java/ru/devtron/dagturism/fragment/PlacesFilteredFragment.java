@@ -92,27 +92,34 @@ public class PlacesFilteredFragment extends Fragment {
         city = this.getArguments().getString("City");
         rest = this.getArguments().getString("Rest");
 
-        //getItemsUrl = "http://republic.tk/api/getListViewForFilter/" + encodeCity + "/" + encodeRest;
+
 
         try {
             if (rest != null && city != null) {
                 splitedRest = rest.split(" ");
                 splitedCity = city.split(" ");
-            }
 
-            for (int i = 0; i < splitedCity.length; i++) {
-                if (i != splitedCity.length - 1){
-                    encodeCity = encodeCity + splitedCity[i] + "%20";
+                for (int i = 0; i < splitedCity.length; i++) {
+                    if (i != splitedCity.length - 1){
+                        encodeCity = encodeCity + URLEncoder.encode(splitedCity[i], "utf-8") + "%20";
+                    }
+                    else encodeCity = encodeCity + URLEncoder.encode(splitedCity[i], "utf-8");
                 }
-                else encodeCity = encodeCity + splitedCity[i];
-            }
 
-            Log.d("REST", encodeCity);
+                for (int i = 0; i < splitedRest.length; i++) {
+                    if (i != splitedRest.length - 1){
+                        encodeRest = encodeRest + URLEncoder.encode(splitedRest[i], "utf-8") + "%20";
+                    }
+                    else encodeRest = encodeRest + URLEncoder.encode(splitedRest[i], "utf-8");
+                }
+
+            }
 
         }
         catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Я молодец");
         }
+
 
 
         updateList();
@@ -128,14 +135,16 @@ public class PlacesFilteredFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new RecyclerAdapter(getContext(), listItemsList);
+        adapter.clearAdapter();
         mRecyclerView.setAdapter(adapter);
 
-        adapter.clearAdapter();
+
 
         showPD();
 
+        getItemsUrl = "http://republic.tk/api/listview/filter/" + encodeCity + "/" + encodeRest + "/1";
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, getItemsUrl, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getItemsUrl, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
@@ -164,12 +173,26 @@ public class PlacesFilteredFragment extends Fragment {
                             place.setImages(arrayImages);
 
                             listItemsList.add(place);
-
-
-
                         }
 
                     }
+
+                    else {
+                        ModelPlace place = new ModelPlace();
+                        List<String> imagesFake = new ArrayList<>();
+                        hidePD();
+                        adapter.clearAdapter();
+                        
+                        imagesFake.add("http://republic.tk/images/1.jpg");
+
+                        place.setId(1);
+                        place.setTitle("Мест по данному запросу пока нет");
+                        place.setCity(city);
+                        place.setImages(imagesFake);
+
+                        listItemsList.add(place);
+                    }
+
                 }
                 catch (JSONException e) {
                     e.printStackTrace();
@@ -184,15 +207,7 @@ public class PlacesFilteredFragment extends Fragment {
                 System.out.println(error.getMessage());
                 hidePD();
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<>();
-                parameters.put("key", "asdf");
-                parameters.put("method", "getListView");
-                return parameters;
-            }
-        };
+        });
 
         queue.add(jsonObjectRequest);
     }

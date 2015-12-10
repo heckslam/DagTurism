@@ -4,6 +4,16 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true">
+    </uses-feature>
+
 
     <application
         android:allowBackup="true"
@@ -32,7 +42,19 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".FilteredActivity"></activity>
+        <activity android:name=".FilteredActivity" />
+        <activity android:name=".OpenPlaceActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.openplace" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAfqc3zSJBrEmLcExWlpb95hcoVqFId8lY">
+        </meta-data>
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ package ru.devtron.dagturism.adapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -19,6 +21,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import java.util.List;
 
 import ru.devtron.dagturism.MySingleton;
+import ru.devtron.dagturism.OpenPlaceActivity;
 import ru.devtron.dagturism.R;
 
 public class ImageGaleryRecyclerAdapter extends PagerAdapter {
@@ -40,13 +43,19 @@ public class ImageGaleryRecyclerAdapter extends PagerAdapter {
 
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.recycler_item_image, container, false);
 
-
-
         mImageLoader = MySingleton.getInstance(context).getImageLoader();
 
         NetworkImageView imageView = (NetworkImageView) layout.findViewById(R.id.imageView5);
         imageView.setImageUrl(arrayImages.get(position), mImageLoader);
 
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, OpenPlaceActivity.class);
+                context.startActivity(intent);
+            }
+        });
 
 
 

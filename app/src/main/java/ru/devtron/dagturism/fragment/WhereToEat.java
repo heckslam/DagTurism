@@ -49,8 +49,10 @@ public class WhereToEat extends Fragment {
 
     private String city;
     private String rest;
-    private String encodeCity;
-    private String encodeRest;
+    private String encodeCity = "";
+    private String encodeRest = "";
+    private String[] splitedRest;
+    private String[] splitedCity;
 
     private RequestQueue queue;
 
@@ -91,15 +93,30 @@ public class WhereToEat extends Fragment {
         rest = this.getArguments().getString("Rest");
 
         try {
-            encodeCity = URLEncoder.encode(city, "utf-8");
-            encodeRest = URLEncoder.encode(rest, "utf-8");
+            if (rest != null && city != null) {
+                splitedRest = rest.split(" ");
+                splitedCity = city.split(" ");
+
+                for (int i = 0; i < splitedCity.length; i++) {
+                    if (i != splitedCity.length - 1){
+                        encodeCity = encodeCity + URLEncoder.encode(splitedCity[i], "utf-8") + "%20";
+                    }
+                    else encodeCity = encodeCity + URLEncoder.encode(splitedCity[i], "utf-8");
+                }
+
+                for (int i = 0; i < splitedRest.length; i++) {
+                    if (i != splitedRest.length - 1){
+                        encodeRest = encodeRest + URLEncoder.encode(splitedRest[i], "utf-8") + "%20";
+                    }
+                    else encodeRest = encodeRest + URLEncoder.encode(splitedRest[i], "utf-8");
+                }
+
+            }
+
         }
         catch (Exception e) {
-            e.printStackTrace();
-            Log.d("Filter", e.getMessage());
+            System.out.println("Я молодец");
         }
-
-        getItemsUrl = "http://republic.tk/api/getListViewForFilter/" + encodeCity + "/" + encodeRest;
 
         updateList();
         return v;
@@ -118,7 +135,9 @@ public class WhereToEat extends Fragment {
 
         showPD();
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, getItemsUrl, new Response.Listener<JSONObject>() {
+        getItemsUrl = "http://republic.tk/api/listview/filter/" + encodeCity + "/" + encodeRest + "/2";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getItemsUrl, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
@@ -148,8 +167,25 @@ public class WhereToEat extends Fragment {
 
                             listItemsList.add(place);
 
+
+
                         }
 
+                    }
+
+                    else {
+                        ModelPlace place = new ModelPlace();
+                        List<String> imagesFake = new ArrayList<>();
+                        hidePD();
+                        adapter.clearAdapter();
+                        imagesFake.add("http://republic.tk/images/1.jpg");
+
+                        place.setId(1);
+                        place.setTitle("Мест по данному запросу пока нет");
+                        place.setCity(city);
+                        place.setImages(imagesFake);
+
+                        listItemsList.add(place);
                     }
                 }
                 catch (JSONException e) {
@@ -165,15 +201,7 @@ public class WhereToEat extends Fragment {
                 System.out.println(error.getMessage());
                 hidePD();
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<>();
-                parameters.put("key", "asdf");
-                parameters.put("method", "getListView");
-                return parameters;
-            }
-        };
+        });
 
         queue.add(jsonObjectRequest);
     }

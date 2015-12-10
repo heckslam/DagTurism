@@ -1,4 +1,5 @@
 package ru.devtron.dagturism.fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ru.devtron.dagturism.OpenPlaceActivity;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.adapter.RecyclerAdapter;
 import ru.devtron.dagturism.model.ModelPlace;
@@ -41,7 +43,7 @@ public class ArrayFragment extends Fragment  {
 
     private RequestQueue queue;
 
-    private static final String getItemsUrl = "http://republic.tk/api/getListView/";
+    private static final String getItemsUrl = "http://republic.tk/api/listview/";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -77,7 +79,6 @@ public class ArrayFragment extends Fragment  {
     }
 
 
-
     private void updateList () {
 
         queue = Volley.newRequestQueue(getContext());
@@ -89,7 +90,7 @@ public class ArrayFragment extends Fragment  {
         adapter.clearAdapter();
 
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, getItemsUrl, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getItemsUrl, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
