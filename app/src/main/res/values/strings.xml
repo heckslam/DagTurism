@@ -21,6 +21,8 @@
     <string name="settings_title">Основные</string>
     <string name="activity_settings_title">Настройки</string>
 
+    <string name="no_places_filtered">Мест по данному запросу пока нет</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

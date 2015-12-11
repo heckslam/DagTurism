@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -46,6 +47,7 @@ public class WhereToEat extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerAdapter adapter;
     private ProgressDialog progressDialog;
+    private TextView noPlacesTextView;
 
     private String city;
     private String rest;
@@ -86,6 +88,7 @@ public class WhereToEat extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(LAYOUT, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerViewWhereToEat);
+        noPlacesTextView = (TextView) v.findViewById(R.id.noPlaces);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
@@ -176,19 +179,12 @@ public class WhereToEat extends Fragment {
 
                     }
 
+
                     else {
-                        ModelPlace place = new ModelPlace();
-                        List<String> imagesFake = new ArrayList<>();
                         hidePD();
                         adapter.clearAdapter();
-                        imagesFake.add("http://republic.tk/images/1.jpg");
-
-                        place.setId(1);
-                        place.setTitle("Мест по данному запросу пока нет");
-                        place.setCity(city);
-                        place.setImages(imagesFake);
-
-                        listItemsList.add(place);
+                        listItemsList.clear();
+                        noPlacesTextView.setText(R.string.no_places_filtered);
                     }
                 }
                 catch (JSONException e) {
