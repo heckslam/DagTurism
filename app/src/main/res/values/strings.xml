@@ -2,6 +2,7 @@
     <string name="app_name">Republic</string>
     <string name="share_title">Поделиться</string>
     <string name="fav_title">В избранные</string>
+    <string name="toolbar_favorite_snack">Добавлено в избранные</string>
     <string name="array">Популярные</string>
     <string name="maps">Карта</string>
     <string name="menu_item_category">Категории</string>
@@ -24,7 +25,10 @@
     <string name="no_places_filtered">Мест по данному запросу пока нет</string>
 
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="toolbar_favorite_snack">Добавлено в избранные</string>
+    <!-- Табы -->
+    <string name="tab_popular">Популярные</string>
+    <string name="tab_mine">Мои</string>
+    <string name="tab_places">Места</string>
+    <string name="tab_where_eat">Где поесть</string>
+    <string name="tab_where_sleep">Где поспать</string>
 </resources>

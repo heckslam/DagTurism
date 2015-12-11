@@ -1,11 +1,10 @@
 package ru.devtron.dagturism.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -32,52 +30,41 @@ import ru.devtron.dagturism.adapter.RecyclerAdapter;
 import ru.devtron.dagturism.dialog.SearchPlaceDialogFragment;
 import ru.devtron.dagturism.model.ModelPlace;
 
-public class ArrayFragment extends Fragment  {
-    private final static String ITEMS_COUNT_KEY = "ArrayFragment$ItemsCount";
+public class PopularFragment extends AbstractTabFragment  {
     private static final int LAYOUT = R.layout.fragment_array;
-
-    FragmentManager fragmentManager;
-
-    private static final String TAG = "MyRecyclerList";
-    private List<ModelPlace> listItemsList = new ArrayList<>();
-    private RecyclerView mRecyclerView;
-    private RecyclerAdapter adapter;
-
-    private RequestQueue queue;
 
     private static final String getItemsUrl = "http://republic.tk/api/listview/";
 
-    // JSON Node names
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_ITEMS = "items";
-    private static final String TAG_PID = "place_id";
-    private static final String TAG_NAME = "place_name";
-    private static final String TAG_CITY = "place_city";
 
-
-    public ArrayFragment() {
+    public PopularFragment() {
         // Required empty public constructor
     }
 
-    public static ArrayFragment createInstance(int itemsCount){
+    public static PopularFragment getInstance(Context context){
         Bundle args = new Bundle();
-        args.putInt(ITEMS_COUNT_KEY, itemsCount);
-        ArrayFragment arrayFragment = new ArrayFragment();
-        arrayFragment.setArguments(args);
-        return arrayFragment;
+        PopularFragment popularFragment = new PopularFragment();
+        popularFragment.setArguments(args);
+        popularFragment.setContext(context);
+        popularFragment.setTitle(context.getString(R.string.tab_popular));
+        return popularFragment;
     }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(LAYOUT, container, false);
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
+        view = inflater.inflate(LAYOUT, container, false);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
         fragmentManager = getActivity().getSupportFragmentManager();
 
-        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +77,7 @@ public class ArrayFragment extends Fragment  {
 
         updateList();
 
-        return v;
+        return view;
     }
 
 

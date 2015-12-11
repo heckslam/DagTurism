@@ -11,13 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-
-import ru.devtron.dagturism.adapter.TabsPagerFragmentAdapter;
-import ru.devtron.dagturism.adapter.TabsPagerFragmentAdapterFilteredActivity;
-import ru.devtron.dagturism.fragment.PlacesFilteredFragment;
+import ru.devtron.dagturism.adapter.TabsFragmentAdapterFilteredActivity;
 
 public class FilteredActivity extends AppCompatActivity {
 
@@ -54,7 +49,7 @@ public class FilteredActivity extends AppCompatActivity {
 
     private void initTabs() {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        TabsPagerFragmentAdapterFilteredActivity adapter = new TabsPagerFragmentAdapterFilteredActivity(getSupportFragmentManager(), cityOrTown, selectedRest);
+        TabsFragmentAdapterFilteredActivity adapter = new TabsFragmentAdapterFilteredActivity(getSupportFragmentManager(), cityOrTown, selectedRest);
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);

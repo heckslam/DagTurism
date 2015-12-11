@@ -14,8 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import ru.devtron.dagturism.R;
-import ru.devtron.dagturism.adapter.TabsPagerFragmentAdapter;
+import ru.devtron.dagturism.adapter.TabsFragmentAdapter;
 import ru.devtron.dagturism.dialog.SearchPlaceDialogFragment;
 import ru.devtron.dagturism.fragment.SplashFragment;
 
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initTabs() {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
+        TabsFragmentAdapter adapter = new TabsFragmentAdapter(this, getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);

@@ -4,8 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import ru.devtron.dagturism.fragment.ArrayFragment;
-import ru.devtron.dagturism.fragment.MapsFragment;
 import ru.devtron.dagturism.fragment.PlacesFilteredFragment;
 import ru.devtron.dagturism.fragment.WhereToEat;
 import ru.devtron.dagturism.fragment.WhereToSleep;
@@ -13,14 +11,14 @@ import ru.devtron.dagturism.fragment.WhereToSleep;
 /**
  * Created by Ruslan Aliev on 28.11.2015.
  */
-public class TabsPagerFragmentAdapterFilteredActivity extends FragmentPagerAdapter {
+public class TabsFragmentAdapterFilteredActivity extends FragmentPagerAdapter {
 
     private String[] tabs;
     private String city;
     private String rest;
 
 
-    public TabsPagerFragmentAdapterFilteredActivity(FragmentManager fm, String city, String rest) {
+    public TabsFragmentAdapterFilteredActivity(FragmentManager fm, String city, String rest) {
         super(fm);
         tabs = new String[] {
                 "Места",

@@ -1,9 +1,9 @@
 package ru.devtron.dagturism.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,38 +25,41 @@ import ru.devtron.dagturism.model.ModelPlace;
  * since 0.0.1
  */
 
-public class MapsFragment extends Fragment {
-    private final static String ITEMS_COUNT_KEY = "PartThreeFragment$ItemsCount";
+public class FavoritesFragment extends AbstractTabFragment {
     private static final int LAYOUT = R.layout.fragment_maps;
 
-    private RecyclerView recyclerView;
-    private RecyclerAdapter recyclerAdapter;
-
-    public MapsFragment() {
+    public FavoritesFragment() {
         // Required empty public constructor
     }
 
-    public static MapsFragment createInstance(int itemsCount) {
-        MapsFragment mapsFragment = new MapsFragment();
+    public static FavoritesFragment getInstance(Context context){
+        FavoritesFragment favoritesFragment = new FavoritesFragment();
         Bundle args = new Bundle();
-        args.putInt(ITEMS_COUNT_KEY, itemsCount);
-        mapsFragment.setArguments(args);
-        return mapsFragment;
+        favoritesFragment.setArguments(args);
+        favoritesFragment.setContext(context);
+        favoritesFragment.setTitle(context.getString(R.string.tab_mine));
+        return favoritesFragment;
 
     }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(LAYOUT, container, false);
-        recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
-        setupRecyclerView(recyclerView);
-        return recyclerView;
+        view = inflater.inflate(LAYOUT, container, false);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        setupRecyclerView(mRecyclerView);
+
+        return view;
     }
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerAdapter = new RecyclerAdapter(getContext(), createItemList());
-        recyclerView.setAdapter(recyclerAdapter);
+        adapter = new RecyclerAdapter(getContext(), createItemList());
+        recyclerView.setAdapter(adapter);
 
 
     }
