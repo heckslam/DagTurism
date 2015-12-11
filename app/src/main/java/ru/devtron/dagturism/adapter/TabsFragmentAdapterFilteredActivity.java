@@ -45,13 +45,13 @@ public class TabsFragmentAdapterFilteredActivity extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return PlacesFilteredFragment.createInstance(3, city, rest);
+                return PlacesFilteredFragment.getInstance(city, rest);
 
             case 1:
-                return WhereToEat.createInstance(4, city, rest);
+                return WhereToEat.getInstance(city, rest);
 
             case 2:
-                return WhereToSleep.createInstance(5, city, rest);
+                return WhereToSleep.getInstance(city, rest);
 
             default:
                 return null;

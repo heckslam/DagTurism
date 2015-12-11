@@ -33,6 +33,7 @@ public abstract class AbstractTabFragment extends Fragment {
     protected static final String TAG_PID = "place_id";
     protected static final String TAG_NAME = "place_name";
     protected static final String TAG_CITY = "place_city";
+    protected static final String TAG_IMAGES = "images";
 
 
 
