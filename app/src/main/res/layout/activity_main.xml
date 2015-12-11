@@ -52,20 +52,7 @@
 
         </android.support.v4.view.ViewPager>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_anchor="@id/container"
-            app:layout_anchorGravity="bottom|right|end"
-            android:src="@drawable/ic_map_marker_radius_white_24dp"
-            android:layout_margin="@dimen/fab_margin"
-            />
-
-
-
     </android.support.design.widget.CoordinatorLayout>
-
 
 
     <android.support.design.widget.NavigationView

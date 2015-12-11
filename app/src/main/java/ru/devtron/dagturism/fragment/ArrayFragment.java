@@ -1,40 +1,42 @@
 package ru.devtron.dagturism.fragment;
-import android.content.Intent;
+
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import ru.devtron.dagturism.OpenPlaceActivity;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.adapter.RecyclerAdapter;
+import ru.devtron.dagturism.dialog.SearchPlaceDialogFragment;
 import ru.devtron.dagturism.model.ModelPlace;
 
 public class ArrayFragment extends Fragment  {
     private final static String ITEMS_COUNT_KEY = "ArrayFragment$ItemsCount";
     private static final int LAYOUT = R.layout.fragment_array;
+
+    FragmentManager fragmentManager;
 
     private static final String TAG = "MyRecyclerList";
     private List<ModelPlace> listItemsList = new ArrayList<>();
@@ -72,6 +74,19 @@ public class ArrayFragment extends Fragment  {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        fragmentManager = getActivity().getSupportFragmentManager();
+
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment searchPlaceDialogFragment = new SearchPlaceDialogFragment();
+                searchPlaceDialogFragment.show(fragmentManager, "SearchPlaceDialogFragment");
+            }
+        });
+
+        fab.attachToRecyclerView(mRecyclerView);
 
         updateList();
 
