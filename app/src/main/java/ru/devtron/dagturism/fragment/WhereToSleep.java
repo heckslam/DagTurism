@@ -1,6 +1,7 @@
 package ru.devtron.dagturism.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,14 +27,22 @@ public class WhereToSleep extends AbstractTabFilterFragment {
         // Required empty public constructor
     }
 
-    public static WhereToSleep getInstance(String city, String rest){
+    public static WhereToSleep getInstance(Context context, String city, String rest){
         Bundle args = new Bundle();
         args.putString("City", city);
         args.putString("Rest", rest);
         WhereToSleep whereToSleep = new WhereToSleep();
         whereToSleep.setArguments(args);
+        whereToSleep.setContext(context);
+        whereToSleep.setTitle(context.getString(R.string.tab_where_sleep));
+
         return whereToSleep;
     }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
 
 
 

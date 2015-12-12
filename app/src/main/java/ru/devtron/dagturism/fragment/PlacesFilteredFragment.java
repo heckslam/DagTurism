@@ -1,6 +1,7 @@
 package ru.devtron.dagturism.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,15 +25,22 @@ public class PlacesFilteredFragment extends AbstractTabFilterFragment {
     }
 
 
-    public static PlacesFilteredFragment getInstance(String city, String rest){
+    public static PlacesFilteredFragment getInstance(Context context, String city, String rest){
         Bundle args = new Bundle();
         args.putString("City", city);
         args.putString("Rest", rest);
         PlacesFilteredFragment placesFilteredFragment = new PlacesFilteredFragment();
         placesFilteredFragment.setArguments(args);
+
+        placesFilteredFragment.setContext(context);
+        placesFilteredFragment.setTitle(context.getString(R.string.tab_places));
+
         return placesFilteredFragment;
     }
 
+    public void setContext(Context context) {
+        this.context = context;
+    }
 
     @Nullable
     @Override

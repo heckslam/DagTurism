@@ -31,7 +31,7 @@ public class SettingsActivity extends AbstractMethodsActivity implements Compoun
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
 
-        initToolbar();
+        initToolbar(R.string.activity_settings_title);
 
         if (getSupportActionBar() != null)
         {

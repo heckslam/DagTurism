@@ -3,8 +3,11 @@ package ru.devtron.dagturism;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 
 import ru.devtron.dagturism.abstract_classes.AbstractMethodsActivity;
+import ru.devtron.dagturism.adapter.TabsFragmentAdapter;
 import ru.devtron.dagturism.dialog.SearchPlaceDialogFragment;
 import ru.devtron.dagturism.fragment.SplashFragment;
 
@@ -35,9 +38,19 @@ public class MainActivity extends AbstractMethodsActivity
         preferenceHelper = PreferenceHelper.getInstance();
         fragmentManager = getFragmentManager();
         runSplash();
-        initToolbar();
+
+        initToolbar(R.string.app_name);
+
         initNavigationView();
         initTabs();
+    }
+
+    protected void initTabs() {
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        TabsFragmentAdapter adapter = new TabsFragmentAdapter(this, getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     protected void runSplash () {

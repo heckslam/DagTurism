@@ -3,7 +3,6 @@ package ru.devtron.dagturism.abstract_classes;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,7 +13,6 @@ import android.view.MenuItem;
 import ru.devtron.dagturism.CategoriesActivity;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.SettingsActivity;
-import ru.devtron.dagturism.adapter.TabsFragmentAdapter;
 
 
 public abstract class AbstractMethodsActivity extends AppCompatActivity {
@@ -25,21 +23,14 @@ public abstract class AbstractMethodsActivity extends AppCompatActivity {
     protected ViewPager viewPager;
 
 
-    protected void initToolbar() {
+    protected void initToolbar(int resId) {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         if (toolbar != null) {
+            toolbar.setTitle(resId);
             toolbar.setTitleTextColor(Color.WHITE);
-            toolbar.setTitle(R.string.app_name);
             setSupportActionBar(toolbar);
         }
-    }
-
-    protected void initTabs() {
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        TabsFragmentAdapter adapter = new TabsFragmentAdapter(this, getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
     }
 
     protected void initNavigationView() {

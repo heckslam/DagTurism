@@ -1,6 +1,9 @@
 package ru.devtron.dagturism;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,14 +15,13 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import ru.devtron.dagturism.abstract_classes.AbstractMethodsActivity;
-
-public class OpenPlaceActivity extends AbstractMethodsActivity {
+public class OpenPlaceActivity extends AppCompatActivity {
 
     private static final int LAYOUT = R.layout.activity_open_place;
 
     GoogleMap map;
     SupportMapFragment mapFragment;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,21 @@ public class OpenPlaceActivity extends AbstractMethodsActivity {
         initToolbar();
 
         initMap();
+    }
+
+    protected void initToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (toolbar != null) {
+            toolbar.setTitle("Молодец");
+            toolbar.setTitleTextColor(Color.WHITE);
+            setSupportActionBar(toolbar);
+        }
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        }
     }
 
     private void initMap() {

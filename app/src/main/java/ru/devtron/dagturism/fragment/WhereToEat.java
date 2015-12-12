@@ -1,6 +1,7 @@
 package ru.devtron.dagturism.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,14 +23,22 @@ public class WhereToEat extends AbstractTabFilterFragment {
         // Required empty public constructor
     }
 
-    public static WhereToEat getInstance(String city, String rest){
+    public static WhereToEat getInstance(Context context, String city, String rest){
         Bundle args = new Bundle();
         args.putString("City", city);
         args.putString("Rest", rest);
         WhereToEat whereToEat = new WhereToEat();
         whereToEat.setArguments(args);
+        whereToEat.setContext(context);
+        whereToEat.setTitle(context.getString(R.string.tab_where_eat));
+
         return whereToEat;
     }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
 
 
     @Nullable
