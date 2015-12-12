@@ -1,4 +1,4 @@
-package ru.devtron.dagturism.fragment;
+package ru.devtron.dagturism.abstract_classes;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

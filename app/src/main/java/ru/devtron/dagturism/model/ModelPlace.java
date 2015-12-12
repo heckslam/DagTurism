@@ -1,6 +1,5 @@
 package ru.devtron.dagturism.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ModelPlace {

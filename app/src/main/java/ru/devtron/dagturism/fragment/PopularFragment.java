@@ -26,11 +26,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.devtron.dagturism.R;
+import ru.devtron.dagturism.abstract_classes.AbstractTabFragment;
 import ru.devtron.dagturism.adapter.RecyclerAdapter;
 import ru.devtron.dagturism.dialog.SearchPlaceDialogFragment;
 import ru.devtron.dagturism.model.ModelPlace;
 
-public class PopularFragment extends AbstractTabFragment  {
+public class PopularFragment extends AbstractTabFragment {
     private static final int LAYOUT = R.layout.fragment_array;
 
     private static final String getItemsUrl = "http://republic.tk/api/listview/";
@@ -105,7 +106,7 @@ public class PopularFragment extends AbstractTabFragment  {
 
                         for (int i = 0; i < places.length(); i++) {
                             JSONObject post = places.getJSONObject(i);
-                            JSONArray images = post.getJSONArray("images");
+                            JSONArray images = post.getJSONArray(TAG_IMAGES);
                             List<String> arrayImages = new ArrayList<>();
                             for (int j = 0; j < images.length(); j++){
                                 arrayImages.add(images.getString(j));

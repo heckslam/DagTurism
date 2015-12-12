@@ -2,19 +2,9 @@ package ru.devtron.dagturism;
 
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-import android.widget.Toast;
 
-import ru.devtron.dagturism.adapter.TabsFragmentAdapter;
+import ru.devtron.dagturism.abstract_classes.AbstractMethodsActivity;
 import ru.devtron.dagturism.dialog.SearchPlaceDialogFragment;
 import ru.devtron.dagturism.fragment.SplashFragment;
 
@@ -27,20 +17,14 @@ import ru.devtron.dagturism.fragment.SplashFragment;
  * since 0.0.1
  */
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AbstractMethodsActivity
         implements SearchPlaceDialogFragment.SearchPlaceListener {
 
     private static final int LAYOUT = R.layout.activity_main;
-    FragmentManager fragmentManager;
 
+    private FragmentManager fragmentManager;
 
-    private Toolbar toolbar;
-    private DrawerLayout drawerLayout;
-    private ViewPager viewPager;
-
-    PreferenceHelper preferenceHelper;
-
-
+    private PreferenceHelper preferenceHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,62 +40,7 @@ public class MainActivity extends AppCompatActivity
         initTabs();
     }
 
-    private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            toolbar.setTitleTextColor(Color.WHITE);
-            toolbar.setTitle(R.string.app_name);
-            setSupportActionBar(toolbar);
-        }
-    }
-
-    private void initTabs() {
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        TabsFragmentAdapter adapter = new TabsFragmentAdapter(this, getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
-    }
-
-    private void initNavigationView() {
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                drawerLayout.closeDrawers();
-                switch (menuItem.getItemId()) {
-                    case R.id.categories:
-                        openCat();
-                        break;
-                    case R.id.settings:
-                        openSettings();
-                        break;
-                    default:
-                        break;
-                }
-                return true;
-            }
-        });
-    }
-
-    public void openCat () {
-        Intent intent = new Intent(this, CategoriesActivity.class);
-        startActivity(intent);
-    }
-
-
-    public void openSettings () {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-    }
-
-
-    public void runSplash () {
+    protected void runSplash () {
         if (preferenceHelper.getBoolean(PreferenceHelper.SPLASH_IS_VISIBLE)) {
             SplashFragment splashFragment = new SplashFragment();
 
@@ -121,6 +50,7 @@ public class MainActivity extends AppCompatActivity
                     .commit();
         }
     }
+
 
 
     @Override
@@ -133,7 +63,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onSearchCanceled() {
-        Toast.makeText(this, "Поиск мест по районам отменен", Toast.LENGTH_SHORT).show();
+
     }
 
 }

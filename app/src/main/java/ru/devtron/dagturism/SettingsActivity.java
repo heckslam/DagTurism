@@ -1,14 +1,13 @@
 package ru.devtron.dagturism;
 
 
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
+
+import ru.devtron.dagturism.abstract_classes.AbstractMethodsActivity;
 
 /**
  * Активность настроек приложения
@@ -19,13 +18,11 @@ import android.widget.CompoundButton;
  * since 0.0.2
  */
 
-public class SettingsActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
-     private SwitchCompat switchSplash, switchAnimation;
+public class SettingsActivity extends AbstractMethodsActivity implements CompoundButton.OnCheckedChangeListener {
 
-    PreferenceHelper preferenceHelper;
+    private SwitchCompat switchSplash, switchAnimation;
+    private PreferenceHelper preferenceHelper;
     private static final int LAYOUT = R.layout.activity_settings;
-
-    private Toolbar toolbar;
 
 
     @Override
@@ -33,7 +30,14 @@ public class SettingsActivity extends AppCompatActivity implements CompoundButto
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
+
         initToolbar();
+
+        if (getSupportActionBar() != null)
+        {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        }
 
         switchSplash = (SwitchCompat) findViewById(R.id.switchSplash);
         switchAnimation = (SwitchCompat) findViewById(R.id.switchAnimation);
@@ -48,23 +52,8 @@ public class SettingsActivity extends AppCompatActivity implements CompoundButto
         switchAnimation.setOnCheckedChangeListener(this);
     }
 
-    private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            toolbar.setTitleTextColor(Color.WHITE);
-            toolbar.setTitle(R.string.activity_settings_title);
-
-            setSupportActionBar(toolbar);
 
 
-        }
-
-        if (getSupportActionBar() != null)
-        {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
-        }
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

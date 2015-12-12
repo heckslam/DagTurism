@@ -1,23 +1,17 @@
 package ru.devtron.dagturism.adapter;
+
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.android.volley.toolbox.ImageLoader;
 
 import java.util.List;
 
-import ru.devtron.dagturism.MySingleton;
-import ru.devtron.dagturism.OpenPlaceActivity;
 import ru.devtron.dagturism.R;
-import ru.devtron.dagturism.viewholder.RecyclerItemViewHolder;
 import ru.devtron.dagturism.model.ModelPlace;
+import ru.devtron.dagturism.viewholder.RecyclerItemViewHolder;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerItemViewHolder> {
     private List<ModelPlace> itemList;

@@ -9,9 +9,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.HashMap;
 import java.util.Map;
 
-import ru.devtron.dagturism.fragment.AbstractTabFragment;
-import ru.devtron.dagturism.fragment.PopularFragment;
+import ru.devtron.dagturism.abstract_classes.AbstractTabFragment;
 import ru.devtron.dagturism.fragment.FavoritesFragment;
+import ru.devtron.dagturism.fragment.PopularFragment;
 
 /**
  *Адаптер для работы с табами. Хранит назвнаия табов, их обработчики на нажатие
