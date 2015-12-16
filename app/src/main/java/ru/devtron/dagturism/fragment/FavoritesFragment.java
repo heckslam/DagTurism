@@ -27,7 +27,7 @@ import ru.devtron.dagturism.model.ModelPlace;
  */
 
 public class FavoritesFragment extends AbstractTabFragment {
-    private static final int LAYOUT = R.layout.fragment_maps;
+    private static final int LAYOUT = R.layout.fragment_favorites;
 
     public FavoritesFragment() {
         // Required empty public constructor

@@ -18,7 +18,7 @@ import ru.devtron.dagturism.SettingsActivity;
 public abstract class AbstractMethodsActivity extends AppCompatActivity {
 
 
-    protected Toolbar toolbar;
+    protected static Toolbar toolbar;
     protected DrawerLayout drawerLayout;
     protected ViewPager viewPager;
 

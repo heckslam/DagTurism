@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -34,7 +33,6 @@ import com.melnykov.fab.FloatingActionButton;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +46,7 @@ import ru.devtron.dagturism.dialog.SearchPlaceDialogFragment;
 import ru.devtron.dagturism.model.ModelPlace;
 
 public class PopularFragment extends AbstractTabFragment {
-    private static final int LAYOUT = R.layout.fragment_array;
+    private static final int LAYOUT = R.layout.fragment_popular;
 
     private static final String getItemsUrl = "http://republic.tk/api/listview/";
     private static final String STATE_PLACES = "state_places";
@@ -77,11 +75,11 @@ public class PopularFragment extends AbstractTabFragment {
         this.context = context;
     }
 
- /*   @Override
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(STATE_PLACES, (ArrayList<? extends Parcelable>) listPlaces);
-    }*/
+    }
 
     @Nullable
     @Override
@@ -90,32 +88,42 @@ public class PopularFragment extends AbstractTabFragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
+
         textVolleyError = (TextView) view.findViewById(R.id.textVolleyError);
 
-
-        /*networkStateReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                checkConnection(NetworkUtil.getConnectivityStatusString(context));
-            }
-        };
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        context.registerReceiver(networkStateReceiver, filter);*/
-
-
         fragmentManager = getActivity().getSupportFragmentManager();
-
         initFab();
 
-        updateList();
+
+        if (savedInstanceState!=null) {
+            listPlaces = savedInstanceState.getParcelableArrayList(STATE_PLACES);
+            adapter = new RecyclerAdapter(getContext(), listPlaces);
+            mRecyclerView.setAdapter(adapter);
+        }
+
+        else {
+            networkStateReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    if (NetworkUtil.getConnectivityStatusString(context)) {
+                        adapter = new RecyclerAdapter(getContext(), listPlaces);
+                        mRecyclerView.setAdapter(adapter);
+                        updateList();
+                    }
+
+                }
+            };
+            IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+            context.registerReceiver(networkStateReceiver, filter);
+
+
+        }
+
 
         return view;
     }
 
 
-
-
-/*
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -123,7 +131,6 @@ public class PopularFragment extends AbstractTabFragment {
             context.unregisterReceiver(networkStateReceiver);
         }
     }
-*/
 
     private void initFab() {
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -138,28 +145,10 @@ public class PopularFragment extends AbstractTabFragment {
         fab.attachToRecyclerView(mRecyclerView);
     }
 
-    private void checkConnection(boolean IsConnected) {
-        /*if (IsConnected) {
-            updateList();
-        }
-        else  {
-            Toast toast = Toast.makeText(context,
-                    R.string.no_network, Toast.LENGTH_LONG);
-            toast.show();
-        }*/
-    }
-
 
     private void updateList () {
 
         queue = Volley.newRequestQueue(getContext());
-
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new RecyclerAdapter(getContext(), listPlaces);
-        mRecyclerView.setAdapter(adapter);
-
-//        adapter.clearAdapter();
-
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getItemsUrl, new Response.Listener<JSONObject>() {
             @Override

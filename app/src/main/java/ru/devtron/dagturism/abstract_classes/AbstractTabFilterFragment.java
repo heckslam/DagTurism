@@ -8,9 +8,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -178,7 +184,20 @@ public abstract class AbstractTabFilterFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                noPlacesTextView.setVisibility(View.VISIBLE);
                 System.out.println(error.getMessage());
+
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    noPlacesTextView.setText(R.string.error_timeout);
+                } else if (error instanceof AuthFailureError) {
+                    noPlacesTextView.setText(R.string.error_auth);
+                } else if (error instanceof ServerError) {
+                    noPlacesTextView.setText(R.string.error_server);
+                } else if (error instanceof NetworkError) {
+                    noPlacesTextView.setText(R.string.no_network);
+                } else if (error instanceof ParseError) {
+                    noPlacesTextView.setText(R.string.error_server);
+                }
                 hidePD();
             }
         });

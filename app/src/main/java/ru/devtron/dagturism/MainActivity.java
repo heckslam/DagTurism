@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import ru.devtron.dagturism.abstract_classes.AbstractMethodsActivity;
 import ru.devtron.dagturism.adapter.TabsFragmentAdapter;
@@ -35,21 +38,28 @@ public class MainActivity extends AbstractMethodsActivity
 
     private PreferenceHelper preferenceHelper;
 
+    private static Context context;
+
     BroadcastReceiver networkStateReceiver;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
+        MainActivity.context = getApplicationContext();
 
         PreferenceHelper.getInstance().init(getApplicationContext());
         preferenceHelper = PreferenceHelper.getInstance();
         fragmentManager = getFragmentManager();
-        runSplash();
 
+        if (savedInstanceState == null) {
+            runSplash();
+        }
+
+        networkStateReceiver = new NetworkStateReceiver();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        this.registerReceiver(networkStateReceiver, filter);
 
 
         initToolbar();
@@ -58,33 +68,26 @@ public class MainActivity extends AbstractMethodsActivity
     }
 
 
-/*    @Override
+   @Override
     protected void onDestroy() {
         super.onDestroy();
         if(networkStateReceiver != null) {
             this.unregisterReceiver(networkStateReceiver);
         }
-    }*/
+    }
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         if (toolbar != null) {
             toolbar.setTitleTextColor(Color.WHITE);
-            toolbar.setTitle(R.string.app_name);
             setSupportActionBar(toolbar);
         }
     }
 
-/*    private void checkConnection(boolean IsConnected) {
-        if (IsConnected) {
-            toolbar.setTitle(R.string.app_name);
-        }
-        else  {
-            toolbar.setTitle(R.string.wait_network);
-        }
-    }*/
-
+    private static void setToolbarTitle(int resId) {
+        toolbar.setTitle(resId);
+    }
 
 
     private void initTabs() {
@@ -121,6 +124,24 @@ public class MainActivity extends AbstractMethodsActivity
 
     }
 
+    protected static void checkConnection(boolean isConnected) {
+        if (isConnected) {
+            setToolbarTitle(R.string.app_name);
+        }
+        else {
+            setToolbarTitle(R.string.wait_network);
+            Toast toast = Toast.makeText(MainActivity.context,
+                    R.string.no_network, Toast.LENGTH_LONG);
+            toast.show();
+            toolbar.setTitle(R.string.wait_network);
+        }
+    }
 
+}
 
+class NetworkStateReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+           MainActivity.checkConnection(NetworkUtil.getConnectivityStatusString(context));
+    }
 }
