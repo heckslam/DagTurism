@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -54,6 +55,7 @@ public class PopularFragment extends AbstractTabFragment {
     BroadcastReceiver networkStateReceiver;
 
     private TextView textVolleyError;
+    private ProgressBar progressBar;
 
     private int success = 0;
 
@@ -86,6 +88,7 @@ public class PopularFragment extends AbstractTabFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(LAYOUT, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
@@ -96,6 +99,7 @@ public class PopularFragment extends AbstractTabFragment {
 
 
         if (savedInstanceState!=null) {
+            progressBar.setVisibility(View.GONE);
             listPlaces = savedInstanceState.getParcelableArrayList(STATE_PLACES);
             adapter = new RecyclerAdapter(getContext(), listPlaces);
             mRecyclerView.setAdapter(adapter);
@@ -109,6 +113,7 @@ public class PopularFragment extends AbstractTabFragment {
                         adapter = new RecyclerAdapter(getContext(), listPlaces);
                         mRecyclerView.setAdapter(adapter);
                         updateList();
+                        progressBar.setVisibility(View.GONE);
                     }
 
                 }

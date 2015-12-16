@@ -133,7 +133,6 @@ public class MainActivity extends AbstractMethodsActivity
             Toast toast = Toast.makeText(MainActivity.context,
                     R.string.no_network, Toast.LENGTH_LONG);
             toast.show();
-            toolbar.setTitle(R.string.wait_network);
         }
     }
 
