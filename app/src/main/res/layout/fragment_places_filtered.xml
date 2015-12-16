@@ -17,6 +17,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textSize="28sp"
+        android:visibility="gone"
         android:textColor="@android:color/tertiary_text_light"
         android:id="@+id/noPlaces"/>
 

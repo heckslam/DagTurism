@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">Republic</string>
+    <string name="wait_network">Ожидание сети...</string>
+    <string name="error_timeout">Нет интернет подключения</string>
+    <string name="error_server">Ошибка на сервере, пожалуйста напишите в тех поддержку \n heckslam@yandex.ru</string>
+    <string name="no_network">Нет интернет подключения</string>
     <string name="share_title">Поделиться</string>
     <string name="fav_title">В избранные</string>
     <string name="toolbar_favorite_snack">Добавлено в избранные</string>
-    <string name="array">Популярные</string>
-    <string name="maps">Карта</string>
     <string name="menu_item_category">Расширенный поиск</string>
     <string name="open">Открыть</string>
     <string name="close">Закрыть</string>
@@ -31,4 +33,5 @@
     <string name="tab_places">Места</string>
     <string name="tab_where_eat">Где поесть</string>
     <string name="tab_where_sleep">Где поспать</string>
+    <string name="error_auth">Ошибка аутентификации на сервере</string>
 </resources>

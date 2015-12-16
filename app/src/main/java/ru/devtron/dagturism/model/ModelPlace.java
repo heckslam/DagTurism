@@ -1,13 +1,15 @@
 package ru.devtron.dagturism.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
-public class ModelPlace {
-    private int id;
+public class ModelPlace implements Parcelable {
+    private String id;
     private String title;
     private String city;
     private List<String> images;
-
 
 
     public static final String[] PLACES = {"Махачкала", "Буйнакск", "Дагестанские огни", "Дербент"};
@@ -17,18 +19,25 @@ public class ModelPlace {
 
     }
 
-    public ModelPlace(int id, String title, String city, List<String> images) {
+    public ModelPlace (Parcel input) {
+        id = input.readString();
+        title = input.readString();
+        city = input.readString();
+        images = input.createStringArrayList();
+    }
+
+    public ModelPlace(String id, String title, String city, List<String> images) {
         this.id = id;
         this.title = title;
         this.city = city;
         this.images = images;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -57,4 +66,26 @@ public class ModelPlace {
         this.images = images;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(title);
+        dest.writeString(city);
+        dest.writeStringList(images);
+    }
+
+    public static final Parcelable.Creator<ModelPlace> CREATOR = new Parcelable.Creator<ModelPlace>() {
+        public ModelPlace createFromParcel(Parcel in) {
+            return new ModelPlace(in);
+        }
+
+        public ModelPlace[] newArray(int size){
+            return new ModelPlace[size];
+        }
+    };
 }

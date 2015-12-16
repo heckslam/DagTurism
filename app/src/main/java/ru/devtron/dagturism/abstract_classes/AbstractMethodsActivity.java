@@ -23,16 +23,6 @@ public abstract class AbstractMethodsActivity extends AppCompatActivity {
     protected ViewPager viewPager;
 
 
-    protected void initToolbar(int resId) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        if (toolbar != null) {
-            toolbar.setTitle(resId);
-            toolbar.setTitleTextColor(Color.WHITE);
-            setSupportActionBar(toolbar);
-        }
-    }
-
     protected void initNavigationView() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);

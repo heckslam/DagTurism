@@ -1,8 +1,10 @@
 package ru.devtron.dagturism;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
@@ -31,13 +33,9 @@ public class SettingsActivity extends AbstractMethodsActivity implements Compoun
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
 
-        initToolbar(R.string.activity_settings_title);
+        initToolbar();
 
-        if (getSupportActionBar() != null)
-        {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
-        }
+
 
         switchSplash = (SwitchCompat) findViewById(R.id.switchSplash);
         switchAnimation = (SwitchCompat) findViewById(R.id.switchAnimation);
@@ -52,8 +50,21 @@ public class SettingsActivity extends AbstractMethodsActivity implements Compoun
         switchAnimation.setOnCheckedChangeListener(this);
     }
 
+    private void initToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        if (toolbar != null) {
+            toolbar.setTitle(R.string.activity_settings_title);
+            toolbar.setTitleTextColor(Color.WHITE);
+            setSupportActionBar(toolbar);
 
+            if (getSupportActionBar() != null)
+            {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+            }
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

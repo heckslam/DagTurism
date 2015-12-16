@@ -133,6 +133,7 @@ public abstract class AbstractTabFilterFragment extends Fragment {
                     int success = response.getInt(TAG_SUCCESS);
                     if (success == 1) {
 
+                        noPlacesTextView.setVisibility(View.GONE);
                         JSONArray places = response.getJSONArray(TAG_ITEMS);
 
                         hidePD();
@@ -148,7 +149,7 @@ public abstract class AbstractTabFilterFragment extends Fragment {
 
                             ModelPlace place = new ModelPlace();
 
-                            place.setId(post.getInt(TAG_PID));
+                            place.setId(post.getString(TAG_PID));
                             place.setTitle(post.getString(TAG_NAME));
                             place.setCity(post.getString(TAG_CITY));
                             place.setImages(arrayImages);
@@ -162,6 +163,7 @@ public abstract class AbstractTabFilterFragment extends Fragment {
                         hidePD();
                         adapter.clearAdapter();
                         listItemsList.clear();
+                        noPlacesTextView.setVisibility(View.VISIBLE);
                         noPlacesTextView.setText(R.string.no_places_filtered);
                     }
 

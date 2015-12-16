@@ -1,10 +1,16 @@
 package ru.devtron.dagturism;
 
 import android.app.FragmentManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 
 import ru.devtron.dagturism.abstract_classes.AbstractMethodsActivity;
 import ru.devtron.dagturism.adapter.TabsFragmentAdapter;
@@ -29,23 +35,59 @@ public class MainActivity extends AbstractMethodsActivity
 
     private PreferenceHelper preferenceHelper;
 
+    BroadcastReceiver networkStateReceiver;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
+
         PreferenceHelper.getInstance().init(getApplicationContext());
         preferenceHelper = PreferenceHelper.getInstance();
         fragmentManager = getFragmentManager();
         runSplash();
 
-        initToolbar(R.string.app_name);
 
+
+        initToolbar();
         initNavigationView();
         initTabs();
     }
 
-    protected void initTabs() {
+
+/*    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(networkStateReceiver != null) {
+            this.unregisterReceiver(networkStateReceiver);
+        }
+    }*/
+
+    private void initToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        if (toolbar != null) {
+            toolbar.setTitleTextColor(Color.WHITE);
+            toolbar.setTitle(R.string.app_name);
+            setSupportActionBar(toolbar);
+        }
+    }
+
+/*    private void checkConnection(boolean IsConnected) {
+        if (IsConnected) {
+            toolbar.setTitle(R.string.app_name);
+        }
+        else  {
+            toolbar.setTitle(R.string.wait_network);
+        }
+    }*/
+
+
+
+    private void initTabs() {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         TabsFragmentAdapter adapter = new TabsFragmentAdapter(this, getSupportFragmentManager());
         viewPager.setAdapter(adapter);
@@ -53,7 +95,7 @@ public class MainActivity extends AbstractMethodsActivity
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    protected void runSplash () {
+    private void runSplash () {
         if (preferenceHelper.getBoolean(PreferenceHelper.SPLASH_IS_VISIBLE)) {
             SplashFragment splashFragment = new SplashFragment();
 
@@ -78,5 +120,7 @@ public class MainActivity extends AbstractMethodsActivity
     public void onSearchCanceled() {
 
     }
+
+
 
 }

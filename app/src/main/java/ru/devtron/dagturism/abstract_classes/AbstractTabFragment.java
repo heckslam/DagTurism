@@ -21,7 +21,7 @@ public abstract class AbstractTabFragment extends Fragment {
     protected View view;
     protected FragmentManager fragmentManager;
 
-    protected List<ModelPlace> listItemsList = new ArrayList<>();
+    protected List<ModelPlace> listPlaces = new ArrayList<>();
     protected RecyclerView mRecyclerView;
     protected RecyclerAdapter adapter;
 
@@ -34,8 +34,6 @@ public abstract class AbstractTabFragment extends Fragment {
     protected static final String TAG_NAME = "place_name";
     protected static final String TAG_CITY = "place_city";
     protected static final String TAG_IMAGES = "images";
-
-
 
     public String getTitle() {
         return title;
