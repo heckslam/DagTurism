@@ -27,7 +27,6 @@ public class RecyclerItemViewHolder extends RecyclerView.ViewHolder {
         this.id = (TextView) view.findViewById(R.id.id);
         this.title = (TextView) view.findViewById(R.id.namePlace);
         this.relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
-        view.setClickable(true);
 
 
     }

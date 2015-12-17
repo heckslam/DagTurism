@@ -65,6 +65,7 @@ public class PlacesFilteredFragment extends AbstractTabFilterFragment {
         noPlacesTextView = (TextView) view.findViewById(R.id.noPlaces);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
+        setRecyclerClickListener ();
 
 
         encodeSpaces();

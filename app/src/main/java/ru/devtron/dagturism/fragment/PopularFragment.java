@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -40,10 +41,13 @@ import java.util.List;
 
 import ru.devtron.dagturism.Constants;
 import ru.devtron.dagturism.NetworkUtil;
+import ru.devtron.dagturism.OpenPlaceActivity;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.abstract_classes.AbstractTabFragment;
 import ru.devtron.dagturism.adapter.RecyclerAdapter;
 import ru.devtron.dagturism.dialog.SearchPlaceDialogFragment;
+import ru.devtron.dagturism.listener.ClickListener;
+import ru.devtron.dagturism.listener.RecyclerClickListener;
 import ru.devtron.dagturism.model.ModelPlace;
 
 public class PopularFragment extends AbstractTabFragment {
@@ -91,6 +95,19 @@ public class PopularFragment extends AbstractTabFragment {
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(getContext(), mRecyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(context, OpenPlaceActivity.class);
+                context.startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                Toast.makeText(getContext(), "OnLongClick" + position, Toast.LENGTH_SHORT).show();
+            }
+        }));
+
 
         textVolleyError = (TextView) view.findViewById(R.id.textVolleyError);
 

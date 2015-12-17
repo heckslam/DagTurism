@@ -55,17 +55,6 @@ public class ImageGaleryRecyclerAdapter extends PagerAdapter {
         NetworkImageView imageView = (NetworkImageView) layout.findViewById(R.id.imageView5);
         imageView.setImageUrl(arrayImages.get(imageNumber), mImageLoader);
 
-
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, OpenPlaceActivity.class);
-                context.startActivity(intent);
-            }
-        });
-
-
-
         container.addView(layout);
         return layout;
 
