@@ -97,7 +97,6 @@ public class PopularFragment extends AbstractTabFragment {
         fragmentManager = getActivity().getSupportFragmentManager();
         initFab();
 
-
         if (savedInstanceState!=null) {
             progressBar.setVisibility(View.GONE);
             listPlaces = savedInstanceState.getParcelableArrayList(STATE_PLACES);
@@ -110,10 +109,8 @@ public class PopularFragment extends AbstractTabFragment {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     if (NetworkUtil.getConnectivityStatusString(context)) {
-                        adapter = new RecyclerAdapter(getContext(), listPlaces);
-                        mRecyclerView.setAdapter(adapter);
+                        listPlaces.clear();
                         updateList();
-                        progressBar.setVisibility(View.GONE);
                     }
 
                 }
@@ -152,8 +149,10 @@ public class PopularFragment extends AbstractTabFragment {
 
 
     private void updateList () {
-
+        progressBar.setVisibility(View.VISIBLE);
         queue = Volley.newRequestQueue(getContext());
+        adapter = new RecyclerAdapter(getContext(), listPlaces);
+        mRecyclerView.setAdapter(adapter);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getItemsUrl, new Response.Listener<JSONObject>() {
             @Override
@@ -195,6 +194,8 @@ public class PopularFragment extends AbstractTabFragment {
                             listPlaces.add(place);
                         }
                     }
+
+                    progressBar.setVisibility(View.GONE);
                 }
                 catch (JSONException e) {
                     e.printStackTrace();
@@ -207,7 +208,7 @@ public class PopularFragment extends AbstractTabFragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 textVolleyError.setVisibility(View.VISIBLE);
-
+                progressBar.setVisibility(View.GONE);
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     textVolleyError.setText(R.string.error_timeout);
                 } else if (error instanceof AuthFailureError) {
@@ -223,6 +224,7 @@ public class PopularFragment extends AbstractTabFragment {
         });
 
         queue.add(jsonObjectRequest);
+
     }
 
 }
