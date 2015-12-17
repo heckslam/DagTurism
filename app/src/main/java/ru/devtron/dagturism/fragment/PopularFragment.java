@@ -207,7 +207,6 @@ public class PopularFragment extends AbstractTabFragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 textVolleyError.setVisibility(View.VISIBLE);
-                System.out.println(error.getMessage());
 
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     textVolleyError.setText(R.string.error_timeout);

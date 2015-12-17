@@ -1,9 +1,11 @@
 package ru.devtron.dagturism.abstract_classes;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -34,12 +36,16 @@ import ru.devtron.dagturism.adapter.RecyclerAdapter;
 import ru.devtron.dagturism.model.ModelPlace;
 
 public abstract class AbstractTabFilterFragment extends Fragment {
-
+    protected int success;
     private String title;
     protected Context context;
     protected View view;
 
-    protected List<ModelPlace> listItemsList = new ArrayList<>();
+    protected static final String STATE_PLACES_FILTERED = "state_places_filtered";
+    protected static final String STATE_PLACES_EAT = "state_places_eat";
+    protected static final String STATE_PLACES_SLEEP = "state_places_sleep";
+
+    protected List<ModelPlace> listPlaces = new ArrayList<>();
     protected RecyclerView mRecyclerView;
     protected RecyclerAdapter adapter;
 
@@ -120,14 +126,16 @@ public abstract class AbstractTabFilterFragment extends Fragment {
         }
     }
 
+
+
     protected void updateList () {
 
         queue = Volley.newRequestQueue(getContext());
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new RecyclerAdapter(getContext(), listItemsList);
         adapter.clearAdapter();
+        adapter = new RecyclerAdapter(getContext(), listPlaces);
         mRecyclerView.setAdapter(adapter);
+
 
         showPD();
 
@@ -136,7 +144,7 @@ public abstract class AbstractTabFilterFragment extends Fragment {
             public void onResponse(JSONObject response) {
 
                 try {
-                    int success = response.getInt(TAG_SUCCESS);
+                    success = response.getInt(TAG_SUCCESS);
                     if (success == 1) {
 
                         noPlacesTextView.setVisibility(View.GONE);
@@ -160,15 +168,13 @@ public abstract class AbstractTabFilterFragment extends Fragment {
                             place.setCity(post.getString(TAG_CITY));
                             place.setImages(arrayImages);
 
-                            listItemsList.add(place);
+                            listPlaces.add(place);
                         }
 
                     }
 
                     else {
                         hidePD();
-                        adapter.clearAdapter();
-                        listItemsList.clear();
                         noPlacesTextView.setVisibility(View.VISIBLE);
                         noPlacesTextView.setText(R.string.no_places_filtered);
                     }
@@ -205,3 +211,5 @@ public abstract class AbstractTabFilterFragment extends Fragment {
         queue.add(jsonObjectRequest);
     }
 }
+
+

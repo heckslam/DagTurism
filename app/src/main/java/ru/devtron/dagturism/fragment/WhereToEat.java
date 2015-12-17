@@ -1,18 +1,28 @@
 package ru.devtron.dagturism.fragment;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
+import ru.devtron.dagturism.NetworkUtil;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.abstract_classes.AbstractTabFilterFragment;
+import ru.devtron.dagturism.adapter.RecyclerAdapter;
 
 
 public class WhereToEat extends AbstractTabFilterFragment {
@@ -39,7 +49,11 @@ public class WhereToEat extends AbstractTabFilterFragment {
         this.context = context;
     }
 
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(STATE_PLACES_EAT, (ArrayList<? extends Parcelable>) listPlaces);
+    }
 
     @Nullable
     @Override
@@ -54,7 +68,27 @@ public class WhereToEat extends AbstractTabFilterFragment {
 
         getItemsUrl = "http://republic.tk/api/listview/filter/" + encodeCity + "/" + encodeRest + "/2";
 
-        updateList();
+        if (savedInstanceState!=null) {
+            listPlaces = savedInstanceState.getParcelableArrayList(STATE_PLACES_EAT);
+            adapter = new RecyclerAdapter(getContext(), listPlaces);
+            mRecyclerView.setAdapter(adapter);
+            if (listPlaces.size() < 1) {
+                noPlacesTextView.setVisibility(View.VISIBLE);
+                noPlacesTextView.setText(R.string.no_places_filtered);
+            }
+        }
+
+        else {
+            if (adapter == null) {
+                adapter = new RecyclerAdapter(getContext(), listPlaces);
+                mRecyclerView.setAdapter(adapter);
+                updateList();
+
+            }
+            else {
+                mRecyclerView.setAdapter(adapter);
+            }
+        }
 
         return view;
     }

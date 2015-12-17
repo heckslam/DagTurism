@@ -1,19 +1,29 @@
 package ru.devtron.dagturism.fragment;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
+import ru.devtron.dagturism.NetworkUtil;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.abstract_classes.AbstractTabFilterFragment;
+import ru.devtron.dagturism.adapter.RecyclerAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,7 +31,6 @@ import ru.devtron.dagturism.abstract_classes.AbstractTabFilterFragment;
 public class WhereToSleep extends AbstractTabFilterFragment {
 
     private static final int LAYOUT = R.layout.fragment_where_to_sleep;
-
 
     public WhereToSleep() {
         // Required empty public constructor
@@ -43,7 +52,11 @@ public class WhereToSleep extends AbstractTabFilterFragment {
         this.context = context;
     }
 
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(STATE_PLACES_SLEEP, (ArrayList<? extends Parcelable>) listPlaces);
+    }
 
 
     @Nullable
@@ -59,9 +72,33 @@ public class WhereToSleep extends AbstractTabFilterFragment {
 
         getItemsUrl = "http://republic.tk/api/listview/filter/" + encodeCity + "/" + encodeRest + "/3";
 
-        updateList();
+        if (savedInstanceState!=null) {
+            listPlaces = savedInstanceState.getParcelableArrayList(STATE_PLACES_SLEEP);
+            adapter = new RecyclerAdapter(getContext(), listPlaces);
+            mRecyclerView.setAdapter(adapter);
+            if (listPlaces.size() < 1) {
+                noPlacesTextView.setVisibility(View.VISIBLE);
+                noPlacesTextView.setText(R.string.no_places_filtered);
+            }
+        }
+
+        else {
+            if (adapter == null) {
+                adapter = new RecyclerAdapter(getContext(), listPlaces);
+                mRecyclerView.setAdapter(adapter);
+                updateList();
+            }
+            else {
+                mRecyclerView.setAdapter(adapter);
+            }
+        }
+
+
+
         return view;
     }
 
 
 }
+
+
