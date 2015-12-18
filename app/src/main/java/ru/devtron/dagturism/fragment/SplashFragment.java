@@ -3,7 +3,9 @@ package ru.devtron.dagturism.fragment;
 
 import android.app.Fragment;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +31,28 @@ public class SplashFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         SplashTask splashTask = new SplashTask();
         splashTask.execute();
         return inflater.inflate(R.layout.fragment_splash, container, false);
+    }
+
+    private void hideStatusBar() {
+        if (Build.VERSION.SDK_INT > 16) {
+            View decorView = getActivity().getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        View decorView = getActivity().getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     class SplashTask extends AsyncTask<Void, Void, Void> {
@@ -40,6 +60,7 @@ public class SplashFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
             try {
+                hideStatusBar();
                 TimeUnit.SECONDS.sleep(2);
             } catch (InterruptedException e) {
                 e.printStackTrace();

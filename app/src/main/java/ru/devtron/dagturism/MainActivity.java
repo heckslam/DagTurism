@@ -7,12 +7,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import ru.devtron.dagturism.abstract_classes.AbstractMethodsActivity;
@@ -56,6 +59,8 @@ public class MainActivity extends AbstractMethodsActivity
         if (savedInstanceState == null) {
             runSplash();
         }
+
+
 
         networkStateReceiver = new NetworkStateReceiver();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -107,6 +112,7 @@ public class MainActivity extends AbstractMethodsActivity
                     .addToBackStack(null)
                     .commit();
         }
+
     }
 
 

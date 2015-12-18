@@ -95,18 +95,7 @@ public class PopularFragment extends AbstractTabFragment {
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(getContext(), mRecyclerView, new ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Intent intent = new Intent(context, OpenPlaceActivity.class);
-                context.startActivity(intent);
-            }
 
-            @Override
-            public void onLongClick(View view, int position) {
-                Toast.makeText(getContext(), "OnLongClick" + position, Toast.LENGTH_SHORT).show();
-            }
-        }));
 
 
         textVolleyError = (TextView) view.findViewById(R.id.textVolleyError);
@@ -119,6 +108,18 @@ public class PopularFragment extends AbstractTabFragment {
             listPlaces = savedInstanceState.getParcelableArrayList(STATE_PLACES);
             adapter = new RecyclerAdapter(getContext(), listPlaces);
             mRecyclerView.setAdapter(adapter);
+            mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(getContext(), mRecyclerView, new ClickListener() {
+                @Override
+                public void onClick(View view, int position) {
+                    Intent intent = new Intent(getActivity(), OpenPlaceActivity.class);
+                    getActivity().startActivity(intent);
+                }
+
+                @Override
+                public void onLongClick(View view, int position) {
+
+                }
+            }));
         }
 
         else {
@@ -170,6 +171,19 @@ public class PopularFragment extends AbstractTabFragment {
         queue = Volley.newRequestQueue(getContext());
         adapter = new RecyclerAdapter(getContext(), listPlaces);
         mRecyclerView.setAdapter(adapter);
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(getContext(), mRecyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(getActivity(), OpenPlaceActivity.class);
+                getActivity().startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                Toast.makeText(getContext(), "OnLongClick" + position, Toast.LENGTH_SHORT).show();
+            }
+        }));
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getItemsUrl, new Response.Listener<JSONObject>() {
             @Override
