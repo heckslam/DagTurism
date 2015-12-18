@@ -38,21 +38,14 @@ public class SplashFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_splash, container, false);
     }
 
-    private void hideStatusBar() {
-        if (Build.VERSION.SDK_INT > 16) {
-            View decorView = getActivity().getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-        }
-    }
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-        View decorView = getActivity().getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-        decorView.setSystemUiVisibility(uiOptions);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            View decorView = getActivity().getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
     }
 
     class SplashTask extends AsyncTask<Void, Void, Void> {
@@ -60,7 +53,6 @@ public class SplashFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                hideStatusBar();
                 TimeUnit.SECONDS.sleep(2);
             } catch (InterruptedException e) {
                 e.printStackTrace();

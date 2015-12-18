@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frameLayout"
     android:focusable="true"
     android:clickable="true"
     android:foreground="@drawable/ripple_bg"
@@ -8,9 +9,8 @@
     <com.android.volley.toolbox.NetworkImageView
         android:layout_width="match_parent"
         android:id="@+id/imageView5"
-        android:clickable="false"
         android:background="@drawable/background_recycler"
         android:scaleType="fitXY"
-        android:layout_height="match_parent" />
+        android:layout_height="180dp" />
 
 </FrameLayout>

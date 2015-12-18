@@ -7,6 +7,7 @@ package ru.devtron.dagturism.viewholder;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,7 +18,7 @@ public class RecyclerItemViewHolder extends RecyclerView.ViewHolder {
     public TextView id;
     public TextView title;
     public TextView city;
-    public RelativeLayout relativeLayout;
+    public FrameLayout frameLayout;
 
 
     public RecyclerItemViewHolder(View view) {
@@ -26,7 +27,7 @@ public class RecyclerItemViewHolder extends RecyclerView.ViewHolder {
         this.city = (TextView) view.findViewById(R.id.cityTextView);
         this.id = (TextView) view.findViewById(R.id.id);
         this.title = (TextView) view.findViewById(R.id.namePlace);
-        this.relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
+        this.frameLayout = (FrameLayout) view.findViewById(R.id.frameLayout);
 
 
     }
