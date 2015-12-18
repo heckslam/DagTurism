@@ -77,22 +77,6 @@ public abstract class AbstractTabFilterFragment extends Fragment {
     }
 
 
-
-    protected void setRecyclerClickListener () {
-        mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(getContext(), mRecyclerView, new ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Intent intent = new Intent(context, OpenPlaceActivity.class);
-                context.startActivity(intent);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
-    }
-
     protected void showPD() {
         if (progressDialog == null) {
             progressDialog= new ProgressDialog(getContext());
@@ -153,7 +137,18 @@ public abstract class AbstractTabFilterFragment extends Fragment {
         adapter.clearAdapter();
         adapter = new RecyclerAdapter(getContext(), listPlaces);
         mRecyclerView.setAdapter(adapter);
+        mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(getContext(), mRecyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(context, OpenPlaceActivity.class);
+                context.startActivity(intent);
+            }
 
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
 
         showPD();
 

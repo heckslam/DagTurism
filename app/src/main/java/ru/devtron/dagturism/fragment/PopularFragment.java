@@ -181,7 +181,7 @@ public class PopularFragment extends AbstractTabFragment {
 
             @Override
             public void onLongClick(View view, int position) {
-                Toast.makeText(getContext(), "OnLongClick" + position, Toast.LENGTH_SHORT).show();
+
             }
         }));
 

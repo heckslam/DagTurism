@@ -20,9 +20,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import ru.devtron.dagturism.NetworkUtil;
+import ru.devtron.dagturism.OpenPlaceActivity;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.abstract_classes.AbstractTabFilterFragment;
 import ru.devtron.dagturism.adapter.RecyclerAdapter;
+import ru.devtron.dagturism.listener.ClickListener;
+import ru.devtron.dagturism.listener.RecyclerClickListener;
 
 
 public class PlacesFilteredFragment extends AbstractTabFilterFragment {
@@ -65,7 +68,6 @@ public class PlacesFilteredFragment extends AbstractTabFilterFragment {
         noPlacesTextView = (TextView) view.findViewById(R.id.noPlaces);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        setRecyclerClickListener ();
 
 
         encodeSpaces();
@@ -77,6 +79,20 @@ public class PlacesFilteredFragment extends AbstractTabFilterFragment {
             listPlaces = savedInstanceState.getParcelableArrayList(STATE_PLACES_FILTERED);
             adapter = new RecyclerAdapter(getContext(), listPlaces);
             mRecyclerView.setAdapter(adapter);
+
+            mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(getContext(), mRecyclerView, new ClickListener() {
+                @Override
+                public void onClick(View view, int position) {
+                    Intent intent = new Intent(getActivity(), OpenPlaceActivity.class);
+                    getActivity().startActivity(intent);
+                }
+
+                @Override
+                public void onLongClick(View view, int position) {
+
+                }
+            }));
+
             if (listPlaces.size() < 1) {
                 noPlacesTextView.setVisibility(View.VISIBLE);
                 noPlacesTextView.setText(R.string.no_places_filtered);
