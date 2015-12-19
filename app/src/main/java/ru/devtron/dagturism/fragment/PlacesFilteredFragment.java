@@ -26,6 +26,7 @@ import ru.devtron.dagturism.abstract_classes.AbstractTabFilterFragment;
 import ru.devtron.dagturism.adapter.RecyclerAdapter;
 import ru.devtron.dagturism.listener.ClickListener;
 import ru.devtron.dagturism.listener.RecyclerClickListener;
+import ru.devtron.dagturism.model.ModelPlace;
 
 
 public class PlacesFilteredFragment extends AbstractTabFilterFragment {
@@ -80,18 +81,7 @@ public class PlacesFilteredFragment extends AbstractTabFilterFragment {
             adapter = new RecyclerAdapter(getContext(), listPlaces);
             mRecyclerView.setAdapter(adapter);
 
-            mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(getContext(), mRecyclerView, new ClickListener() {
-                @Override
-                public void onClick(View view, int position) {
-                    Intent intent = new Intent(getActivity(), OpenPlaceActivity.class);
-                    getActivity().startActivity(intent);
-                }
-
-                @Override
-                public void onLongClick(View view, int position) {
-
-                }
-            }));
+            recyclerClickListener();
 
             if (listPlaces.size() < 1) {
                 noPlacesTextView.setVisibility(View.VISIBLE);

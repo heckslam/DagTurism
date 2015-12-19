@@ -112,6 +112,7 @@ public class PopularFragment extends AbstractTabFragment {
                 @Override
                 public void onClick(View view, int position) {
                     Intent intent = new Intent(getActivity(), OpenPlaceActivity.class);
+                    intent.putExtra(ModelPlace.class.getCanonicalName(), listPlaces.get(position));
                     getActivity().startActivity(intent);
                 }
 
@@ -176,6 +177,7 @@ public class PopularFragment extends AbstractTabFragment {
             @Override
             public void onClick(View view, int position) {
                 Intent intent = new Intent(getActivity(), OpenPlaceActivity.class);
+                intent.putExtra(ModelPlace.class.getCanonicalName(), listPlaces.get(position));
                 getActivity().startActivity(intent);
             }
 

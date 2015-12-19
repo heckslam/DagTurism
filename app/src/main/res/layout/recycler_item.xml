@@ -16,7 +16,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/relativeLayout"
             android:layout_marginTop="2dp"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
@@ -27,7 +26,7 @@
                 android:id="@+id/viewPagerForImages"
                 android:layout_width="match_parent"
                 android:clickable="false"
-                android:layout_height="wrap_content"/>
+                android:layout_height="180dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -47,7 +46,6 @@
                 android:maxLength="25"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:layout_below="@+id/id"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
@@ -63,16 +61,16 @@
                 android:paddingLeft="14dp"
                 android:paddingBottom="10dp"
                 android:textAlignment="inherit"
-                android:layout_alignBottom="@+id/viewPagerForImages"
-                android:layout_toRightOf="@+id/id"
-                android:layout_toEndOf="@+id/id" />
+                android:layout_alignBottom="@+id/viewPagerForImages" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/id"
                 android:maxLines="0"
-                android:layout_above="@id/textView"/>
+                android:visibility="gone"/>
+
+
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

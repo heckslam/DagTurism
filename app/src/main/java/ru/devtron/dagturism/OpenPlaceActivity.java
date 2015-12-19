@@ -1,11 +1,15 @@
 package ru.devtron.dagturism;
 
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,6 +19,12 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ru.devtron.dagturism.adapter.ImageGaleryRecyclerAdapter;
+import ru.devtron.dagturism.model.ModelPlace;
+
 public class OpenPlaceActivity extends AppCompatActivity {
 
     private static final int LAYOUT = R.layout.activity_open_place;
@@ -22,6 +32,14 @@ public class OpenPlaceActivity extends AppCompatActivity {
     GoogleMap map;
     SupportMapFragment mapFragment;
     private Toolbar toolbar;
+    private ModelPlace parcelWithPlace;
+    private TextView cityTitle;
+    private String city, title;
+    private long id;
+    private List<String> arrayImages = new ArrayList<>();
+
+    ViewPager viewPager;
+    ImageGaleryRecyclerAdapter adapterImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +47,39 @@ public class OpenPlaceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
 
+        viewPager = (ViewPager) findViewById(R.id.viewPagerForImages);
+        cityTitle = (TextView) findViewById(R.id.cityTitle);
+
+        getPlaceFromActivity();
+
         initToolbar();
 
         initMap();
     }
 
-    protected void initToolbar() {
+    private void getPlaceFromActivity() {
+        parcelWithPlace = (ModelPlace) getIntent().getParcelableExtra(ModelPlace.class.getCanonicalName());
+
+        title = parcelWithPlace.getTitle();
+        city = parcelWithPlace.getCity();
+        id = Long.parseLong(parcelWithPlace.getId());
+        arrayImages = parcelWithPlace.getImages();
+
+        cityTitle.setText(city);
+
+        adapterImages = new ImageGaleryRecyclerAdapter(this, arrayImages);
+
+        viewPager.setAdapter(adapterImages);
+        viewPager.setCurrentItem(ImageGaleryRecyclerAdapter.PAGER_PAGES_MIDDLE);
+
+    }
+
+
+    private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         if (toolbar != null) {
-            toolbar.setTitle("Молодец");
+            toolbar.setTitle(title);
             toolbar.setTitleTextColor(Color.WHITE);
             setSupportActionBar(toolbar);
         }

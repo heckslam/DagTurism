@@ -79,18 +79,8 @@ public class WhereToSleep extends AbstractTabFilterFragment {
             listPlaces = savedInstanceState.getParcelableArrayList(STATE_PLACES_SLEEP);
             adapter = new RecyclerAdapter(getContext(), listPlaces);
             mRecyclerView.setAdapter(adapter);
-            mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(getContext(), mRecyclerView, new ClickListener() {
-                @Override
-                public void onClick(View view, int position) {
-                    Intent intent = new Intent(getActivity(), OpenPlaceActivity.class);
-                    getActivity().startActivity(intent);
-                }
 
-                @Override
-                public void onLongClick(View view, int position) {
-
-                }
-            }));
+            recyclerClickListener();
 
             if (listPlaces.size() < 1) {
                 noPlacesTextView.setVisibility(View.VISIBLE);

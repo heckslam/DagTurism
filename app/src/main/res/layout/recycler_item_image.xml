@@ -11,6 +11,6 @@
         android:id="@+id/imageView5"
         android:background="@drawable/background_recycler"
         android:scaleType="fitXY"
-        android:layout_height="180dp" />
+        android:layout_height="wrap_content" />
 
 </FrameLayout>
