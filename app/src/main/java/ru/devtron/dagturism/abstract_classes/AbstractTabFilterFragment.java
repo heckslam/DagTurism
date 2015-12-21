@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -60,6 +61,8 @@ public abstract class AbstractTabFilterFragment extends Fragment {
     protected static final String TAG_CITY = "place_city";
     protected static final String TAG_IMAGES = "images";
 
+    protected int numberOfColumns = 1;
+
     protected ProgressDialog progressDialog;
     protected TextView noPlacesTextView;
 
@@ -108,6 +111,17 @@ public abstract class AbstractTabFilterFragment extends Fragment {
             progressDialog.dismiss();
             progressDialog = null;
         }
+    }
+
+    protected void setColumns() {
+        if(this.getActivity().getResources().getConfiguration().orientation ==
+                this.getActivity().getResources().getConfiguration().ORIENTATION_LANDSCAPE)
+            numberOfColumns = 2;
+        else numberOfColumns = 1;
+        mRecyclerView.setLayoutManager(new GridLayoutManager
+                (this.context,
+                        numberOfColumns,
+                        GridLayoutManager.VERTICAL, false));
     }
 
 

@@ -68,8 +68,8 @@ public class WhereToSleep extends AbstractTabFilterFragment {
         view = inflater.inflate(LAYOUT, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewWhereToSleep);
         noPlacesTextView = (TextView) view.findViewById(R.id.noPlaces);
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        setColumns();
 
         encodeSpaces();
 

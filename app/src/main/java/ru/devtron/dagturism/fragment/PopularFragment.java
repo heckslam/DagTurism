@@ -64,8 +64,6 @@ public class PopularFragment extends AbstractTabFragment {
         if (savedInstanceState!=null) {
             progressBar.setVisibility(View.GONE);
             listPlaces = savedInstanceState.getParcelableArrayList(STATE_PLACES);
-            numberOfColumns = savedInstanceState.getInt("NUMBER_OF_COLUMNS");
-
             setClickListenerForCards();
         }
 

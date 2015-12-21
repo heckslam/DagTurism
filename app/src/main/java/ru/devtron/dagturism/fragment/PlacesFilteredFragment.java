@@ -67,13 +67,12 @@ public class PlacesFilteredFragment extends AbstractTabFilterFragment {
         view = inflater.inflate(LAYOUT, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewPlacesFiltered);
         noPlacesTextView = (TextView) view.findViewById(R.id.noPlaces);
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-
 
         encodeSpaces();
 
         getItemsUrl = "http://republic.tk/api/listview/filter/" + encodeCity + "/" + encodeRest + "/1";
+
+        setColumns();
 
 
         if (savedInstanceState!=null) {

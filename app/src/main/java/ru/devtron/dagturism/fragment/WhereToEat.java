@@ -64,10 +64,7 @@ public class WhereToEat extends AbstractTabFilterFragment {
         view = inflater.inflate(LAYOUT, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewWhereToEat);
         noPlacesTextView = (TextView) view.findViewById(R.id.noPlaces);
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-
-
+        setColumns();
         encodeSpaces();
 
         getItemsUrl = "http://republic.tk/api/listview/filter/" + encodeCity + "/" + encodeRest + "/2";
