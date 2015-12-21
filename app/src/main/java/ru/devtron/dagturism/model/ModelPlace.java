@@ -11,7 +11,6 @@ public class ModelPlace implements Parcelable {
     private String city;
     private List<String> images;
 
-
     public static final String[] PLACES = {"Махачкала", "Буйнакск", "Дагестанские огни", "Дербент"};
     public static final String[] REST = {"Любой", "Активный отдых", "Религиозный отдых", "Исторический"};
 

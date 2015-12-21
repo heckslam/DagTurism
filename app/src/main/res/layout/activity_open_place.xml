@@ -72,6 +72,13 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
+            <TextView
+                android:id="@+id/textVolleyError"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content" />
+
                 <TextView
                     android:id="@+id/descriptionTitle"
                     android:layout_width="match_parent"
@@ -89,7 +96,6 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:textAlignment="inherit"
-                    android:text="Саракум основана Саракум основана в 1939 году раходися в 1939 году раходися вавава ваыва Саракум основана в 1939 году раходися Саракум основана в 1939 году раходися Саракум основана в 1939 году раходися ываыва ыываы ыва ыва ыва выававы выа ываываы ваываыва ыва ыва ыва ыва ываываыавыаыв аываыва"
                     android:maxLines="7"
                     android:ellipsize="end"/>
 
