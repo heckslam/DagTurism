@@ -1,17 +1,11 @@
 package ru.devtron.dagturism.fragment;
 
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +13,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import ru.devtron.dagturism.NetworkUtil;
-import ru.devtron.dagturism.OpenPlaceActivity;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.abstract_classes.AbstractTabFilterFragment;
 import ru.devtron.dagturism.adapter.RecyclerAdapter;
-import ru.devtron.dagturism.listener.ClickListener;
-import ru.devtron.dagturism.listener.RecyclerClickListener;
-import ru.devtron.dagturism.model.ModelPlace;
 
 
 public class PlacesFilteredFragment extends AbstractTabFilterFragment {

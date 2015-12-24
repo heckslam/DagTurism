@@ -33,7 +33,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivityOld">
+        <activity android:name=".settings.SettingsActivityOld">
             <intent-filter>
                 <action android:name="android.intent.action.settings" />
 
@@ -53,7 +53,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAfqc3zSJBrEmLcExWlpb95hcoVqFId8lY"></meta-data>
 
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".settings.SettingsActivity"></activity>
     </application>
 
 </manifest>

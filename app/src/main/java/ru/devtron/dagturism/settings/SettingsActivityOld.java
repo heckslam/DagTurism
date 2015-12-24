@@ -1,4 +1,4 @@
-package ru.devtron.dagturism;
+package ru.devtron.dagturism.settings;
 
 
 import android.graphics.Color;
@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 
+import ru.devtron.dagturism.PreferenceHelper;
+import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.abstract_classes.AbstractMethodsActivity;
 
 /**

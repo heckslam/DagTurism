@@ -164,7 +164,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/map"
-                android:background="@drawable/background_city"
                 android:text="Как доехать"/>
 
 

@@ -1,4 +1,4 @@
-package ru.devtron.dagturism;
+package ru.devtron.dagturism.settings;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.settings.AppCompatPreferenceActivity;
 
 /**

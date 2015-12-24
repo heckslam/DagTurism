@@ -13,11 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * A {@link android.preference.PreferenceActivity} which implements and proxies the necessary calls
- * to be used with AppCompat.
- *
- * This technique can be used with an {@link android.app.Activity} class, not just
- * {@link android.preference.PreferenceActivity}.
+ * Created by user on 24.12.2015.
  */
 public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
 
@@ -103,7 +99,7 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
         getDelegate().invalidateOptionsMenu();
     }
 
-    protected AppCompatDelegate getDelegate() {
+    private AppCompatDelegate getDelegate() {
         if (mDelegate == null) {
             mDelegate = AppCompatDelegate.create(this, null);
         }

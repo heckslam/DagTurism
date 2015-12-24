@@ -1,16 +1,10 @@
-package ru.devtron.dagturism;
+package ru.devtron.dagturism.settings;
 
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 
-import ru.devtron.dagturism.settings.AppCompatPreferenceActivity;
+import ru.devtron.dagturism.R;
 
 
 public class SettingsActivity extends AppCompatPreferenceActivity {

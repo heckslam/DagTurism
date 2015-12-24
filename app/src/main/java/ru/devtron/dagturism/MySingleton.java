@@ -2,15 +2,11 @@ package ru.devtron.dagturism;
 
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.util.LruCache;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-
-import ru.devtron.dagturism.adapter.ImageGaleryRecyclerAdapter;
 
 public class MySingleton {
     private static MySingleton mInstance;

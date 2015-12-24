@@ -32,7 +32,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:background="@drawable/background_city"
                 android:maxLines="1"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"

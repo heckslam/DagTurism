@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 import ru.devtron.dagturism.CategoriesActivity;
 import ru.devtron.dagturism.R;
-import ru.devtron.dagturism.SettingsActivity;
+import ru.devtron.dagturism.settings.SettingsActivity;
 
 
 public abstract class AbstractMethodsActivity extends AppCompatActivity {
