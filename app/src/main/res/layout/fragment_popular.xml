@@ -24,8 +24,12 @@
     <TextView
         android:id="@+id/textVolleyError"
         android:layout_gravity="center"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/cardview_dark_background"
         android:layout_width="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_height="wrap_content" />
 
     <com.melnykov.fab.FloatingActionButton

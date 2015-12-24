@@ -1,6 +1,7 @@
 package ru.devtron.dagturism.settings;
 
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -17,11 +18,15 @@ import ru.devtron.dagturism.settings.AppCompatPreferenceActivity;
  */
 
 public class SettingsFragment extends PreferenceFragment {
+    ListPreference listPreference;
 
     @Override
     public void onCreate(final Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
+
+        listPreference = (ListPreference) findPreference("selectedTheme");
+        listPreference.setSummary(listPreference.getEntry());
 
     }
 

@@ -6,7 +6,8 @@
             android:title="@string/enableSplash"
             android:key="splashEnabled"
             android:defaultValue="true"
-            android:summary="Картинка при запуске приложения"/>
+            android:summaryOn="Включена"
+            android:summaryOff="Выключена"/>
 
         <CheckBoxPreference
             android:title="@string/enableAnimation"
