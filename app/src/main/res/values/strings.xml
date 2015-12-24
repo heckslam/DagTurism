@@ -23,6 +23,21 @@
 
     <string name="settings_title">Основные</string>
     <string name="activity_settings_title">Настройки</string>
+    <string name="select_theme">Выбрать тему</string>
+    <string name="default_theme">По умолчанию оранжевая</string>
+    <string-array name="entries">
+        <item>Оранжевая</item>
+        <item>Фиолетовая</item>
+        <item>Сине-серая</item>
+        <item>Зеленая</item>
+    </string-array>
+
+    <string-array name="entries_value">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 
     <string name="no_places_filtered">Мест по данному запросу пока нет</string>
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/settings_title">
+        <CheckBoxPreference
+            android:title="@string/enableSplash"
+            android:key="splashEnabled"
+            android:defaultValue="true"
+            android:summary="Картинка при запуске приложения"/>
+
+        <CheckBoxPreference
+            android:title="@string/enableAnimation"
+            android:key="splashEnabled"
+            android:defaultValue="true"/>
+
+        <ListPreference
+            android:title="@string/select_theme"
+            android:summary="@string/default_theme"
+            android:key="selectedTheme"
+            android:defaultValue="1"
+            android:entries="@array/entries"
+            android:entryValues="@array/entries_value"
+            />
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

@@ -1,11 +1,13 @@
 package ru.devtron.dagturism.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerItemViewHolder
     private Context mContext;
 
     ViewPager viewPager;
+    TextView titleTV;
+    TextView cityTV;
     ImageGaleryRecyclerAdapter adapterImages;
 
     private int focusedItem = 0;
@@ -35,6 +39,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerItemViewHolder
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item, null);
 
         viewPager = (ViewPager) v.findViewById(R.id.viewPagerForImages);
+        titleTV = (TextView) v.findViewById(R.id.namePlace);
+        cityTV = (TextView) v.findViewById(R.id.cityTextView);
+
+        Typeface light = Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Light.ttf");
+        Typeface medium = Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Medium.ttf");
+        titleTV.setTypeface(medium);
+        cityTV.setTypeface(light);
 
 
         RecyclerItemViewHolder holder = new RecyclerItemViewHolder(v);
