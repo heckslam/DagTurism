@@ -82,6 +82,9 @@ public abstract class AbstractTabFilterFragment extends Fragment {
 
 
     protected void recyclerClickListener() {
+        adapter = new RecyclerAdapter(getContext(), listPlaces);
+        mRecyclerView.setAdapter(adapter);
+
         mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(getContext(), mRecyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -164,10 +167,6 @@ public abstract class AbstractTabFilterFragment extends Fragment {
     protected void updateList () {
 
         queue = Volley.newRequestQueue(getContext());
-
-        adapter.clearAdapter();
-        adapter = new RecyclerAdapter(getContext(), listPlaces);
-        mRecyclerView.setAdapter(adapter);
 
         recyclerClickListener();
 

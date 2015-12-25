@@ -61,11 +61,7 @@ public class WhereToEat extends AbstractTabFilterFragment {
 
         if (savedInstanceState!=null) {
             listPlaces = savedInstanceState.getParcelableArrayList(STATE_PLACES_EAT);
-            adapter = new RecyclerAdapter(getContext(), listPlaces);
-            mRecyclerView.setAdapter(adapter);
-
             recyclerClickListener();
-
             if (listPlaces.size() < 1) {
                 noPlacesTextView.setVisibility(View.VISIBLE);
                 noPlacesTextView.setText(R.string.no_places_filtered);
@@ -73,15 +69,8 @@ public class WhereToEat extends AbstractTabFilterFragment {
         }
 
         else {
-            if (adapter == null) {
-                adapter = new RecyclerAdapter(getContext(), listPlaces);
-                mRecyclerView.setAdapter(adapter);
-                updateList();
-
-            }
-            else {
-                mRecyclerView.setAdapter(adapter);
-            }
+            listPlaces.clear();
+            updateList();
         }
 
         return view;

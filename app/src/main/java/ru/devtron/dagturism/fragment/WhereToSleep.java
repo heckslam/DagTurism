@@ -67,11 +67,7 @@ public class WhereToSleep extends AbstractTabFilterFragment {
 
         if (savedInstanceState!=null) {
             listPlaces = savedInstanceState.getParcelableArrayList(STATE_PLACES_SLEEP);
-            adapter = new RecyclerAdapter(getContext(), listPlaces);
-            mRecyclerView.setAdapter(adapter);
-
             recyclerClickListener();
-
             if (listPlaces.size() < 1) {
                 noPlacesTextView.setVisibility(View.VISIBLE);
                 noPlacesTextView.setText(R.string.no_places_filtered);
@@ -79,14 +75,8 @@ public class WhereToSleep extends AbstractTabFilterFragment {
         }
 
         else {
-            if (adapter == null) {
-                adapter = new RecyclerAdapter(getContext(), listPlaces);
-                mRecyclerView.setAdapter(adapter);
-                updateList();
-            }
-            else {
-                mRecyclerView.setAdapter(adapter);
-            }
+            listPlaces.clear();
+            updateList();
         }
 
 
