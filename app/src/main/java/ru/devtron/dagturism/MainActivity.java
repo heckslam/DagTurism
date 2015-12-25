@@ -103,7 +103,7 @@ public class MainActivity extends AbstractMethodsActivity
     private void runSplash () {
         if (preferenceHelper.getBoolean(PreferenceHelper.SPLASH_IS_VISIBLE)) {
 
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                 View decorView = getWindow().getDecorView();
                 int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
                 decorView.setSystemUiVisibility(uiOptions);

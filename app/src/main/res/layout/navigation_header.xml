@@ -3,6 +3,34 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="192dp"
-    android:background="@drawable/ic_drower_background">
+    android:background="@drawable/ic_drawer_background">
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_gravity="start"
+        android:layout_marginTop="65dp"
+        android:layout_marginLeft="30dp"
+        android:src="@drawable/user"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        style="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+        android:text="Руслан" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="20dp"
+        android:gravity="bottom"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:text="heckslam@gmail.com" />
 
 </LinearLayout>
+

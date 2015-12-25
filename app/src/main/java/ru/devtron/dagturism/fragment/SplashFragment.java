@@ -40,7 +40,7 @@ public class SplashFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             View decorView = getActivity().getWindow().getDecorView();
             int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             decorView.setSystemUiVisibility(uiOptions);
