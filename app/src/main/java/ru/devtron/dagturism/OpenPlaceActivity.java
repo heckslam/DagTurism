@@ -1,8 +1,10 @@
 package ru.devtron.dagturism;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -56,6 +58,7 @@ public class OpenPlaceActivity extends AppCompatActivity {
     private String city, title, id, description;
     private List<String> arrayImages = new ArrayList<>();
     protected List<ModelPlaceLatLng> placeData = new ArrayList<>();
+    SharedPreferences sp;
 
     private static final String STATE_OPEN_PLACE = "state_open_place";
 
@@ -83,7 +86,17 @@ public class OpenPlaceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppDefault);
+        sp = PreferenceManager.getDefaultSharedPreferences(this);
+        String selectedTheme = sp.getString("selectedTheme", "1");
+        int selectedThemeValue = Integer.parseInt(selectedTheme);
+        switch (selectedThemeValue) {
+            case 1:
+                setTheme(R.style.AppDefault);
+                break;
+            case 2:
+                setTheme(R.style.AppOrange);
+                break;
+        }
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
 

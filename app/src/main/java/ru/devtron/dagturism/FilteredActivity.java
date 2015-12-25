@@ -17,7 +17,7 @@ public class FilteredActivity extends AbstractMethodsActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppDefault);
+        settingTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtered);
 

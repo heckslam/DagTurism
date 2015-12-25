@@ -18,12 +18,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         String selectedTheme = sp.getString("selectedTheme", "1");
-        Log.d("selected", selectedTheme);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setTheme(R.style.AppDefaultSettings);
-        }
-        else {
-            setTheme(R.style.AppDefault);
+        int selectedThemeValue = Integer.parseInt(selectedTheme);
+        switch (selectedThemeValue) {
+            case 1:
+                setTheme(R.style.AppDefaultSettings);
+                break;
+            case 2:
+                setTheme(R.style.AppOrangeSettings);
+                break;
         }
 
         super.onCreate(savedInstanceState);
@@ -41,6 +43,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 
 
 

@@ -44,7 +44,7 @@ public class MainActivity extends AbstractMethodsActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppDefault);
+        settingTheme();
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
         MainActivity.context = getApplicationContext();
@@ -101,8 +101,7 @@ public class MainActivity extends AbstractMethodsActivity
     }
 
     private void runSplash () {
-        if (preferenceHelper.getBoolean(PreferenceHelper.SPLASH_IS_VISIBLE)) {
-
+        if (sp.getBoolean("splashEnabled", true)) {
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                 View decorView = getWindow().getDecorView();
                 int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;

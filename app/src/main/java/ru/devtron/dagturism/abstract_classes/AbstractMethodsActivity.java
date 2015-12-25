@@ -1,6 +1,8 @@
 package ru.devtron.dagturism.abstract_classes;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -16,10 +18,25 @@ import ru.devtron.dagturism.settings.SettingsActivity;
 
 public abstract class AbstractMethodsActivity extends AppCompatActivity {
 
+    protected SharedPreferences sp;
 
     protected static Toolbar toolbar;
     protected DrawerLayout drawerLayout;
     protected ViewPager viewPager;
+
+    protected void settingTheme() {
+        sp = PreferenceManager.getDefaultSharedPreferences(this);
+        String selectedTheme = sp.getString("selectedTheme", "1");
+        int selectedThemeValue = Integer.parseInt(selectedTheme);
+        switch (selectedThemeValue) {
+            case 1:
+                setTheme(R.style.AppDefault);
+                break;
+            case 2:
+                setTheme(R.style.AppOrange);
+                break;
+        }
+    }
 
 
     protected void initNavigationView() {

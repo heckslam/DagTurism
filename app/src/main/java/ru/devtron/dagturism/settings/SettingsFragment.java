@@ -1,7 +1,9 @@
 package ru.devtron.dagturism.settings;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -9,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.settings.AppCompatPreferenceActivity;
@@ -27,6 +30,16 @@ public class SettingsFragment extends PreferenceFragment {
 
         listPreference = (ListPreference) findPreference("selectedTheme");
         listPreference.setSummary(listPreference.getEntry());
+        listPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                Toast toast = Toast.makeText(getActivity(),
+                        "Чтобы настройки вступили в силу, необходимо перезапустить приложение", Toast.LENGTH_LONG);
+                toast.show();
+
+                return true;
+            }
+        });
 
     }
 
