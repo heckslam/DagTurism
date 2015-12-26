@@ -18,7 +18,6 @@
 
         <ListPreference
             android:title="@string/select_theme"
-            android:summary="@string/default_theme"
             android:key="selectedTheme"
             android:defaultValue="1"
             android:entries="@array/entries"

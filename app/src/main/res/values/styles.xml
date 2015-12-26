@@ -41,7 +41,7 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
-    <style name="AppPurpleSettings" parent="AppTheme">
+    <style name="AppPurpleSettings" parent="AppPurple">
 
     </style>
 
@@ -55,7 +55,7 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
-    <style name="AppGreySettings" parent="AppTheme">
+    <style name="AppGreySettings" parent="AppGrey">
 
     </style>
 
