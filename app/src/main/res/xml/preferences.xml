@@ -11,8 +11,10 @@
 
         <CheckBoxPreference
             android:title="@string/enableAnimation"
-            android:key="splashEnabled"
-            android:defaultValue="true"/>
+            android:key="animationEnabled"
+            android:defaultValue="true"
+            android:summaryOn="Включена"
+            android:summaryOff="Выключена"/>
 
         <ListPreference
             android:title="@string/select_theme"

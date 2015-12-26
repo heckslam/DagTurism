@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Republic</string>
     <string name="wait_network">Ожидание сети…</string>
-    <string name="error_timeout">Скорость вашего интернета очень низкая</string>
+    <string name="error_timeout">Плохое интернет соединение</string>
     <string name="error_server">Ошибка на сервере, пожалуйста напишите в тех поддержку \n heckslam@yandex.ru</string>
     <string name="no_network">Нет интернет подключения</string>
     <string name="share_title">Поделиться</string>
@@ -12,19 +12,21 @@
     <string name="close">Закрыть</string>
 
     <string name="enableSplash">Заставка при запуске</string>
-    <string name="enableAnimation">Включить анимацию</string>
+    <string name="enableAnimation">Анимация</string>
     <string name="menu_item_settings">Настройки</string>
 
     <string name="sort_by_place">Место отдыха</string>
     <string name="sort_by_rest">Вид отдыха</string>
     <string name="sort_by">Быстрый поиск</string>
     <string name="dialog_ok">ОК</string>
+    <string name="dialog_ok_settings">Перезапустить</string>
     <string name="dialog_cancel">Отмена</string>
 
     <string name="settings_title">Основные</string>
     <string name="activity_settings_title">Настройки</string>
     <string name="select_theme">Выбрать тему</string>
     <string name="default_theme">По умолчанию зеленая</string>
+    <string name="apply_settings_dialog">Чтобы настройки вступили в силу, необходимо перезапустить приложение</string>
     <string-array name="entries">
         <item>Зеленая</item>
         <item>Оранжевая</item>

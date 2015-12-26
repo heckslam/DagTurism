@@ -35,6 +35,12 @@ public abstract class AbstractMethodsActivity extends AppCompatActivity {
             case 2:
                 setTheme(R.style.AppOrange);
                 break;
+            case 3:
+                setTheme(R.style.AppPurple);
+                break;
+            case 4:
+                setTheme(R.style.AppGrey);
+                break;
         }
     }
 

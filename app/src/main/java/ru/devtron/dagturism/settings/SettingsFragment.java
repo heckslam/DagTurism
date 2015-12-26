@@ -1,5 +1,7 @@
 package ru.devtron.dagturism.settings;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -7,6 +9,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +19,6 @@ import android.widget.Toast;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.settings.AppCompatPreferenceActivity;
 
-/**
- * Created by user on 23.12.2015.
- */
 
 public class SettingsFragment extends PreferenceFragment {
     ListPreference listPreference;
@@ -33,10 +33,26 @@ public class SettingsFragment extends PreferenceFragment {
         listPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                Toast toast = Toast.makeText(getActivity(),
-                        "Чтобы настройки вступили в силу, необходимо перезапустить приложение", Toast.LENGTH_LONG);
-                toast.show();
 
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                alertDialogBuilder
+                        .setMessage(R.string.apply_settings_dialog)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.dialog_ok_settings,new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                Intent i = getActivity().getPackageManager()
+                                        .getLaunchIntentForPackage( getActivity().getPackageName());
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(i);
+                            }
+                        })
+                        .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
                 return true;
             }
         });

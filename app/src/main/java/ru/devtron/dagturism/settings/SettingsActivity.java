@@ -26,6 +26,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             case 2:
                 setTheme(R.style.AppOrangeSettings);
                 break;
+            case 3:
+                setTheme(R.style.AppPurpleSettings);
+                break;
+            case 4:
+                setTheme(R.style.AppGreySettings);
+                break;
         }
 
         super.onCreate(savedInstanceState);

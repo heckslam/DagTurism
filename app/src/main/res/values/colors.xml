@@ -13,4 +13,14 @@
     <color name="colorPrimaryDarkOrange">#CB3D2C</color>
     <color name="colorAccentOrange">#FD9C09</color>
     <color name="colorHighlightOrange">#FFE082</color>
+
+    <color name="colorPrimaryPurple">#673AB7</color>
+    <color name="colorPrimaryDarkPurple">#5E35B1</color>
+    <color name="colorAccentPurple">#FF1744</color>
+    <color name="colorHighlightPurple">#D1C4E9</color>
+
+    <color name="colorPrimaryGrey">#607D8B</color>
+    <color name="colorPrimaryDarkGrey">#546E7A</color>
+    <color name="colorAccentGrey">#0097A7</color>
+    <color name="colorHighlightGrey">#CFD8DC</color>
 </resources>

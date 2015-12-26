@@ -41,9 +41,8 @@
         android:layout_marginBottom="72dp"
         fab:fab_shadow="true"
         android:src="@drawable/ic_map_marker_radius_white_24dp"
-        fab:fab_colorNormal="?attr/colorPrimary"
-        fab:fab_colorPressed="?attr/colorPrimary"
-        fab:fab_colorRipple="@color/white" />
+        fab:fab_colorNormal="?attr/colorAccent"
+        fab:fab_colorRipple="?attr/colorControlHighlight" />
 
 
 
