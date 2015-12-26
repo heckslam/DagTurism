@@ -30,6 +30,7 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -193,11 +194,11 @@ public class OpenPlaceActivity extends AppCompatActivity {
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(lat, lng))
-                    .zoom(15)
+                    .zoom(13)
                     .build();
             CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
             map.moveCamera(cameraUpdate);
-            map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)));
+            map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)));
             map.getUiSettings().setAllGesturesEnabled(false);
         }
 
