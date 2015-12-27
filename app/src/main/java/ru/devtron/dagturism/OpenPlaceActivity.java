@@ -1,5 +1,6 @@
 package ru.devtron.dagturism;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -45,26 +47,20 @@ import ru.devtron.dagturism.adapter.ImageGaleryRecyclerAdapter;
 import ru.devtron.dagturism.model.ModelPlace;
 import ru.devtron.dagturism.model.ModelPlaceLatLng;
 
-public class OpenPlaceActivity extends AppCompatActivity {
+public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final int LAYOUT = R.layout.activity_open_place;
 
-    GoogleMap map;
     SupportMapFragment mapFragment;
     private double lat, lng;
-    private Toolbar toolbar;
-    private ModelPlace parcelWithPlace;
     private ModelPlaceLatLng modelPlaceLatLng;
     private TextView cityTitle, textVolleyError, descriptionTV;
     private String city, title, id, description;
-    private List<String> arrayImages = new ArrayList<>();
     protected List<ModelPlaceLatLng> placeData = new ArrayList<>();
     SharedPreferences sp;
 
     private static final String STATE_OPEN_PLACE = "state_open_place";
 
-
-    private RequestQueue queue;
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -134,12 +130,12 @@ public class OpenPlaceActivity extends AppCompatActivity {
     }
 
     private void getPlaceFromActivity() {
-        parcelWithPlace = getIntent().getParcelableExtra(ModelPlace.class.getCanonicalName());
+        ModelPlace parcelWithPlace = getIntent().getParcelableExtra(ModelPlace.class.getCanonicalName());
 
         title = parcelWithPlace.getTitle();
         city = parcelWithPlace.getCity();
         id = parcelWithPlace.getId();
-        arrayImages = parcelWithPlace.getImages();
+        List<String> arrayImages = parcelWithPlace.getImages();
 
         cityTitle.setText(city);
 
@@ -159,19 +155,19 @@ public class OpenPlaceActivity extends AppCompatActivity {
         else
             updateItem();
 
-        initUI(description, lat, lng);
+        initUI(description);
 
         return modelPlace;
     }
 
-    private void initUI(String description, double lat, double lng) {
+    private void initUI(String description) {
         descriptionTV.setText(description);
-        initMap(lat, lng);
+        initMap();
     }
 
 
     private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         if (toolbar != null) {
             toolbar.setTitle(title);
@@ -185,24 +181,12 @@ public class OpenPlaceActivity extends AppCompatActivity {
         }
     }
 
-    private void initMap(double lat, double lng) {
+    private void initMap() {
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        map = mapFragment.getMap();
-
-        if (map != null) {
-            map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(lat, lng))
-                    .zoom(13)
-                    .build();
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-            map.moveCamera(cameraUpdate);
-            map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)));
-            map.getUiSettings().setAllGesturesEnabled(false);
-        }
+        mapFragment.getMapAsync(this);
 
     }
+
 
     private void updateItem () {
 
@@ -210,7 +194,7 @@ public class OpenPlaceActivity extends AppCompatActivity {
 
         getItemsUrl = getItemsUrl + id;
 
-        queue = Volley.newRequestQueue(this);
+        RequestQueue queue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getItemsUrl, new Response.Listener<JSONObject>() {
             @Override
@@ -282,5 +266,31 @@ public class OpenPlaceActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(lat, lng))
+                .zoom(13)
+                .build();
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+        map.moveCamera(cameraUpdate);
+        map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).icon(BitmapDescriptorFactory.fromResource(R.drawable.custom_marker)));
+        map.getUiSettings().setAllGesturesEnabled(false);
+        map.getUiSettings().setMapToolbarEnabled(false);
+
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                Intent intent = new Intent(OpenPlaceActivity.this, OpenMapActivity.class);
+                intent.putExtra("lat", lat);
+                intent.putExtra("lng", lng);
+                intent.putExtra("title", title);
+                startActivity(intent);
+            }
+        });
     }
 }
