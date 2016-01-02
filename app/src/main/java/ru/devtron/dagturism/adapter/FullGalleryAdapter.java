@@ -18,10 +18,10 @@ import ru.devtron.dagturism.MySingleton;
 import ru.devtron.dagturism.OpenFullGallery;
 import ru.devtron.dagturism.OpenPlaceActivity;
 import ru.devtron.dagturism.R;
+import ru.devtron.dagturism.listener.ZoomImageListener;
 import ru.devtron.dagturism.model.ModelImages;
-import ru.devtron.dagturism.model.ModelPlace;
 
-public class ImageGaleryRecyclerAdapter extends PagerAdapter {
+public class FullGalleryAdapter extends PagerAdapter {
     Context context;
     List<String> arrayImages;
     private ImageLoader mImageLoader;
@@ -31,7 +31,7 @@ public class ImageGaleryRecyclerAdapter extends PagerAdapter {
     public static final int PAGER_PAGES_MIDDLE = PAGER_PAGES / 2;
 
 
-    public ImageGaleryRecyclerAdapter(Context context, List<String> arrayImages){
+    public FullGalleryAdapter(Context context, List<String> arrayImages){
         this.context = context;
         this.arrayImages = arrayImages;
     }
@@ -41,9 +41,7 @@ public class ImageGaleryRecyclerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         LayoutInflater inflater = LayoutInflater.from(context);
-
-        layout = (ViewGroup) inflater.inflate(R.layout.recycler_item_image, container, false);
-        position = position - PAGER_PAGES_MIDDLE;
+        layout = (ViewGroup) inflater.inflate(R.layout.full_gallery_item, container, false);
 
         mImageLoader = MySingleton.getInstance(context).getImageLoader();
 
@@ -57,23 +55,8 @@ public class ImageGaleryRecyclerAdapter extends PagerAdapter {
         }
 
 
-        NetworkImageView imageView = (NetworkImageView) layout.findViewById(R.id.imageView5);
+        ZoomImageListener imageView = (ZoomImageListener) layout.findViewById(R.id.imageView5);
         imageView.setImageUrl(arrayImages.get(imageNumber), mImageLoader);
-
-        if (context instanceof OpenPlaceActivity) {
-            final int finalPosition = position;
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, OpenFullGallery.class);
-                    ModelImages images = new ModelImages();
-                    images.setImages(arrayImages);
-                    intent.putExtra(ModelImages.class.getCanonicalName(), images);
-                    intent.putExtra("position", finalPosition);
-                    context.startActivity(intent);
-                }
-            });
-        }
 
         container.addView(layout);
 
