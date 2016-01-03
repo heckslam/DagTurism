@@ -1,4 +1,4 @@
-package ru.devtron.dagturism;
+package ru.devtron.dagturism.Utils;
 
 /**
  * Класс для хранения констант (постоянных значений)

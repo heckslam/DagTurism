@@ -33,7 +33,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.devtron.dagturism.Constants;
+import ru.devtron.dagturism.Utils.Constants;
 import ru.devtron.dagturism.OpenPlaceActivity;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.adapter.RecyclerAdapter;

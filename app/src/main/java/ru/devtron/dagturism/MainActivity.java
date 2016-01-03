@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import ru.devtron.dagturism.Utils.NetworkUtil;
+import ru.devtron.dagturism.Utils.PreferenceHelper;
 import ru.devtron.dagturism.abstract_classes.AbstractMethodsActivity;
 import ru.devtron.dagturism.adapter.TabsFragmentAdapter;
 import ru.devtron.dagturism.dialog.SearchPlaceDialogFragment;

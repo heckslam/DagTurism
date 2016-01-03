@@ -1,4 +1,4 @@
-package ru.devtron.dagturism;
+package ru.devtron.dagturism.Utils;
 
 
 import android.content.Context;

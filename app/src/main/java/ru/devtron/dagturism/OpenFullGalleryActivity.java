@@ -9,7 +9,7 @@ import java.util.List;
 import ru.devtron.dagturism.adapter.FullGalleryAdapter;
 import ru.devtron.dagturism.model.ModelImages;
 
-public class OpenFullGallery extends Activity {
+public class OpenFullGalleryActivity extends Activity {
 
     private ViewPager mViewPager;
     FullGalleryAdapter adapterImages;
@@ -36,9 +36,6 @@ public class OpenFullGallery extends Activity {
         mViewPager.setAdapter(adapterImages);
         mViewPager.setCurrentItem(position);
     }
-
-
-
 
 
 }

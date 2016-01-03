@@ -14,12 +14,11 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
-import ru.devtron.dagturism.MySingleton;
-import ru.devtron.dagturism.OpenFullGallery;
+import ru.devtron.dagturism.Utils.MySingleton;
+import ru.devtron.dagturism.OpenFullGalleryActivity;
 import ru.devtron.dagturism.OpenPlaceActivity;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.model.ModelImages;
-import ru.devtron.dagturism.model.ModelPlace;
 
 public class ImageGaleryRecyclerAdapter extends PagerAdapter {
     Context context;
@@ -65,7 +64,7 @@ public class ImageGaleryRecyclerAdapter extends PagerAdapter {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, OpenFullGallery.class);
+                    Intent intent = new Intent(context, OpenFullGalleryActivity.class);
                     ModelImages images = new ModelImages();
                     images.setImages(arrayImages);
                     intent.putExtra(ModelImages.class.getCanonicalName(), images);

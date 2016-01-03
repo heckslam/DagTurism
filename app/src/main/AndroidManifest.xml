@@ -37,13 +37,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".settings.SettingsActivityOld">
-            <intent-filter>
-                <action android:name="android.intent.action.settings" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity android:name=".FilteredActivity" />
         <activity android:name=".OpenPlaceActivity">
             <intent-filter>
@@ -60,9 +53,9 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCaSufuHKEIiuU4o5dNhs0schk1dWWALlY" />
+            android:value="AIzaSyDMQsrkJODc1HQlNredP6-cKRiy9FhysJc" />
 
-        <activity android:name=".OpenFullGallery"></activity>
+        <activity android:name=".OpenFullGalleryActivity"></activity>
     </application>
 
 </manifest>

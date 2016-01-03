@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import ru.devtron.dagturism.NetworkUtil;
+import ru.devtron.dagturism.Utils.NetworkUtil;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.abstract_classes.AbstractTabFragment;
 
