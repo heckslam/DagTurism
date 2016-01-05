@@ -13,7 +13,7 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
-    <style name="AppDefaultSettings" parent="AppDefault">
+    <style name="AppDefaultTransparent" parent="AppDefault">
 
     </style>
 
@@ -27,7 +27,7 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
-    <style name="AppOrangeSettings" parent="AppOrange">
+    <style name="AppOrangeTransparent" parent="AppOrange">
 
     </style>
 
@@ -41,7 +41,7 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
-    <style name="AppPurpleSettings" parent="AppPurple">
+    <style name="AppPurpleTransparent" parent="AppPurple">
 
     </style>
 
@@ -55,7 +55,7 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
-    <style name="AppGreySettings" parent="AppGrey">
+    <style name="AppGreyTransparent" parent="AppGrey">
 
     </style>
 

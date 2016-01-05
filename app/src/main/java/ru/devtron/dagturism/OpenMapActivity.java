@@ -161,7 +161,7 @@ public class OpenMapActivity extends AppCompatActivity implements OnMapReadyCall
             UiSettings settings = map.getUiSettings();
             settings.setAllGesturesEnabled(true);
             settings.setRotateGesturesEnabled(false);
-            settings.setMyLocationButtonEnabled(false);
+            settings.setMyLocationButtonEnabled(true);
 
 
             fab.setOnClickListener(new View.OnClickListener() {

@@ -1,13 +1,12 @@
-package ru.devtron.dagturism.settings;
+package ru.devtron.dagturism;
 
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MenuItem;
 
-import ru.devtron.dagturism.R;
+import ru.devtron.dagturism.abstract_classes.AppCompatPreferenceActivity;
+import ru.devtron.dagturism.fragment.SettingsFragment;
 
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
@@ -21,16 +20,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         int selectedThemeValue = Integer.parseInt(selectedTheme);
         switch (selectedThemeValue) {
             case 1:
-                setTheme(R.style.AppDefaultSettings);
+                setTheme(R.style.AppDefault);
                 break;
             case 2:
-                setTheme(R.style.AppOrangeSettings);
+                setTheme(R.style.AppOrange);
                 break;
             case 3:
-                setTheme(R.style.AppPurpleSettings);
+                setTheme(R.style.AppPurple);
                 break;
             case 4:
-                setTheme(R.style.AppGreySettings);
+                setTheme(R.style.AppGrey);
                 break;
         }
 

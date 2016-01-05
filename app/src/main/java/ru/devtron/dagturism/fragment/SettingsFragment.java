@@ -1,8 +1,7 @@
-package ru.devtron.dagturism.settings;
+package ru.devtron.dagturism.fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -14,10 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import ru.devtron.dagturism.R;
-import ru.devtron.dagturism.settings.AppCompatPreferenceActivity;
+import ru.devtron.dagturism.abstract_classes.AppCompatPreferenceActivity;
 
 
 public class SettingsFragment extends PreferenceFragment {

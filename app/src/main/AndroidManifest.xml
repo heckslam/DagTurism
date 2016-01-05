@@ -45,7 +45,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".settings.SettingsActivity" />
+        <activity android:name=".SettingsActivity" />
         <activity android:name=".OpenMapActivity" />
 
         <meta-data
@@ -55,7 +55,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDMQsrkJODc1HQlNredP6-cKRiy9FhysJc" />
 
-        <activity android:name=".OpenFullGalleryActivity"></activity>
+        <activity android:name=".OpenFullGalleryActivity" />
+        <activity android:name=".SprintLineActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package ru.devtron.dagturism;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
@@ -16,6 +17,8 @@ public class OpenFullGalleryActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            setTheme(android.R.style.Theme_Material_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_full_gallery);
 

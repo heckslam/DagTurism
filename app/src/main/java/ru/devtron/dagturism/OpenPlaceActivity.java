@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -55,8 +56,9 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     private double lat, lng;
     private ModelPlaceLatLng modelPlaceLatLng;
     private TextView cityTitle, textVolleyError, descriptionTV;
+    private Button button;
     private String city, title, id, description;
-    protected List<ModelPlaceLatLng> placeData = new ArrayList<>();
+    private int idInt;
     SharedPreferences sp;
 
     private static final String STATE_OPEN_PLACE = "state_open_place";
@@ -77,8 +79,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(STATE_OPEN_PLACE, (ArrayList<? extends Parcelable>) placeData);
-        Log.d("data", placeData.get(0).getDescription());
+        outState.putParcelable(STATE_OPEN_PLACE, modelPlaceLatLng);
     }
 
     @Override
@@ -88,16 +89,16 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         int selectedThemeValue = Integer.parseInt(selectedTheme);
         switch (selectedThemeValue) {
             case 1:
-                setTheme(R.style.AppDefault);
+                setTheme(R.style.AppDefaultTransparent);
                 break;
             case 2:
-                setTheme(R.style.AppOrange);
+                setTheme(R.style.AppOrangeTransparent);
                 break;
             case 3:
-                setTheme(R.style.AppPurple);
+                setTheme(R.style.AppPurpleTransparent);
                 break;
             case 4:
-                setTheme(R.style.AppGrey);
+                setTheme(R.style.AppGreyTransparent);
                 break;
         }
         super.onCreate(savedInstanceState);
@@ -108,13 +109,16 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         descriptionTV = (TextView) findViewById(R.id.descriptionPlace);
         viewPager = (ViewPager) findViewById(R.id.viewPagerForImages);
         cityTitle = (TextView) findViewById(R.id.cityTitle);
+        button = (Button) findViewById(R.id.whereToGo);
 
         getPlaceFromActivity();
 
+
+
         if (savedInstanceState!=null) {
-            placeData = savedInstanceState.getParcelableArrayList(STATE_OPEN_PLACE);
-            if (placeData != null && placeData.get(0).getDescription().length() > 3) {
-                initVariables(placeData.get(0));
+            modelPlaceLatLng = savedInstanceState.getParcelable(STATE_OPEN_PLACE);
+            if (modelPlaceLatLng != null && modelPlaceLatLng.getDescription().length() > 3) {
+                initVariables(modelPlaceLatLng);
             }
             else {
                 updateItem();
@@ -143,6 +147,16 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
 
         viewPager.setAdapter(adapterImages);
         viewPager.setCurrentItem(ImageGaleryRecyclerAdapter.PAGER_PAGES_MIDDLE);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OpenPlaceActivity.this, SprintLineActivity.class);
+                idInt = Integer.parseInt(id);
+                intent.putExtra("id", idInt);
+                startActivity(intent);
+            }
+        });
     }
 
     private ModelPlaceLatLng initVariables(ModelPlaceLatLng modelPlace) {
@@ -215,9 +229,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
                         modelPlaceLatLng.setLng(lng);
                         modelPlaceLatLng.setDescription(description);
 
-                        placeData.clear();
-                        placeData.add(modelPlaceLatLng);
-                        initVariables(placeData.get(0));
+                        initVariables(modelPlaceLatLng);
                     }
                 }
                 catch (JSONException e) {

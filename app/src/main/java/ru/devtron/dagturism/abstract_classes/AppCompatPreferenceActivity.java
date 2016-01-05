@@ -1,4 +1,4 @@
-package ru.devtron.dagturism.settings;
+package ru.devtron.dagturism.abstract_classes;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

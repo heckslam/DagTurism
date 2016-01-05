@@ -150,6 +150,7 @@ public abstract class AbstractTabFragment extends Fragment {
                         JSONArray places = response.getJSONArray(TAG_ITEMS);
 
 
+
                         for (int i = 0; i < places.length(); i++) {
                             JSONObject currentPlace = places.getJSONObject(i);
                             JSONArray images = currentPlace.getJSONArray(TAG_IMAGES);

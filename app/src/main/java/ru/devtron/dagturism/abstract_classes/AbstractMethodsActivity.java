@@ -13,7 +13,7 @@ import android.view.MenuItem;
 
 import ru.devtron.dagturism.CategoriesActivity;
 import ru.devtron.dagturism.R;
-import ru.devtron.dagturism.settings.SettingsActivity;
+import ru.devtron.dagturism.SettingsActivity;
 
 
 public abstract class AbstractMethodsActivity extends AppCompatActivity {
@@ -30,16 +30,16 @@ public abstract class AbstractMethodsActivity extends AppCompatActivity {
         int selectedThemeValue = Integer.parseInt(selectedTheme);
         switch (selectedThemeValue) {
             case 1:
-                setTheme(R.style.AppDefault);
+                setTheme(R.style.AppDefaultTransparent);
                 break;
             case 2:
-                setTheme(R.style.AppOrange);
+                setTheme(R.style.AppOrangeTransparent);
                 break;
             case 3:
-                setTheme(R.style.AppPurple);
+                setTheme(R.style.AppPurpleTransparent);
                 break;
             case 4:
-                setTheme(R.style.AppGrey);
+                setTheme(R.style.AppGreyTransparent);
                 break;
         }
     }

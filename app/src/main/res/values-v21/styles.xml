@@ -6,15 +6,15 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorControlHighlight">@color/colorHighlight</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="windowActionBar">false</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
-    <style name="AppDefaultSettings" parent="AppDefault">
-        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+    <style name="AppDefaultTransparent" parent="AppDefault">
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="AppOrange" parent="AppTheme">
@@ -22,15 +22,15 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarkOrange</item>
         <item name="colorAccent">@color/colorAccentOrange</item>
         <item name="android:colorControlHighlight">@color/colorHighlightOrange</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDarkOrange</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="windowActionBar">false</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
-    <style name="AppOrangeSettings" parent="AppOrange">
-        <item name="android:statusBarColor">@color/colorPrimaryDarkOrange</item>
+    <style name="AppOrangeTransparent" parent="AppOrange">
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
 
@@ -39,15 +39,15 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarkPurple</item>
         <item name="colorAccent">@color/colorAccentPurple</item>
         <item name="android:colorControlHighlight">@color/colorHighlightPurple</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDarkPurple</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="windowActionBar">false</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
-    <style name="AppPurpleSettings" parent="AppPurple">
-        <item name="android:statusBarColor">@color/colorPrimaryDarkPurple</item>
+    <style name="AppPurpleTransparent" parent="AppPurple">
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="AppGrey" parent="AppTheme">
@@ -55,15 +55,15 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarkGrey</item>
         <item name="colorAccent">@color/colorAccentGrey</item>
         <item name="android:colorControlHighlight">@color/colorHighlightGrey</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDarkGrey</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="windowActionBar">false</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
-    <style name="AppGreySettings" parent="AppGrey">
-        <item name="android:statusBarColor">@color/colorPrimaryDarkGrey</item>
+    <style name="AppGreyTransparent" parent="AppGrey">
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
 
