@@ -4,16 +4,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -41,10 +42,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import ru.devtron.dagturism.adapter.ImageGaleryRecyclerAdapter;
+import ru.devtron.dagturism.adapter.RecyclerGalleryAdapter;
 import ru.devtron.dagturism.model.ModelPlace;
 import ru.devtron.dagturism.model.ModelPlaceLatLng;
 
@@ -60,6 +60,8 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     private String city, title, id, description;
     private int idInt;
     SharedPreferences sp;
+    ContentLoadingProgressBar progressBar;
+    NestedScrollView nestedScrollView;
 
     private static final String STATE_OPEN_PLACE = "state_open_place";
 
@@ -74,7 +76,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     private int success = 0;
 
     ViewPager viewPager;
-    ImageGaleryRecyclerAdapter adapterImages;
+    RecyclerGalleryAdapter adapterImages;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -104,12 +106,16 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
 
+        progressBar = (ContentLoadingProgressBar) findViewById(R.id.loading);
+
+
 
         textVolleyError = (TextView) findViewById(R.id.textVolleyError);
         descriptionTV = (TextView) findViewById(R.id.descriptionPlace);
         viewPager = (ViewPager) findViewById(R.id.viewPagerForImages);
         cityTitle = (TextView) findViewById(R.id.cityTitle);
         button = (Button) findViewById(R.id.whereToGo);
+        nestedScrollView =  (NestedScrollView) findViewById(R.id.nestedScroll);
 
         getPlaceFromActivity();
 
@@ -143,10 +149,10 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
 
         cityTitle.setText(city);
 
-        adapterImages = new ImageGaleryRecyclerAdapter(this, arrayImages);
+        adapterImages = new RecyclerGalleryAdapter(this, arrayImages);
 
         viewPager.setAdapter(adapterImages);
-        viewPager.setCurrentItem(ImageGaleryRecyclerAdapter.PAGER_PAGES_MIDDLE);
+        viewPager.setCurrentItem(RecyclerGalleryAdapter.PAGER_PAGES_MIDDLE);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,7 +209,8 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
 
 
     private void updateItem () {
-
+        progressBar.setVisibility(View.VISIBLE);
+        nestedScrollView.setVisibility(View.GONE);
         String getItemsUrl = "http://republic.tk/api/place/";
 
         getItemsUrl = getItemsUrl + id;
@@ -231,6 +238,9 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
 
                         initVariables(modelPlaceLatLng);
                     }
+
+                    progressBar.setVisibility(View.GONE);
+                    nestedScrollView.setVisibility(View.VISIBLE);
                 }
                 catch (JSONException e) {
                     e.printStackTrace();

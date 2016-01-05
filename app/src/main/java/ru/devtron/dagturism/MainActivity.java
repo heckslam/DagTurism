@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import ru.devtron.dagturism.Utils.NetworkUtil;
-import ru.devtron.dagturism.Utils.PreferenceHelper;
 import ru.devtron.dagturism.abstract_classes.AbstractMethodsActivity;
 import ru.devtron.dagturism.adapter.TabsFragmentAdapter;
 import ru.devtron.dagturism.dialog.SearchPlaceDialogFragment;
@@ -38,8 +37,6 @@ public class MainActivity extends AbstractMethodsActivity
 
     private FragmentManager fragmentManager;
 
-    private PreferenceHelper preferenceHelper;
-
     private static Context context;
 
     BroadcastReceiver networkStateReceiver;
@@ -51,8 +48,6 @@ public class MainActivity extends AbstractMethodsActivity
         setContentView(LAYOUT);
         MainActivity.context = getApplicationContext();
 
-        PreferenceHelper.getInstance().init(getApplicationContext());
-        preferenceHelper = PreferenceHelper.getInstance();
         fragmentManager = getFragmentManager();
 
         if (savedInstanceState == null) {

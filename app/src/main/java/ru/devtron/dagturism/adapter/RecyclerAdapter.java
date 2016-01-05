@@ -24,7 +24,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerItemViewHolder
     ViewPager viewPager;
     TextView titleTV;
     TextView cityTV;
-    ImageGaleryRecyclerAdapter adapterImages;
+    RecyclerGalleryAdapter adapterImages;
 
     private int focusedItem = 0;
 
@@ -71,10 +71,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerItemViewHolder
             recyclerItemViewHolder.city.setText(modelPlaces.getCity());
 
             List<String> images1 = modelPlaces.getImages();
-            adapterImages = new ImageGaleryRecyclerAdapter(mContext, images1);
+            adapterImages = new RecyclerGalleryAdapter(mContext, images1);
 
             recyclerItemViewHolder.pager.setAdapter(adapterImages);
-            recyclerItemViewHolder.pager.setCurrentItem(ImageGaleryRecyclerAdapter.PAGER_PAGES_MIDDLE);
+            recyclerItemViewHolder.pager.setCurrentItem(RecyclerGalleryAdapter.PAGER_PAGES_MIDDLE);
 
 
 

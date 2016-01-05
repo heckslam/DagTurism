@@ -4,11 +4,16 @@ package ru.devtron.dagturism.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
@@ -20,17 +25,15 @@ import ru.devtron.dagturism.OpenPlaceActivity;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.model.ModelImages;
 
-public class ImageGaleryRecyclerAdapter extends PagerAdapter {
+public class RecyclerGalleryAdapter extends PagerAdapter {
     Context context;
     List<String> arrayImages;
-    private ImageLoader mImageLoader;
-    private ViewGroup layout;
 
     public static final int PAGER_PAGES = 10000;
     public static final int PAGER_PAGES_MIDDLE = PAGER_PAGES / 2;
 
 
-    public ImageGaleryRecyclerAdapter(Context context, List<String> arrayImages){
+    public RecyclerGalleryAdapter(Context context, List<String> arrayImages){
         this.context = context;
         this.arrayImages = arrayImages;
     }
@@ -41,10 +44,10 @@ public class ImageGaleryRecyclerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        layout = (ViewGroup) inflater.inflate(R.layout.recycler_item_image, container, false);
+        ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.recycler_item_image, container, false);
         position = position - PAGER_PAGES_MIDDLE;
 
-        mImageLoader = MySingleton.getInstance(context).getImageLoader();
+        ImageLoader mImageLoader = MySingleton.getInstance(context).getImageLoader();
 
 
         int imageNumber = position % arrayImages.size();
@@ -56,11 +59,27 @@ public class ImageGaleryRecyclerAdapter extends PagerAdapter {
         }
 
 
-        NetworkImageView imageView = (NetworkImageView) layout.findViewById(R.id.imageView5);
-        imageView.setImageUrl(arrayImages.get(imageNumber), mImageLoader);
+        final ImageView imageView = (ImageView) layout.findViewById(R.id.imageView5);
+        final ContentLoadingProgressBar progressBar = (ContentLoadingProgressBar) layout.findViewById(R.id.loading);
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        mImageLoader.get(arrayImages.get(imageNumber), new ImageLoader.ImageListener() {
+            @Override
+            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                imageView.setImageBitmap(response.getBitmap());
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+
 
         if (context instanceof OpenPlaceActivity) {
-            final int finalPosition = position;
+            final int finalImageNumber = imageNumber;
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -68,7 +87,7 @@ public class ImageGaleryRecyclerAdapter extends PagerAdapter {
                     ModelImages images = new ModelImages();
                     images.setImages(arrayImages);
                     intent.putExtra(ModelImages.class.getCanonicalName(), images);
-                    intent.putExtra("position", finalPosition);
+                    intent.putExtra("position", finalImageNumber);
                     context.startActivity(intent);
                 }
             });

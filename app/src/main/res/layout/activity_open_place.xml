@@ -59,9 +59,19 @@
 
         </android.support.design.widget.AppBarLayout>
 
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/loading"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/nestedScroll"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
@@ -73,11 +83,14 @@
             android:paddingRight="20dp">
 
             <TextView
-                android:id="@+id/textVolleyError"
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="28sp"
                 android:visibility="gone"
-                android:layout_height="wrap_content" />
+                android:textColor="@android:color/tertiary_text_light"
+                android:id="@+id/textVolleyError"/>
 
                 <TextView
                     android:id="@+id/descriptionTitle"
@@ -87,7 +100,6 @@
                     android:text="Описание"
                     android:paddingBottom="8dp"
                     android:textColor="?attr/colorAccent"
-
                     android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <TextView
