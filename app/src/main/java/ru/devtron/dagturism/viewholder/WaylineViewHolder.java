@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import ru.devtron.dagturism.R;
-import ru.devtron.dagturism.timeline.WaylineView;
+import ru.devtron.dagturism.customview.WaylineView;
 
 /**
  * Created by user on 03.01.2016.

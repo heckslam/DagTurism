@@ -67,8 +67,10 @@ public class RecyclerGalleryAdapter extends PagerAdapter {
         mImageLoader.get(arrayImages.get(imageNumber), new ImageLoader.ImageListener() {
             @Override
             public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                imageView.setImageBitmap(response.getBitmap());
-                progressBar.setVisibility(View.GONE);
+                if (response.getBitmap() != null) {
+                    imageView.setImageBitmap(response.getBitmap());
+                    progressBar.setVisibility(View.GONE);
+                }
             }
 
             @Override

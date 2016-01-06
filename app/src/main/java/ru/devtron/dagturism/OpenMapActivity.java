@@ -36,7 +36,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class OpenMapActivity extends AppCompatActivity implements OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback {
 
-    private SharedPreferences sp;
     private double lat, lng, myLat, myLng;
     SupportMapFragment mapFragment;
     String title;
@@ -44,7 +43,7 @@ public class OpenMapActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        sp = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         String selectedTheme = sp.getString("selectedTheme", "1");
         int selectedThemeValue = Integer.parseInt(selectedTheme);
         switch (selectedThemeValue) {

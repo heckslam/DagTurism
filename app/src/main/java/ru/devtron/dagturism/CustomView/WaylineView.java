@@ -1,4 +1,4 @@
-package ru.devtron.dagturism.timeline;
+package ru.devtron.dagturism.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -20,7 +20,6 @@ public class WaylineView extends View {
     private Drawable mMarker;
     private Drawable mStartLine;
     private Drawable mEndLine;
-    private Drawable mNormalLine;
     private int mMarkerSize;
     private int mLineSize;
 
@@ -59,7 +58,7 @@ public class WaylineView extends View {
 
         //Width measurements of the width and height and the inside view of child controls
         int w = mMarkerSize + getPaddingLeft() + getPaddingRight();
-        int h = mMarkerSize + getPaddingTop() + getPaddingBottom() + 50;
+        int h = mMarkerSize + getPaddingTop() ;
 
 
         // Width and height to determine the final view through a systematic approach to decision-making
@@ -107,7 +106,7 @@ public class WaylineView extends View {
         }
 
         if(mEndLine != null) {
-            mEndLine.setBounds(lineLeft, mBounds.bottom, mLineSize + lineLeft, height+500);
+            mEndLine.setBounds(lineLeft, mBounds.bottom, mLineSize + lineLeft, height);
 
 
     }

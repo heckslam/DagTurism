@@ -8,7 +8,7 @@ import java.util.List;
 
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.model.WaylineModel;
-import ru.devtron.dagturism.timeline.WaylineView;
+import ru.devtron.dagturism.customview.WaylineView;
 import ru.devtron.dagturism.viewholder.WaylineViewHolder;
 
 /**

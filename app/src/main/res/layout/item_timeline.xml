@@ -8,21 +8,23 @@
     android:paddingRight="10dp"
     android:layout_height="wrap_content">
 
-    <ru.devtron.dagturism.timeline.WaylineView
+    <ru.devtron.dagturism.customview.WaylineView
         android:id="@+id/time_marker"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="55dp"
-        android:paddingBottom="30dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        app:marker_size="25dp"
+        android:layout_height="match_parent"
+        android:paddingTop="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:marker_size="20dp"
         app:line_size="2dp"
         app:line="@color/colorHighlightGrey"/>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="4dp"
         android:layout_gravity="center_vertical">
 
         <TextView
