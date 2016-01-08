@@ -45,6 +45,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import ru.devtron.dagturism.adapter.RecyclerGalleryAdapter;
+import ru.devtron.dagturism.customview.ExpandableTextView;
 import ru.devtron.dagturism.model.ModelPlace;
 import ru.devtron.dagturism.model.ModelPlaceLatLng;
 
@@ -55,8 +56,9 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     SupportMapFragment mapFragment;
     private double lat, lng;
     private ModelPlaceLatLng modelPlaceLatLng;
-    private TextView cityTitle, textVolleyError, descriptionTV;
-    private Button button;
+    private TextView cityTitle, textVolleyError;
+    ExpandableTextView descriptionTV;
+    private Button howToGo;
     private String city, title, id, description;
     private int idInt;
     SharedPreferences sp;
@@ -72,6 +74,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     private static final String TAG_LAT = "latitude";
     private static final String TAG_LNG = "longitude";
     private static final String TAG_DESC = "place_desc";
+    private static final String TAG_PRICE = "price";
 
     private int success = 0;
 
@@ -111,10 +114,10 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
 
 
         textVolleyError = (TextView) findViewById(R.id.textVolleyError);
-        descriptionTV = (TextView) findViewById(R.id.descriptionPlace);
+        descriptionTV = (ExpandableTextView) findViewById(R.id.descriptionPlace);
         viewPager = (ViewPager) findViewById(R.id.viewPagerForImages);
         cityTitle = (TextView) findViewById(R.id.cityTitle);
-        button = (Button) findViewById(R.id.whereToGo);
+        howToGo = (Button) findViewById(R.id.howToGo);
         nestedScrollView =  (NestedScrollView) findViewById(R.id.nestedScroll);
 
         getPlaceFromActivity();
@@ -154,7 +157,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         viewPager.setAdapter(adapterImages);
         viewPager.setCurrentItem(RecyclerGalleryAdapter.PAGER_PAGES_MIDDLE);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        howToGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(OpenPlaceActivity.this, SprintLineActivity.class);
@@ -228,6 +231,10 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
                         modelPlaceLatLng = new ModelPlaceLatLng();
 
                         JSONObject place = response.getJSONObject(TAG_ITEM);
+                        if (place.getInt(TAG_PRICE) > 0) {
+                            howToGo.setVisibility(View.VISIBLE);
+                        }
+
                         lat = place.getDouble(TAG_LAT);
                         lng = place.getDouble(TAG_LNG);
                         description = place.getString(TAG_DESC);

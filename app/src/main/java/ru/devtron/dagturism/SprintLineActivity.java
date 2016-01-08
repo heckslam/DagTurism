@@ -41,7 +41,6 @@ import ru.devtron.dagturism.adapter.WaylineAdapter;
 import ru.devtron.dagturism.model.WaylineModel;
 
 public class SprintLineActivity extends AppCompatActivity {
-    private RecyclerView mRecyclerView;
     private double pointLat, pointLng;
     private String pointCaption;
     private List<WaylineModel> mDataList = new ArrayList<>();
@@ -49,9 +48,8 @@ public class SprintLineActivity extends AppCompatActivity {
     private TextView textVolleyError;
     private WaylineAdapter adapter;
     private ProgressBar progressBar;
+    TextView finalPrice;
 
-    private int id;
-    private int success = 0;
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_POINTS = "points";
@@ -59,6 +57,7 @@ public class SprintLineActivity extends AppCompatActivity {
     private static final String TAG_LNG = "point_longitude";
     private static final String TAG_CAPTION = "point_caption";
     private static final String TAG_ITEM = "item";
+    private static final String TAG_PRICE = "price";
 
     SharedPreferences sp;
     @Override
@@ -83,20 +82,22 @@ public class SprintLineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sprint_line);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        finalPrice = (TextView) findViewById(R.id.finalPrice);
 
         if (savedInstanceState!=null) {
             progressBar.setVisibility(View.GONE);
         }
 
-        id = getIntent().getIntExtra("id", 0);
+        int id = getIntent().getIntExtra("id", 0);
+        updateItem(id);
         initToolbar();
 
         textVolleyError = (TextView) findViewById(R.id.textVolleyError);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
-        updateItem();
+
 
         adapter = new WaylineAdapter(mDataList);
         mRecyclerView.setAdapter(adapter);
@@ -113,7 +114,11 @@ public class SprintLineActivity extends AppCompatActivity {
 
             @Override
             public void onLongClick(View view, int position) {
-
+                Intent intent = new Intent(SprintLineActivity.this, OpenMapActivity.class);
+                intent.putExtra("lat", mDataList.get(position).getPointLat());
+                intent.putExtra("lng", mDataList.get(position).getPointLng());
+                intent.putExtra("title", getResources().getString(R.string.howtogo));
+                startActivity(intent);
             }
         }));
 
@@ -145,14 +150,17 @@ public class SprintLineActivity extends AppCompatActivity {
         }
     }
 
+    private void setText(int price) {
+        finalPrice.setText(finalPrice.getText() + " " + String.valueOf(price) + "р");
+        finalPrice.setVisibility(View.VISIBLE);
+    }
 
-    private void updateItem () {
+
+    private void updateItem (int id) {
         progressBar.setVisibility(View.VISIBLE);
         String getItemsUrl = "http://republic.tk/api/place/";
 
         getItemsUrl = getItemsUrl + id;
-
-        Log.d("url123", getItemsUrl);
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -161,12 +169,15 @@ public class SprintLineActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
 
                 try {
-                    success = response.getInt(TAG_SUCCESS);
+                    int success = response.getInt(TAG_SUCCESS);
                     if (success == 1) {
 
 
                         JSONObject place = response.getJSONObject(TAG_ITEM);
                         JSONArray points = place.getJSONArray(TAG_POINTS);
+                        if (place.getInt(TAG_PRICE) > 0) {
+                            setText(place.getInt(TAG_PRICE));
+                        }
 
                         for (int i = points.length() - 1; i >= 0; i--) {
                             JSONObject currentPoint = points.getJSONObject(i);

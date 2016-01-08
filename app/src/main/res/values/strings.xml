@@ -53,4 +53,5 @@
     <string name="title_activity_maps">Map</string>
     <string name="clickMarker">Нажмите на красный маркер, чтобы открыть место в Google Карты</string>
     <string name="howtogo">Как добраться</string>
+    <string name="finalPrice">Примерная стоимость поездки:</string>
 </resources>

@@ -102,15 +102,31 @@
                     android:textColor="?attr/colorAccent"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
+            <ru.devtron.dagturism.customview.ExpandableTextView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+                android:layout_below="@id/descriptionTitle"
+                android:id="@+id/descriptionPlace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <TextView
-                    android:id="@+id/descriptionPlace"
-                    android:layout_below="@id/descriptionTitle"
+                    android:id="@+id/expandable_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:textAlignment="inherit"
                     android:maxLines="7"
                     android:ellipsize="end"/>
+                <ImageButton
+                    android:id="@id/expand_collapse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="14dp"
+                    android:layout_gravity="center|bottom"
+                    android:background="@android:color/transparent"/>
+            </ru.devtron.dagturism.customview.ExpandableTextView>
+
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -119,7 +135,6 @@
                 android:text="На карте"
                 android:layout_below="@id/descriptionPlace"
                 android:id="@+id/mapTitle"
-                android:layout_marginTop="8dp"
                 android:paddingBottom="3dp"
                 android:textColor="?attr/colorAccent"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
@@ -176,7 +191,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/map"
-                android:id="@+id/whereToGo"
+                android:id="@+id/howToGo"
+                android:visibility="gone"
                 android:text="@string/howtogo"/>
 
 
