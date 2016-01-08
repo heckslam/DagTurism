@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:id="@+id/LinearTimeline"
-    android:layout_width="match_parent"
-    android:paddingRight="10dp"
+    android:layout_width="300dp"
     android:layout_height="wrap_content">
 
     <ru.devtron.dagturism.customview.WaylineView
@@ -23,9 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="4dp"
-        android:layout_gravity="center_vertical">
+        style="@style/CardView.Light">
 
         <TextView
             android:id="@+id/tx_name"
@@ -37,6 +34,7 @@
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:layout_gravity="center_vertical"/>
+
 
     </android.support.v7.widget.CardView>
 

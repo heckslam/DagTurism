@@ -86,6 +86,7 @@ public abstract class AbstractTabFragment extends Fragment {
     protected void setClickListenerForCards() {
         adapter = new RecyclerAdapter(getContext(), listPlaces);
         mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setHasFixedSize(true);
 
         mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(getContext(), mRecyclerView, new ClickListener() {
             @Override

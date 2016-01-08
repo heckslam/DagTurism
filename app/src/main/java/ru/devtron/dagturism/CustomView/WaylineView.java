@@ -38,7 +38,7 @@ public class WaylineView extends View {
         mMarker = typedArray.getDrawable(R.styleable.timeline_style_marker);
         mStartLine = typedArray.getDrawable(R.styleable.timeline_style_line);
         mEndLine = typedArray.getDrawable(R.styleable.timeline_style_line);
-        mMarkerSize = typedArray.getDimensionPixelSize(R.styleable.timeline_style_marker_size, 25);
+        mMarkerSize = typedArray.getDimensionPixelSize(R.styleable.timeline_style_marker_size, 20);
         mLineSize = typedArray.getDimensionPixelSize(R.styleable.timeline_style_line_size, 2);
         typedArray.recycle();
 
