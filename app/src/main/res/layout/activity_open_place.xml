@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main_content"
-        android:fitsSystemWindows="true">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:fitsSystemWindows="true">
 
 
         <android.support.design.widget.AppBarLayout
@@ -59,15 +60,6 @@
 
         </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.ContentLoadingProgressBar
-        android:id="@+id/loading"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone" />
-
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -76,21 +68,27 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="24dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="28sp"
-                android:visibility="gone"
-                android:textColor="@android:color/tertiary_text_light"
-                android:id="@+id/textVolleyError"/>
+                android:orientation="vertical"
+                android:id="@+id/description"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="20dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="28sp"
+                    android:visibility="gone"
+                    android:textColor="@android:color/tertiary_text_light"
+                    android:id="@+id/textVolleyError"/>
 
                 <TextView
                     android:id="@+id/descriptionTitle"
@@ -102,98 +100,73 @@
                     android:textColor="?attr/colorAccent"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-            <ru.devtron.dagturism.customview.ExpandableTextView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
-                android:layout_below="@id/descriptionTitle"
-                android:id="@+id/descriptionPlace"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/expandable_text"
+                <ru.devtron.dagturism.customview.ExpandableTextView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/descriptionPlace"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textAlignment="inherit"
-                    android:maxLines="7"
-                    android:ellipsize="end"/>
-                <ImageButton
-                    android:id="@id/expand_collapse"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="14dp"
-                    android:layout_gravity="center|bottom"
-                    android:background="@android:color/transparent"/>
-            </ru.devtron.dagturism.customview.ExpandableTextView>
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/expandable_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textAlignment="inherit"
+                        android:maxLines="7"
+                        android:ellipsize="end"/>
+                    <ImageButton
+                        android:id="@id/expand_collapse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="14dp"
+                        android:layout_gravity="center|bottom"
+                        android:background="@android:color/transparent"/>
+                </ru.devtron.dagturism.customview.ExpandableTextView>
 
+            </LinearLayout>
 
-
-            <TextView
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:text="На карте"
-                android:layout_below="@id/descriptionPlace"
-                android:id="@+id/mapTitle"
-                android:paddingBottom="3dp"
-                android:textColor="?attr/colorAccent"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_below="@id/mapTitle"
-                android:id="@+id/mapMark"
-                android:layout_marginTop="8dp"
-                android:layout_height="wrap_content" android:src="@drawable/map_marker" />
+                android:layout_below="@+id/description"
+                android:layout_height="100dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/mapTitle"
-                android:layout_toRightOf="@id/mapMark"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
                 android:paddingLeft="20dp"
-                android:paddingBottom="3dp"
-                android:id="@+id/cityTitleAndMarker"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:id="@+id/cityTitle"
-                    android:textStyle="bold"
-                    android:textColor="@color/descriptionColor"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                android:paddingRight="20dp"
+                android:layout_below="@+id/map">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:text="Россия"
-                    android:id="@+id/counryTitle"
-                    android:textColor="@color/descriptionColor"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    card_view:cardUseCompatPadding="true"
+                    card_view:cardElevation="5dp">
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="7dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:id="@+id/howToGo"
+                        android:visibility="visible"
+                        android:textColor="@color/white"
+                        android:background="@drawable/custom_button"
+                        android:text="@string/howtogo"
+                        xmlns:android="http://schemas.android.com/apk/res/android" />
+                </android.support.v7.widget.CardView>
+
+
 
             </LinearLayout>
 
 
 
 
-                <fragment
-                    android:id="@+id/map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
-                    android:layout_width="match_parent"
-                    android:layout_below="@id/cityTitleAndMarker"
-                    android:layout_marginTop="8dp"
-                    android:layout_height="100dp"/>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/map"
-                android:id="@+id/howToGo"
-                android:visibility="gone"
-                android:text="@string/howtogo"/>
 
 
 

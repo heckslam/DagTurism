@@ -20,6 +20,7 @@
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.Toolbar
@@ -32,12 +33,15 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:tabIndicatorColor="@android:color/white"
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="2dp"
+                app:tabIndicatorColor="@color/white"
                 app:tabIndicatorHeight="2dp"
                 app:tabSelectedTextColor="@android:color/white"
                 app:tabTextColor="@android:color/white"
-                />
+
+                xmlns:app="http://schemas.android.com/apk/res-auto" />
+
 
         </android.support.design.widget.AppBarLayout>
 
