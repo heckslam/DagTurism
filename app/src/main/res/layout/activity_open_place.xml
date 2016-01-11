@@ -144,15 +144,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     card_view:cardUseCompatPadding="true"
+                    android:id="@+id/howToGoCard"
+                    android:visibility="gone"
                     card_view:cardElevation="5dp">
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="7dp"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:id="@+id/howToGo"
-                        android:visibility="visible"
                         android:textColor="@color/white"
                         android:background="@drawable/custom_button"
                         android:text="@string/howtogo"

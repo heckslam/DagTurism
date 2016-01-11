@@ -3,6 +3,7 @@ package ru.devtron.dagturism;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ public class SprintLineActivity extends AppCompatActivity {
     private WaylineAdapter adapter;
     private ProgressBar progressBar;
     TextView finalPrice;
+    RecyclerView mRecyclerView;
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -59,7 +61,16 @@ public class SprintLineActivity extends AppCompatActivity {
     private static final String TAG_ITEM = "item";
     private static final String TAG_PRICE = "price";
 
+    private static final String STATE_SPRINT = "state_sprint";
+
     SharedPreferences sp;
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(STATE_SPRINT, (ArrayList<? extends Parcelable>) mDataList);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -83,44 +94,29 @@ public class SprintLineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sprint_line);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         finalPrice = (TextView) findViewById(R.id.finalPrice);
-
-        if (savedInstanceState!=null) {
-            progressBar.setVisibility(View.GONE);
-        }
-
-        int id = getIntent().getIntExtra("id", 0);
-        updateItem(id);
-        initToolbar();
-
         textVolleyError = (TextView) findViewById(R.id.textVolleyError);
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
+        initToolbar();
 
 
-        adapter = new WaylineAdapter(mDataList);
-        mRecyclerView.setAdapter(adapter);
+        if (savedInstanceState!=null) {
+            progressBar.setVisibility(View.GONE);
+            mDataList = savedInstanceState.getParcelableArrayList(STATE_SPRINT);
 
-        mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(this, mRecyclerView, new ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Intent intent = new Intent(SprintLineActivity.this, OpenMapActivity.class);
-                intent.putExtra("lat", mDataList.get(position).getPointLat());
-                intent.putExtra("lng", mDataList.get(position).getPointLng());
-                intent.putExtra("title", getResources().getString(R.string.howtogo));
-                startActivity(intent);
-            }
+            RecyclerViewSettings();
 
-            @Override
-            public void onLongClick(View view, int position) {
-                Intent intent = new Intent(SprintLineActivity.this, OpenMapActivity.class);
-                intent.putExtra("lat", mDataList.get(position).getPointLat());
-                intent.putExtra("lng", mDataList.get(position).getPointLng());
-                intent.putExtra("title", getResources().getString(R.string.howtogo));
-                startActivity(intent);
-            }
-        }));
+        }
+
+        else {
+            int id = getIntent().getIntExtra("id", 0);
+            updateItem(id);
+            RecyclerViewSettings();
+        }
+
+
 
     }
 
@@ -226,6 +222,32 @@ public class SprintLineActivity extends AppCompatActivity {
 
         queue.add(jsonObjectRequest);
 
+    }
+
+    private void RecyclerViewSettings() {
+        adapter = new WaylineAdapter(mDataList);
+        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setHasFixedSize(true);
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(this, mRecyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(SprintLineActivity.this, OpenMapActivity.class);
+                intent.putExtra("lat", mDataList.get(position).getPointLat());
+                intent.putExtra("lng", mDataList.get(position).getPointLng());
+                intent.putExtra("title", getResources().getString(R.string.howtogo));
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                Intent intent = new Intent(SprintLineActivity.this, OpenMapActivity.class);
+                intent.putExtra("lat", mDataList.get(position).getPointLat());
+                intent.putExtra("lng", mDataList.get(position).getPointLng());
+                intent.putExtra("title", getResources().getString(R.string.howtogo));
+                startActivity(intent);
+            }
+        }));
     }
 
 

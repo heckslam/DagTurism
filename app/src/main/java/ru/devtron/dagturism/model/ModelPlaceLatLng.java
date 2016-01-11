@@ -60,13 +60,13 @@ public class ModelPlaceLatLng implements Parcelable {
         dest.writeString(description);
     }
 
-    public static final Parcelable.Creator<ModelPlace> CREATOR = new Parcelable.Creator<ModelPlace>() {
-        public ModelPlace createFromParcel(Parcel in) {
-            return new ModelPlace(in);
+    public static final Parcelable.Creator<ModelPlaceLatLng> CREATOR = new Parcelable.Creator<ModelPlaceLatLng>() {
+        public ModelPlaceLatLng createFromParcel(Parcel in) {
+            return new ModelPlaceLatLng(in);
         }
 
-        public ModelPlace[] newArray(int size){
-            return new ModelPlace[size];
+        public ModelPlaceLatLng[] newArray(int size){
+            return new ModelPlaceLatLng[size];
         }
     };
 }

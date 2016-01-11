@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,6 +59,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     private TextView textVolleyError;
     ExpandableTextView descriptionTV;
     private Button howToGo;
+    private CardView howToGoCard;
     private String title, id, description;
     private int idInt;
     SharedPreferences sp;
@@ -111,6 +113,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         descriptionTV = (ExpandableTextView) findViewById(R.id.descriptionPlace);
         viewPager = (ViewPager) findViewById(R.id.viewPagerForImages);
         howToGo = (Button) findViewById(R.id.howToGo);
+        howToGoCard = (CardView) findViewById(R.id.howToGoCard);
         nestedScrollView =  (NestedScrollView) findViewById(R.id.nestedScroll);
 
         getPlaceFromActivity();
@@ -221,7 +224,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
 
                         JSONObject place = response.getJSONObject(TAG_ITEM);
                         if (place.getInt(TAG_PRICE) > 0) {
-                            howToGo.setVisibility(View.VISIBLE);
+                            howToGoCard.setVisibility(View.VISIBLE);
                         }
 
                         lat = place.getDouble(TAG_LAT);

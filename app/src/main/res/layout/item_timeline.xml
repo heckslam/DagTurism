@@ -22,6 +22,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:foreground="@drawable/ripple_bg"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
         style="@style/CardView.Light">
 
         <TextView
