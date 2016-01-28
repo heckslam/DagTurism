@@ -1,21 +1,24 @@
 package ru.devtron.dagturism;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -29,6 +32,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -46,8 +50,8 @@ import java.util.List;
 
 import ru.devtron.dagturism.adapter.RecyclerGalleryAdapter;
 import ru.devtron.dagturism.customview.ExpandableTextView;
+import ru.devtron.dagturism.db.DBHelper;
 import ru.devtron.dagturism.model.ModelPlace;
-import ru.devtron.dagturism.model.ModelPlaceLatLng;
 
 public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -55,15 +59,18 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
 
     SupportMapFragment mapFragment;
     private double lat, lng;
-    private ModelPlaceLatLng modelPlaceLatLng;
+    private ModelPlace modelPlace;
     private TextView textVolleyError;
     ExpandableTextView descriptionTV;
     private Button howToGo;
     private CardView howToGoCard;
-    private String title, id, description;
+    private String title, id, description, city;
     private int idInt;
     SharedPreferences sp;
     NestedScrollView nestedScrollView;
+    private DBHelper dbHelper;
+    private SQLiteDatabase database;
+    List<String> arrayImages;
 
     private static final String STATE_OPEN_PLACE = "state_open_place";
 
@@ -84,7 +91,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(STATE_OPEN_PLACE, modelPlaceLatLng);
+        outState.putParcelable(STATE_OPEN_PLACE, modelPlace);
     }
 
     @Override
@@ -116,34 +123,67 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         howToGoCard = (CardView) findViewById(R.id.howToGoCard);
         nestedScrollView =  (NestedScrollView) findViewById(R.id.nestedScroll);
 
+
+
+        dbHelper = new DBHelper(this);
+        database = dbHelper.getWritableDatabase();
+
         getPlaceFromActivity();
 
+        String selectQuery = "SELECT " + DBHelper.KEY_DESCRIPTION + ", "
+                + DBHelper.KEY_LAT + ", " + DBHelper.KEY_LNG +
+                " FROM " + DBHelper.TABLE_PLACES + " WHERE "
+                + DBHelper.KEY_PLACE_ID + " = " + id;
 
+        //Сначала смотрим есть ли место в бд
+        Cursor c = database.rawQuery(selectQuery, null);
+        if(c!=null && c.getCount()>0){
+            c.moveToFirst();
+            initToolbar(true);
+            String desc = c.getString(c.getColumnIndex(DBHelper.KEY_DESCRIPTION));
+            double lat = Double.parseDouble(c.getString(c.getColumnIndex(DBHelper.KEY_LAT)));
+            double lng = Double.parseDouble(c.getString(c.getColumnIndex(DBHelper.KEY_LNG)));
 
-        if (savedInstanceState!=null) {
-            modelPlaceLatLng = savedInstanceState.getParcelable(STATE_OPEN_PLACE);
-            if (modelPlaceLatLng != null && modelPlaceLatLng.getDescription().length() > 3) {
-                initVariables(modelPlaceLatLng);
+            ModelPlace place = new ModelPlace();
+            place.setDescription(desc);
+            place.setLat(lat);
+            place.setLng(lng);
+
+            initVariables(place);
+
+            Toast.makeText(getApplicationContext(),
+                    "Вывел из базы",
+                    Toast.LENGTH_LONG).show();
+
+            c.close();
+        }
+        //иначе если в базе нету, тогда смотрим в savedInstanceState
+        else if (savedInstanceState!=null) {
+            initToolbar(false);
+            modelPlace = savedInstanceState.getParcelable(STATE_OPEN_PLACE);
+            if (modelPlace != null && modelPlace.getDescription().length() > 3) {
+                initVariables(modelPlace);
             }
             else {
                 updateItem();
             }
         }
+        //Если и в savedInstanceState пусто, тогда делаем запрос на сервер
         else {
+            initToolbar(false);
             updateItem();
         }
-
-
-        initToolbar();
-
     }
 
     private void getPlaceFromActivity() {
         ModelPlace parcelWithPlace = getIntent().getParcelableExtra(ModelPlace.class.getCanonicalName());
 
-        title = parcelWithPlace.getTitle();
-        id = parcelWithPlace.getId();
-        List<String> arrayImages = parcelWithPlace.getImages();
+        if (parcelWithPlace != null) {
+            title = parcelWithPlace.getTitle();
+            city = parcelWithPlace.getCity();
+            id = parcelWithPlace.getId();
+            arrayImages = parcelWithPlace.getImages();
+        }
 
         adapterImages = new RecyclerGalleryAdapter(this, arrayImages);
 
@@ -161,7 +201,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         });
     }
 
-    private ModelPlaceLatLng initVariables(ModelPlaceLatLng modelPlace) {
+    private ModelPlace initVariables(ModelPlace modelPlace) {
         if (modelPlace != null) {
             description = modelPlace.getDescription();
             lat = modelPlace.getLat();
@@ -182,16 +222,63 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
 
-    private void initToolbar() {
+    private void initToolbar(boolean hasDb) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         if (toolbar != null) {
             toolbar.setTitle(title);
             toolbar.setTitleTextColor(Color.WHITE);
             setSupportActionBar(toolbar);
-        }
 
-        if (getSupportActionBar() != null) {
+
+            MaterialFavoriteButton toolbarFavorite = new MaterialFavoriteButton.Builder(this)
+                    .favorite(hasDb)
+                    .color(MaterialFavoriteButton.STYLE_WHITE)
+                    .type(MaterialFavoriteButton.STYLE_HEART)
+                    .rotationDuration(400)
+                    .create();
+
+            LinearLayout layoutButton = (LinearLayout) findViewById(R.id.linearButton);
+            layoutButton.addView(toolbarFavorite);
+            toolbarFavorite.setOnFavoriteChangeListener(
+                    new MaterialFavoriteButton.OnFavoriteChangeListener() {
+                        @Override
+                        public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
+                            if (favorite) {
+                                ContentValues contentValuesPlace = new ContentValues();
+                                contentValuesPlace.put(DBHelper.KEY_PLACE_ID, id);
+                                contentValuesPlace.put(DBHelper.KEY_TITLE, title);
+                                contentValuesPlace.put(DBHelper.KEY_CITY, city);
+                                contentValuesPlace.put(DBHelper.KEY_LAT, modelPlace.getLat());
+                                contentValuesPlace.put(DBHelper.KEY_LNG, modelPlace.getLng());
+                                contentValuesPlace.put(DBHelper.KEY_DESCRIPTION, modelPlace.getDescription());
+
+                                database.insert(DBHelper.TABLE_PLACES, null, contentValuesPlace);
+
+                                ContentValues contentValuesImages = new ContentValues();
+
+                                for (int i = 0; i < arrayImages.size(); i++) {
+                                    contentValuesImages.put(DBHelper.KEY_PLACE_ID, id);
+                                    contentValuesImages.put(DBHelper.KEY_IMAGE_URL, arrayImages.get(i));
+                                    database.insert(DBHelper.TABLE_IMAGES, null, contentValuesImages);
+                                }
+
+                                Cursor cursor = database.query(DBHelper.TABLE_IMAGES, null, null, null, null, null, null);
+                                if (cursor.getCount() > 0) {
+                                    Toast toast = Toast.makeText(getApplicationContext(),
+                                            "Добавлено в избранные", Toast.LENGTH_SHORT);
+                                    toast.show();
+                                }
+
+                                cursor.close();
+                            }
+                            }
+                        }
+
+                        );
+                    }
+
+            if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
         }
@@ -220,7 +307,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
                     success = response.getInt(TAG_SUCCESS);
                     if (success == 1) {
 
-                        modelPlaceLatLng = new ModelPlaceLatLng();
+                        modelPlace = new ModelPlace();
 
                         JSONObject place = response.getJSONObject(TAG_ITEM);
                         if (place.getInt(TAG_PRICE) > 0) {
@@ -231,11 +318,11 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
                         lng = place.getDouble(TAG_LNG);
                         description = place.getString(TAG_DESC);
 
-                        modelPlaceLatLng.setLat(lat);
-                        modelPlaceLatLng.setLng(lng);
-                        modelPlaceLatLng.setDescription(description);
+                        modelPlace.setLat(lat);
+                        modelPlace.setLng(lng);
+                        modelPlace.setDescription(description);
 
-                        initVariables(modelPlaceLatLng);
+                        initVariables(modelPlace);
                     }
 
                     nestedScrollView.setVisibility(View.VISIBLE);
@@ -269,13 +356,6 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
 
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

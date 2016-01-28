@@ -4,7 +4,6 @@
     <item android:id="@+id/share"
         android:title="@string/share_title"
         android:orderInCategory="1"
-        android:icon="@drawable/ic_share_variant_white_24dp"
         app:showAsAction="ifRoom"
         />
 

@@ -10,6 +10,9 @@ public class ModelPlace implements Parcelable {
     private String title;
     private String city;
     private List<String> images;
+    private double lat;
+    private double lng;
+    private String description;
 
     public static final String[] PLACES = {"Махачкала", "Буйнакск", "Дагестанские огни", "Дербент"};
     public static final String[] REST = {"Любой", "Активный отдых", "Религиозный отдых", "Исторический"};
@@ -23,13 +26,21 @@ public class ModelPlace implements Parcelable {
         title = input.readString();
         city = input.readString();
         images = input.createStringArrayList();
+        lat = input.readDouble();
+        lng = input.readDouble();
+        description = input.readString();
     }
 
-    public ModelPlace(String id, String title, String city, List<String> images) {
+
+
+    public ModelPlace(String id, String title, String city, List<String> images, Double lat, double lng, String description) {
         this.id = id;
         this.title = title;
         this.city = city;
         this.images = images;
+        this.lat = lat;
+        this.lng = lng;
+        this.description = description;
     }
 
     public String getId() {
@@ -65,6 +76,30 @@ public class ModelPlace implements Parcelable {
         this.images = images;
     }
 
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -76,6 +111,9 @@ public class ModelPlace implements Parcelable {
         dest.writeString(title);
         dest.writeString(city);
         dest.writeStringList(images);
+        dest.writeDouble(lat);
+        dest.writeDouble(lng);
+        dest.writeString(description);
     }
 
     public static final Parcelable.Creator<ModelPlace> CREATOR = new Parcelable.Creator<ModelPlace>() {

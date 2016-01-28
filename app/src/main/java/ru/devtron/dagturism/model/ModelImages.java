@@ -1,51 +1,17 @@
 package ru.devtron.dagturism.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.util.List;
-
 /**
- * Created by heckslam on 31.12.2015.
+ * Created by user on 27.01.2016.
  */
-public class ModelImages implements Parcelable {
-    private List<String> images;
+public class ModelImages {
+    private String url;
 
-    public ModelImages () {
-
+    public String getUrl() {
+        return url;
     }
 
-    public ModelImages (Parcel input) {
-        images = input.createStringArrayList();
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public static final Creator<ModelImages> CREATOR = new Creator<ModelImages>() {
-        @Override
-        public ModelImages createFromParcel(Parcel in) {
-            return new ModelImages(in);
-        }
-
-        @Override
-        public ModelImages[] newArray(int size) {
-            return new ModelImages[size];
-        }
-    };
-
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringList(images);
-    }
 }

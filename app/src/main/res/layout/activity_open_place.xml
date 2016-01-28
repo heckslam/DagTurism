@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:card_view="http://schemas.android.com/tools"
-    android:id="@+id/main_content"
     android:fitsSystemWindows="true">
 
 
@@ -40,20 +43,13 @@
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
-                        app:layout_collapseMode="pin">
-
-                        <com.github.ivbaranov.mfb.MaterialFavoriteButton
-                            android:id="@+id/favorite_nice"
+                        app:layout_collapseMode="pin" >
+                        <LinearLayout
                             android:layout_width="wrap_content"
+                            android:id="@+id/linearButton"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="right"
-                            app:mfb_rotation_duration="700"
-                            app:mfb_rotation_angle="360"
-                            app:mfb_favorite_image="@drawable/ic_heart_white_24dp"
-                            app:mfb_not_favorite_image="@drawable/ic_heart_outline_white_24dp"
-                             />
-
+                            android:orientation="horizontal"
+                            android:layout_gravity="end"/>
                     </android.support.v7.widget.Toolbar>
 
             </android.support.design.widget.CollapsingToolbarLayout>
@@ -117,7 +113,9 @@
                         android:id="@id/expand_collapse"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="14dp"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginRight="14dp"
+                        android:layout_marginTop="14dp"
                         android:layout_gravity="center|bottom"
                         android:background="@android:color/transparent"/>
                 </ru.devtron.dagturism.customview.ExpandableTextView>
@@ -128,6 +126,7 @@
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
+                android:layout_marginTop="14dp"
                 android:layout_below="@+id/description"
                 android:layout_height="100dp"/>
 
@@ -158,26 +157,11 @@
                         android:text="@string/howtogo"
                         xmlns:android="http://schemas.android.com/apk/res/android" />
                 </android.support.v7.widget.CardView>
-
-
-
             </LinearLayout>
-
-
-
-
-
-
-
-
         </RelativeLayout>
-
-
-
-
     </android.support.v4.widget.NestedScrollView>
 
 
 
-
     </android.support.design.widget.CoordinatorLayout>
+</FrameLayout>

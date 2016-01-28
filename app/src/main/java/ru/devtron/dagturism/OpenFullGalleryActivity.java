@@ -8,7 +8,7 @@ import android.support.v4.view.ViewPager;
 import java.util.List;
 
 import ru.devtron.dagturism.adapter.FullGalleryAdapter;
-import ru.devtron.dagturism.model.ModelImages;
+import ru.devtron.dagturism.model.ModelGallery;
 
 public class OpenFullGalleryActivity extends Activity {
 
@@ -31,7 +31,7 @@ public class OpenFullGalleryActivity extends Activity {
 
 
     private void getPlaceFromActivity() {
-        ModelImages parcelWithPlace = getIntent().getParcelableExtra(ModelImages.class.getCanonicalName());
+        ModelGallery parcelWithPlace = getIntent().getParcelableExtra(ModelGallery.class.getCanonicalName());
         List<String> arrayImages = parcelWithPlace.getImages();
         int position = getIntent().getIntExtra("position", 0);
 

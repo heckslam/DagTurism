@@ -10,12 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
@@ -23,7 +20,7 @@ import ru.devtron.dagturism.Utils.MySingleton;
 import ru.devtron.dagturism.OpenFullGalleryActivity;
 import ru.devtron.dagturism.OpenPlaceActivity;
 import ru.devtron.dagturism.R;
-import ru.devtron.dagturism.model.ModelImages;
+import ru.devtron.dagturism.model.ModelGallery;
 
 public class RecyclerGalleryAdapter extends PagerAdapter {
     Context context;
@@ -86,9 +83,9 @@ public class RecyclerGalleryAdapter extends PagerAdapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, OpenFullGalleryActivity.class);
-                    ModelImages images = new ModelImages();
+                    ModelGallery images = new ModelGallery();
                     images.setImages(arrayImages);
-                    intent.putExtra(ModelImages.class.getCanonicalName(), images);
+                    intent.putExtra(ModelGallery.class.getCanonicalName(), images);
                     intent.putExtra("position", finalImageNumber);
                     context.startActivity(intent);
                 }
