@@ -7,12 +7,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -43,15 +45,18 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.devtron.dagturism.adapter.RecyclerGalleryAdapter;
 import ru.devtron.dagturism.customview.ExpandableTextView;
 import ru.devtron.dagturism.db.DBHelper;
 import ru.devtron.dagturism.model.ModelPlace;
+import ru.devtron.dagturism.model.WaylineModel;
 
 public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -60,7 +65,9 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     SupportMapFragment mapFragment;
     private double lat, lng;
     private ModelPlace modelPlace;
+    private boolean hasRoute;
     private TextView textVolleyError;
+    private WaylineModel waylineModel;
     ExpandableTextView descriptionTV;
     private Button howToGo;
     private CardView howToGoCard;
@@ -68,9 +75,14 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     private int idInt;
     SharedPreferences sp;
     NestedScrollView nestedScrollView;
-    private DBHelper dbHelper;
     private SQLiteDatabase database;
     List<String> arrayImages;
+    private double pointLat, pointLng;
+    private String pointCaption;
+    private int pointNumber;
+    private List<WaylineModel> mDataList = new ArrayList<>();
+    private int finalPrice;
+
 
     private static final String STATE_OPEN_PLACE = "state_open_place";
 
@@ -82,6 +94,11 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     private static final String TAG_LNG = "longitude";
     private static final String TAG_DESC = "place_desc";
     private static final String TAG_PRICE = "price";
+    private static final String TAG_POINTS = "points";
+    private static final String TAG_CAPTION = "point_caption";
+    private static final String TAG_POINT_LAT = "point_latitude";
+    private static final String TAG_POINT_LNG = "point_longitude";
+    private static final String TAG_POINT_NUMBER = "point_number";
 
     private int success = 0;
 
@@ -124,8 +141,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         nestedScrollView =  (NestedScrollView) findViewById(R.id.nestedScroll);
 
 
-
-        dbHelper = new DBHelper(this);
+        DBHelper dbHelper = new DBHelper(this);
         database = dbHelper.getWritableDatabase();
 
         getPlaceFromActivity();
@@ -151,9 +167,33 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
 
             initVariables(place);
 
-            Toast.makeText(getApplicationContext(),
-                    "Вывел из базы",
-                    Toast.LENGTH_LONG).show();
+            String selectPointsQuery = "SELECT  * FROM " + DBHelper.TABLE_POINTS + " WHERE "
+                    + DBHelper.KEY_PLACE_ID + " = " + id;
+
+            Cursor cursorPoints = database.rawQuery(selectPointsQuery, null);
+            if (cursorPoints.moveToFirst()) {
+                howToGoCard.setVisibility(View.VISIBLE);
+                do {
+                    String caption = cursorPoints.getString((cursorPoints.getColumnIndex(DBHelper.KEY_POINT_CAPTION)));
+                    int pointNumber = cursorPoints.getInt((cursorPoints.getColumnIndex(DBHelper.KEY_POINT_NUMBER)));
+                    double pointLng = cursorPoints.getDouble((cursorPoints.getColumnIndex(DBHelper.KEY_POINT_LAT)));
+                    double pointLat = cursorPoints.getDouble((cursorPoints.getColumnIndex(DBHelper.KEY_POINT_LNG)));
+
+                    WaylineModel model = new WaylineModel();
+                    model.setPointCaption(caption);
+                    model.setPointLat(pointLat);
+                    model.setPointLng(pointLng);
+                    model.setPointNumber(pointNumber);
+
+                    mDataList.add(model);
+                }
+                while (cursorPoints.moveToNext());
+                finalPrice = cursorPoints.getInt((cursorPoints.getColumnIndex(DBHelper.KEY_POINTS_PRICE)));
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Поинты из базы стопудова", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            cursorPoints.close();
 
             c.close();
         }
@@ -194,8 +234,8 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(OpenPlaceActivity.this, SprintLineActivity.class);
-                idInt = Integer.parseInt(id);
-                intent.putExtra("id", idInt);
+                intent.putParcelableArrayListExtra("mDataList", (ArrayList<? extends Parcelable>) mDataList);
+                intent.putExtra("finalPrice", finalPrice);
                 startActivity(intent);
             }
         });
@@ -263,14 +303,45 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
                                     database.insert(DBHelper.TABLE_IMAGES, null, contentValuesImages);
                                 }
 
+                                if (hasRoute) {
+                                    ContentValues contentValuesPoints = new ContentValues();
+                                    howToGoCard.setVisibility(View.VISIBLE);
+
+                                    for (int i = 0; i < mDataList.size(); i++) {
+                                        contentValuesPoints.put(DBHelper.KEY_PLACE_ID, id);
+                                        contentValuesPoints.put(DBHelper.KEY_POINT_CAPTION, mDataList.get(i).getPointCaption());
+                                        contentValuesPoints.put(DBHelper.KEY_POINT_NUMBER, mDataList.get(i).getPointNumber());
+                                        contentValuesPoints.put(DBHelper.KEY_POINT_LAT, mDataList.get(i).getPointLat());
+                                        contentValuesPoints.put(DBHelper.KEY_POINT_LNG, mDataList.get(i).getPointLng());
+                                        contentValuesPoints.put(DBHelper.KEY_POINTS_PRICE, finalPrice);
+                                        database.insert(DBHelper.TABLE_POINTS, null, contentValuesPoints);
+                                    }
+
+                                }
+
                                 Cursor cursor = database.query(DBHelper.TABLE_IMAGES, null, null, null, null, null, null);
                                 if (cursor.getCount() > 0) {
                                     Toast toast = Toast.makeText(getApplicationContext(),
-                                            "Добавлено в избранные", Toast.LENGTH_SHORT);
+                                            "Добаёлено в избранные", Toast.LENGTH_SHORT);
                                     toast.show();
                                 }
 
                                 cursor.close();
+                            }
+
+                            else {
+                                database.delete(DBHelper.TABLE_PLACES, DBHelper.KEY_PLACE_ID + " = ? ", new String[] { id });
+                                database.delete(DBHelper.TABLE_IMAGES, DBHelper.KEY_PLACE_ID + " = ? ", new String[] { id });
+
+                                Cursor cursorPoints = database.query(DBHelper.TABLE_POINTS, null, null, null, null, null, null);
+                                if (cursorPoints.getCount() > 0) {
+                                    database.delete(DBHelper.TABLE_POINTS, DBHelper.KEY_PLACE_ID + " = ? ", new String[]{id});
+                                }
+
+                                cursorPoints.close();
+                                Toast toast = Toast.makeText(getApplicationContext(),
+                                        "Удалено из избранных", Toast.LENGTH_SHORT);
+                                toast.show();
                             }
                             }
                         }
@@ -310,8 +381,28 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
                         modelPlace = new ModelPlace();
 
                         JSONObject place = response.getJSONObject(TAG_ITEM);
-                        if (place.getInt(TAG_PRICE) > 0) {
+                        JSONArray points = place.getJSONArray(TAG_POINTS);
+                        finalPrice = place.getInt(TAG_PRICE);
+                        if (finalPrice > 0) {
                             howToGoCard.setVisibility(View.VISIBLE);
+                            hasRoute = true;
+                            for (int i = points.length() - 1; i >= 0; i--) {
+                                JSONObject currentPoint = points.getJSONObject(i);
+                                waylineModel = new WaylineModel();
+
+                                pointLat = currentPoint.getDouble(TAG_POINT_LAT);
+                                pointLng = currentPoint.getDouble(TAG_POINT_LNG);
+                                pointCaption = currentPoint.getString(TAG_CAPTION);
+                                pointNumber = currentPoint.getInt(TAG_POINT_NUMBER);
+
+                                waylineModel.setPointLat(pointLat);
+                                waylineModel.setPointLng(pointLng);
+                                waylineModel.setPointCaption(pointCaption);
+                                waylineModel.setPointNumber(pointNumber);
+
+
+                                mDataList.add(waylineModel);
+                            }
                         }
 
                         lat = place.getDouble(TAG_LAT);
