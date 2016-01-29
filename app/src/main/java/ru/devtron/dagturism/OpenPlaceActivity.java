@@ -184,14 +184,11 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
                     model.setPointLat(pointLat);
                     model.setPointLng(pointLng);
                     model.setPointNumber(pointNumber);
+                    finalPrice = cursorPoints.getInt((cursorPoints.getColumnIndex(DBHelper.KEY_POINTS_PRICE)));
 
                     mDataList.add(model);
                 }
                 while (cursorPoints.moveToNext());
-                finalPrice = cursorPoints.getInt((cursorPoints.getColumnIndex(DBHelper.KEY_POINTS_PRICE)));
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Поинты из базы стопудова", Toast.LENGTH_SHORT);
-                toast.show();
             }
             cursorPoints.close();
 
@@ -322,7 +319,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
                                 Cursor cursor = database.query(DBHelper.TABLE_IMAGES, null, null, null, null, null, null);
                                 if (cursor.getCount() > 0) {
                                     Toast toast = Toast.makeText(getApplicationContext(),
-                                            "Добаёлено в избранные", Toast.LENGTH_SHORT);
+                                            "Добавлено в избранные", Toast.LENGTH_SHORT);
                                     toast.show();
                                 }
 
