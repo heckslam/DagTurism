@@ -6,12 +6,20 @@
     android:background="@color/mainBackground"
     android:fitsSystemWindows="true">
 
-    <include layout="@layout/toolbar"/>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:paddingTop="?attr/actionBarSize"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            >
+
+            <include layout="@layout/toolbar"/>
+
+        </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.ContentLoadingProgressBar
             android:id="@+id/progressbar"
@@ -24,9 +32,11 @@
 
         <android.support.v7.widget.RecyclerView
             xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_marginBottom="4dp"
             android:id="@+id/recyclerView"
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/textVolleyError"
@@ -39,7 +49,7 @@
             android:visibility="visible"
             android:layout_height="wrap_content" />
 
-    </FrameLayout>
+    </LinearLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation"

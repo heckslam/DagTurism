@@ -1,17 +1,13 @@
 package ru.devtron.dagturism;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Parcelable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,11 +29,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.devtron.dagturism.Utils.Constants;
-import ru.devtron.dagturism.Utils.NetworkUtil;
 import ru.devtron.dagturism.abstract_classes.AbstractMethodsActivity;
 import ru.devtron.dagturism.adapter.RecyclerAdapter;
 import ru.devtron.dagturism.listener.ClickListener;
@@ -58,7 +55,7 @@ public class ViewListPlacesActivity extends AbstractMethodsActivity {
     private RecyclerView mRecyclerView;
     private RecyclerAdapter adapter;
 
-    private static final String getItemsUrl = "http://republic.tk/api/listview/";
+    private static final String getItemsUrl = "http://republic.tk/api/listview/filter/";
     private static final String STATE_PLACES = "state_places";
     private String getCategoryUrl;
 
@@ -68,6 +65,12 @@ public class ViewListPlacesActivity extends AbstractMethodsActivity {
     private int success = 0;
 
     protected RequestQueue queue;
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(STATE_PLACES, (ArrayList<? extends Parcelable>) listPlaces);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,17 +84,15 @@ public class ViewListPlacesActivity extends AbstractMethodsActivity {
         initNavigationView();
         setColumns();
 
-        String selectedItem = String.valueOf(getIntent().getIntExtra("selectedItem", 1));
-        getCategoryUrl = getItemsUrl  + selectedItem;
-
         if (savedInstanceState!=null) {
             progressBar.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
             listPlaces = savedInstanceState.getParcelableArrayList(STATE_PLACES);
         }
         else {
-            listPlaces.clear();
             updateList();
         }
+
         setClickListenerForCards();
 
 
@@ -103,19 +104,49 @@ public class ViewListPlacesActivity extends AbstractMethodsActivity {
         if (toolbar != null) {
             toolbar.setTitleTextColor(Color.WHITE);
             setSupportActionBar(toolbar);
-            toolbar.setTitle(R.string.app_name);
+
+            int selectedItemInt = getIntent().getIntExtra("selectedItem", 0);
+            String query = getIntent().getStringExtra("query");
+
+            if (selectedItemInt > 0) {
+                String selectedItem = String.valueOf(selectedItemInt);
+                try {
+                    String any = "Любой";
+                    getCategoryUrl = getItemsUrl + URLEncoder.encode(any, "utf-8") + "/" + URLEncoder.encode(any, "utf-8") + "/" + selectedItem;
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+                switch (selectedItemInt) {
+                    case 1:
+                        setToolbarTitle(R.string.menu_item_places);
+                        break;
+                    case 2:
+                        setToolbarTitle(R.string.menu_item_eat);
+                        break;
+                    case 3:
+                        setToolbarTitle(R.string.menu_item_sleep);
+                        break;
+                }
+            }
+
+            else {
+                setTitle(query);
+                try {
+                    getCategoryUrl = "http://republic.tk/api/search/" + URLEncoder.encode(query, "utf-8");
+                    Log.d("getCategoryUrl", getCategoryUrl);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    private void setToolbarTitle(int resId) {
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(resId);
     }
 
     private void setColumns() {
@@ -156,6 +187,7 @@ public class ViewListPlacesActivity extends AbstractMethodsActivity {
             @Override
             public void onResponse(JSONObject response) {
 
+                Log.d("getCategoryUrl", getCategoryUrl);
                 try {
                     success = response.getInt(TAG_SUCCESS);
                     if (success == 1) {
@@ -167,9 +199,6 @@ public class ViewListPlacesActivity extends AbstractMethodsActivity {
                         textVolleyError.setVisibility(View.GONE);
 
                         JSONArray places = response.getJSONArray(TAG_ITEMS);
-
-
-
                         for (int i = 0; i < places.length(); i++) {
                             JSONObject currentPlace = places.getJSONObject(i);
                             JSONArray images = currentPlace.getJSONArray(TAG_IMAGES);
@@ -195,6 +224,7 @@ public class ViewListPlacesActivity extends AbstractMethodsActivity {
                     }
 
                     progressBar.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
                 }
                 catch (JSONException e) {
                     e.printStackTrace();

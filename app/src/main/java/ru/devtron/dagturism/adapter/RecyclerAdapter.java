@@ -12,6 +12,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import ru.devtron.dagturism.R;
+import ru.devtron.dagturism.customview.RobotoTextLight;
+import ru.devtron.dagturism.customview.RobotoTextMedium;
 import ru.devtron.dagturism.model.ModelPlace;
 import ru.devtron.dagturism.viewholder.RecyclerItemViewHolder;
 
@@ -39,14 +41,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerItemViewHolder
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item, null);
 
         viewPager = (ViewPager) v.findViewById(R.id.viewPagerForImages);
-        titleTV = (TextView) v.findViewById(R.id.namePlace);
-        cityTV = (TextView) v.findViewById(R.id.cityTextView);
-
-        Typeface light = Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Light.ttf");
-        Typeface medium = Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Medium.ttf");
-        titleTV.setTypeface(medium);
-        cityTV.setTypeface(light);
-
+        titleTV = (RobotoTextMedium) v.findViewById(R.id.namePlace);
+        cityTV = (RobotoTextLight) v.findViewById(R.id.cityTextView);
 
         RecyclerItemViewHolder holder = new RecyclerItemViewHolder(v);
 

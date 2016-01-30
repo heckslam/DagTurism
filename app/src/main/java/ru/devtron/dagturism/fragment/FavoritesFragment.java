@@ -8,9 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,11 +43,16 @@ public class FavoritesFragment extends AbstractTabFragment {
         favoritesFragment.setContext(context);
         favoritesFragment.setTitle(context.getString(R.string.tab_mine));
         return favoritesFragment;
-
     }
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("FavoriteList", (ArrayList<? extends Parcelable>) listFavorites);
     }
 
     @Nullable
@@ -58,32 +61,12 @@ public class FavoritesFragment extends AbstractTabFragment {
         view = inflater.inflate(LAYOUT, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         setColumns();
-        listFavorites.clear();
 
-        loadFromDataBase();
-
-        if (listFavorites != null && listFavorites.size() > 1) {
-            adapter = new RecyclerAdapter(context, listFavorites);
-            mRecyclerView.setAdapter(adapter);
-
-            mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(context, mRecyclerView, new ClickListener() {
-                @Override
-                public void onClick(View view, int position) {
-                    if (listFavorites != null && listFavorites.size() > 0) {
-                        Intent intent = new Intent(context, OpenPlaceActivity.class);
-                        intent.putExtra(ModelPlace.class.getCanonicalName(), listFavorites.get(position));
-                        context.startActivity(intent);
-                    }
-                }
-
-                @Override
-                public void onLongClick(View view, int position) {
-
-                }
-            }));
+        if (savedInstanceState!=null) {
+            listFavorites.clear();
+            listFavorites = savedInstanceState.getParcelableArrayList("FavoriteList");
+            setAdapters();
         }
-
-
 
         return view;
     }
@@ -96,14 +79,40 @@ public class FavoritesFragment extends AbstractTabFragment {
         if (this.isVisible()) {
             // If we are becoming visible, then...
             if (isVisibleToUser) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.detach(this).attach(this).commit();
+                if (listFavorites.isEmpty()) {
+                    loadFromDataBase();
+                    setAdapters();
+                }
+                else {
+                    listFavorites.clear();
+                    loadFromDataBase();
+                    setAdapters();
+                }
             }
         }
     }
 
+    private void setAdapters() {
+        adapter = new RecyclerAdapter(context, listFavorites);
+        mRecyclerView.setAdapter(adapter);
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(context, mRecyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(context, OpenPlaceActivity.class);
+                intent.putExtra(ModelPlace.class.getCanonicalName(), listFavorites.get(position));
+                context.startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+    }
+
     private void loadFromDataBase () {
-        DBHelper dbHelper = new DBHelper(context);
+        DBHelper dbHelper = new DBHelper(getContext());
         database = dbHelper.getReadableDatabase();
 
         Cursor cursorPlace = database.query(DBHelper.TABLE_PLACES, null, null, null, null, null, null);

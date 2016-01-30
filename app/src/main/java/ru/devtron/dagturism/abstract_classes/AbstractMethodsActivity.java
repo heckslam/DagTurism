@@ -70,7 +70,10 @@ public abstract class AbstractMethodsActivity extends AppCompatActivity {
                         goTOViewList(1);
                         break;
                     case R.id.home:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("visible", "no");
+                        startActivity(intent);
                         break;
                     case R.id.eat:
                         goTOViewList(2);
@@ -79,7 +82,7 @@ public abstract class AbstractMethodsActivity extends AppCompatActivity {
                         goTOViewList(3);
                         break;
                     case R.id.deep_search:
-                        startActivity(new Intent(getApplicationContext(), ViewListPlacesActivity.class));
+                        //startActivity(new Intent(getApplicationContext(), ViewListPlacesActivity.class));
                         break;
                     case R.id.settings:
                         startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
@@ -93,9 +96,9 @@ public abstract class AbstractMethodsActivity extends AppCompatActivity {
     }
 
     private void goTOViewList (int selected) {
-        Intent intentSleep = new Intent(getApplicationContext(), ViewListPlacesActivity.class);
-        intentSleep.putExtra("selectedItem", selected);
-        startActivity(intentSleep);
+        Intent intent = new Intent(getApplicationContext(), ViewListPlacesActivity.class);
+        intent.putExtra("selectedItem", selected);
+        startActivity(intent);
     }
 
 

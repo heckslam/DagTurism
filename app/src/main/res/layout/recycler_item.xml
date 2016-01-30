@@ -25,11 +25,10 @@
                 android:clickable="false"
                 android:layout_height="180dp"/>
 
-            <TextView
+            <ru.devtron.dagturism.customview.RobotoTextMedium
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/namePlace"
-                android:text="Название места загуржается"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textAllCaps="true"
@@ -37,7 +36,7 @@
                 android:layout_marginBottom="27dp"
                 android:textAlignment="inherit"
                 android:layout_alignBottom="@+id/viewPagerForImages" />
-            <TextView
+            <ru.devtron.dagturism.customview.RobotoTextLight
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"

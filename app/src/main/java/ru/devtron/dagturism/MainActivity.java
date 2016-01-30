@@ -58,7 +58,7 @@ public class MainActivity extends AbstractMethodsActivity
 
         fragmentManager = getFragmentManager();
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null && !getIntent().hasExtra("visible")) {
             runSplash();
         }
 
@@ -83,9 +83,9 @@ public class MainActivity extends AbstractMethodsActivity
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //Todo write query and send to server
-                Toast.makeText(getBaseContext(), query,
-                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, ViewListPlacesActivity.class);
+                intent.putExtra("query", query);
+                startActivity(intent);
                 return false;
             }
 
@@ -143,10 +143,7 @@ public class MainActivity extends AbstractMethodsActivity
                     .addToBackStack(null)
                     .commit();
         }
-
     }
-
-
 
     @Override
     public void onSearchStarted(String cityOrTown, String selectedRest) {
