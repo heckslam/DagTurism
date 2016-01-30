@@ -5,7 +5,26 @@
         android:id="@+id/categories"
         android:title="@string/menu_item_category"
         android:orderInCategory="1"
-        android:icon="@mipmap/ic_view_module"/>
+        android:icon="@drawable/ic_magnify_white_24dp"/>
+
+    <item
+        android:id="@+id/places"
+        android:title="@string/menu_item_places"
+        android:orderInCategory="1"
+        android:icon="@drawable/map_marker"/>
+
+
+    <item
+        android:id="@+id/eat"
+        android:title="@string/menu_item_eat"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_restaurant_menu_black_24dp"/>
+
+    <item
+        android:id="@+id/sleep"
+        android:title="@string/menu_item_sleep"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_hotel_black_24dp"/>
 
     <item
         android:id="@+id/settings"

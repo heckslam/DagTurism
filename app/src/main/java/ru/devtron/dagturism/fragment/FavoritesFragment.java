@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +30,7 @@ import ru.devtron.dagturism.model.ModelPlace;
 
 public class FavoritesFragment extends AbstractTabFragment {
     private static final int LAYOUT = R.layout.fragment_favorites;
+    SQLiteDatabase database;
 
     List<ModelPlace> listFavorites = new ArrayList<>();
 
@@ -58,64 +60,28 @@ public class FavoritesFragment extends AbstractTabFragment {
         setColumns();
         listFavorites.clear();
 
-            DBHelper dbHelper = new DBHelper(context);
-            SQLiteDatabase database = dbHelper.getReadableDatabase();
+        loadFromDataBase();
 
-            Cursor cursorPlace = database.query(DBHelper.TABLE_PLACES, null, null, null, null, null, null);
-            if(cursorPlace!=null && cursorPlace.getCount()>0){
-                cursorPlace.moveToFirst();
+        if (listFavorites != null && listFavorites.size() > 1) {
+            adapter = new RecyclerAdapter(context, listFavorites);
+            mRecyclerView.setAdapter(adapter);
 
-                do {
-                    ModelPlace place = new ModelPlace();
-                    String place_id = cursorPlace.getString(cursorPlace.getColumnIndex(DBHelper.KEY_PLACE_ID));
-                    place.setId(place_id);
-                    String title = cursorPlace.getString(cursorPlace.getColumnIndex(DBHelper.KEY_TITLE));
-                    place.setTitle(title);
-                    String city = cursorPlace.getString(cursorPlace.getColumnIndex(DBHelper.KEY_CITY));
-                    place.setCity(city);
-
-                    String selectImagesQuery = "SELECT  * FROM " + DBHelper.TABLE_IMAGES + " WHERE "
-                            + DBHelper.KEY_PLACE_ID + " = " + place_id;
-
-                    Cursor cursorImages = database.rawQuery(selectImagesQuery, null);
-                    List<String> listImages = new ArrayList<>();
-                    if (cursorImages.moveToFirst()) {
-                        do {
-                            String image = cursorImages.getString((cursorImages.getColumnIndex(DBHelper.KEY_IMAGE_URL)));
-                            listImages.add(image);
-                        }
-                        while (cursorImages.moveToNext());
-
+            mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(context, mRecyclerView, new ClickListener() {
+                @Override
+                public void onClick(View view, int position) {
+                    if (listFavorites != null && listFavorites.size() > 0) {
+                        Intent intent = new Intent(context, OpenPlaceActivity.class);
+                        intent.putExtra(ModelPlace.class.getCanonicalName(), listFavorites.get(position));
+                        context.startActivity(intent);
                     }
-                    cursorImages.close();
+                }
 
-                    place.setImages(listImages);
-
-                    listFavorites.add(place);
+                @Override
+                public void onLongClick(View view, int position) {
 
                 }
-                while (cursorPlace.moveToNext());
-                cursorPlace.close();
-
-                adapter = new RecyclerAdapter(context, listFavorites);
-                mRecyclerView.setAdapter(adapter);
-
-                mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(context, mRecyclerView, new ClickListener() {
-                    @Override
-                    public void onClick(View view, int position) {
-                        if (listFavorites != null && listFavorites.size() > 0) {
-                            Intent intent = new Intent(context, OpenPlaceActivity.class);
-                            intent.putExtra(ModelPlace.class.getCanonicalName(), listFavorites.get(position));
-                            context.startActivity(intent);
-                        }
-                    }
-
-                    @Override
-                    public void onLongClick(View view, int position) {
-
-                    }
-                }));
-            }
+            }));
+        }
 
 
 
@@ -134,6 +100,46 @@ public class FavoritesFragment extends AbstractTabFragment {
                 ft.detach(this).attach(this).commit();
             }
         }
+    }
+
+    private void loadFromDataBase () {
+        DBHelper dbHelper = new DBHelper(context);
+        database = dbHelper.getReadableDatabase();
+
+        Cursor cursorPlace = database.query(DBHelper.TABLE_PLACES, null, null, null, null, null, null);
+        if(cursorPlace.moveToFirst()){
+            do {
+                ModelPlace place = new ModelPlace();
+                String place_id = cursorPlace.getString(cursorPlace.getColumnIndex(DBHelper.KEY_PLACE_ID));
+                place.setId(place_id);
+                String title = cursorPlace.getString(cursorPlace.getColumnIndex(DBHelper.KEY_TITLE));
+                place.setTitle(title);
+                String city = cursorPlace.getString(cursorPlace.getColumnIndex(DBHelper.KEY_CITY));
+                place.setCity(city);
+
+                String selectImagesQuery = "SELECT  * FROM " + DBHelper.TABLE_IMAGES + " WHERE "
+                        + DBHelper.KEY_PLACE_ID + " = " + place_id;
+
+                Cursor cursorImages = database.rawQuery(selectImagesQuery, null);
+                List<String> listImages = new ArrayList<>();
+                if (cursorImages.moveToFirst()) {
+                    do {
+                        String image = cursorImages.getString((cursorImages.getColumnIndex(DBHelper.KEY_IMAGE_URL)));
+                        listImages.add(image);
+                    }
+                    while (cursorImages.moveToNext());
+
+                }
+                cursorImages.close();
+
+                place.setImages(listImages);
+
+                listFavorites.add(place);
+            }
+            while (cursorPlace.moveToNext());
+        }
+        cursorPlace.close();
+        database.close();
     }
 }
 

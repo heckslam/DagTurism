@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
@@ -38,6 +39,8 @@ public class MainActivity extends AbstractMethodsActivity
 
     private FragmentManager fragmentManager;
 
+    SearchView searchView;
+
     private static Context context;
 
     BroadcastReceiver networkStateReceiver;
@@ -48,6 +51,10 @@ public class MainActivity extends AbstractMethodsActivity
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
         MainActivity.context = getApplicationContext();
+
+        setSearchInToolbar();
+
+
 
         fragmentManager = getFragmentManager();
 
@@ -67,8 +74,30 @@ public class MainActivity extends AbstractMethodsActivity
         initTabs();
     }
 
+    private void setSearchInToolbar() {
+        searchView = (SearchView) findViewById(R.id.searchView);
+        searchView.setQueryHint("Попробуйте Нарын-кала");
 
-   @Override
+        //***setOnQueryTextListener***
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //Todo write query and send to server
+                Toast.makeText(getBaseContext(), query,
+                        Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+    }
+
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if(networkStateReceiver != null) {
