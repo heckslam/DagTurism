@@ -35,7 +35,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CategoriesActivity">
+        <activity android:name=".ViewListPlacesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.categories" />
 

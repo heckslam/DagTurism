@@ -11,7 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import ru.devtron.dagturism.CategoriesActivity;
+import ru.devtron.dagturism.MainActivity;
+import ru.devtron.dagturism.ViewListPlacesActivity;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.SettingsActivity;
 
@@ -23,6 +24,14 @@ public abstract class AbstractMethodsActivity extends AppCompatActivity {
     protected static Toolbar toolbar;
     protected DrawerLayout drawerLayout;
     protected ViewPager viewPager;
+
+    // JSON Node names
+    protected static final String TAG_SUCCESS = "success";
+    protected static final String TAG_ITEMS = "items";
+    protected static final String TAG_PID = "place_id";
+    protected static final String TAG_NAME = "place_name";
+    protected static final String TAG_CITY = "place_city";
+    protected static final String TAG_IMAGES = "images";
 
     protected void settingTheme() {
         sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -57,11 +66,23 @@ public abstract class AbstractMethodsActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 drawerLayout.closeDrawers();
                 switch (menuItem.getItemId()) {
-                    case R.id.categories:
-                        openCat();
+                    case R.id.places:
+                        goTOViewList(1);
+                        break;
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        break;
+                    case R.id.eat:
+                        goTOViewList(2);
+                        break;
+                    case R.id.sleep:
+                        goTOViewList(3);
+                        break;
+                    case R.id.deep_search:
+                        startActivity(new Intent(getApplicationContext(), ViewListPlacesActivity.class));
                         break;
                     case R.id.settings:
-                        openSettings();
+                        startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                         break;
                     default:
                         break;
@@ -71,15 +92,10 @@ public abstract class AbstractMethodsActivity extends AppCompatActivity {
         });
     }
 
-    protected void openCat () {
-        Intent intent = new Intent(this, CategoriesActivity.class);
-        startActivity(intent);
-    }
-
-
-    protected void openSettings () {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
+    private void goTOViewList (int selected) {
+        Intent intentSleep = new Intent(getApplicationContext(), ViewListPlacesActivity.class);
+        intentSleep.putExtra("selectedItem", selected);
+        startActivity(intentSleep);
     }
 
 
