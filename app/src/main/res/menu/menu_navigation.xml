@@ -11,7 +11,13 @@
         android:id="@+id/deep_search"
         android:title="@string/menu_item_category"
         android:orderInCategory="1"
-        android:icon="@drawable/ic_magnify_white_24dp"/>
+        android:icon="@drawable/ic_chat_bubble_black_24dp"/>
+
+    <item
+        android:id="@+id/excursions"
+        android:title="@string/menu_item_excursions"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_explore_black_24dp"/>
 
     <item
         android:id="@+id/places"

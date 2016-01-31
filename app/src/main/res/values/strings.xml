@@ -11,7 +11,8 @@
     <string name="close">Закрыть</string>
 
     <!-- menu items -->
-    <string name="menu_item_category">Расширенный поиск</string>
+    <string name="menu_item_category">Предложить услугу</string>
+    <string name="menu_item_excursions">Экскурсии</string>
     <string name="menu_item_home">Главная</string>
     <string name="menu_item_places">Все места</string>
     <string name="menu_item_eat">Где поесть</string>

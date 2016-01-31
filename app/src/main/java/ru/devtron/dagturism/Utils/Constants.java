@@ -16,4 +16,7 @@ public class Constants {
     public static final int END = 2;
     public static final int ONLYONE = 3;
 
+    public static final int STATE_CAFE = 0;
+    public static final int STATE_HOTELS = 1;
+
 }

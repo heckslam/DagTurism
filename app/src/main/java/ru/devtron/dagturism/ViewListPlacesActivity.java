@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -126,6 +127,9 @@ public class ViewListPlacesActivity extends AbstractMethodsActivity {
                         break;
                     case 3:
                         setToolbarTitle(R.string.menu_item_sleep);
+                        break;
+                    case 4:
+                        setToolbarTitle(R.string.menu_item_excursions);
                         break;
                 }
             }
@@ -254,6 +258,12 @@ public class ViewListPlacesActivity extends AbstractMethodsActivity {
 
         queue.add(jsonObjectRequest);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.view_map_menu, menu);
+        return true;
     }
 
 

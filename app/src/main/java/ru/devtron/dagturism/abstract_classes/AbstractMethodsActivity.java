@@ -78,6 +78,9 @@ public abstract class AbstractMethodsActivity extends AppCompatActivity {
                     case R.id.eat:
                         goTOViewList(2);
                         break;
+                    case R.id.excursions:
+                        goTOViewList(4);
+                        break;
                     case R.id.sleep:
                         goTOViewList(3);
                         break;

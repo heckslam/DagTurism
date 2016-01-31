@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.devtron.dagturism.Utils.MySingleton;
@@ -24,7 +25,7 @@ import ru.devtron.dagturism.model.ModelGallery;
 
 public class RecyclerGalleryAdapter extends PagerAdapter {
     Context context;
-    List<String> arrayImages;
+    List<String> arrayImages = new ArrayList<>();
 
     public static final int PAGER_PAGES = 10000;
     public static final int PAGER_PAGES_MIDDLE = PAGER_PAGES / 2;
@@ -59,25 +60,22 @@ public class RecyclerGalleryAdapter extends PagerAdapter {
         final ImageView imageView = (ImageView) layout.findViewById(R.id.imageView5);
         final ContentLoadingProgressBar progressBar = (ContentLoadingProgressBar) layout.findViewById(R.id.loading);
 
-        progressBar.setVisibility(View.VISIBLE);
+        if (context instanceof OpenPlaceActivity) {
+            mImageLoader.get(arrayImages.get(imageNumber), new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    if (response.getBitmap() != null) {
+                        imageView.setImageBitmap(response.getBitmap());
+                        progressBar.setVisibility(View.GONE);
+                    }
+                }
 
-        mImageLoader.get(arrayImages.get(imageNumber), new ImageLoader.ImageListener() {
-            @Override
-            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                if (response.getBitmap() != null) {
-                    imageView.setImageBitmap(response.getBitmap());
+                @Override
+                public void onErrorResponse(VolleyError error) {
                     progressBar.setVisibility(View.GONE);
                 }
-            }
+            });
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressBar.setVisibility(View.GONE);
-            }
-        });
-
-
-        if (context instanceof OpenPlaceActivity) {
             final int finalImageNumber = imageNumber;
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -88,6 +86,24 @@ public class RecyclerGalleryAdapter extends PagerAdapter {
                     intent.putExtra(ModelGallery.class.getCanonicalName(), images);
                     intent.putExtra("position", finalImageNumber);
                     context.startActivity(intent);
+                }
+            });
+        }
+
+        else {
+            progressBar.setVisibility(View.VISIBLE);
+            mImageLoader.get(arrayImages.get(imageNumber), new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    if (response.getBitmap() != null) {
+                        imageView.setImageBitmap(response.getBitmap());
+                        progressBar.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    progressBar.setVisibility(View.GONE);
                 }
             });
         }

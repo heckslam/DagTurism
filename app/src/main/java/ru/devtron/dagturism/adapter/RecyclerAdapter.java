@@ -19,8 +19,6 @@ import ru.devtron.dagturism.viewholder.RecyclerItemViewHolder;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerItemViewHolder> {
     private List<ModelPlace> itemList;
-
-
     private Context mContext;
 
     ViewPager viewPager;
@@ -48,10 +46,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerItemViewHolder
 
         return holder;
     }
-
-
-    
-
 
     @Override
     public void onBindViewHolder(final RecyclerItemViewHolder recyclerItemViewHolder, int position) {

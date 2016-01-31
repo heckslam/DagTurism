@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -13,6 +14,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -51,12 +54,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import ru.devtron.dagturism.adapter.RecyclerAdapterEatSleep;
 import ru.devtron.dagturism.adapter.RecyclerGalleryAdapter;
 import ru.devtron.dagturism.customview.ExpandableTextView;
 import ru.devtron.dagturism.db.DBHelper;
+import ru.devtron.dagturism.listener.ClickListener;
+import ru.devtron.dagturism.listener.RecyclerClickListener;
+import ru.devtron.dagturism.model.ModelNearPlace;
 import ru.devtron.dagturism.model.ModelPlace;
 import ru.devtron.dagturism.model.WaylineModel;
 
@@ -74,16 +88,21 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     private Button howToGo;
     private CardView howToGoCard;
     private String title, id, description, city;
-    private int idInt;
     SharedPreferences sp;
     NestedScrollView nestedScrollView;
     private SQLiteDatabase database;
-    List<String> arrayImages;
+    List<String> arrayImages = new ArrayList<>();
+    List<String> arrayImagesFrom1 = new ArrayList<>();
     private double pointLat, pointLng;
     private String pointCaption;
     private int pointNumber;
     private List<WaylineModel> mDataList = new ArrayList<>();
     private int finalPrice;
+    private RecyclerView cafeRV;
+    private RecyclerView hotelRV;
+    private List<ModelNearPlace> modelNearPlaces = new ArrayList<>();
+    private Map<Integer, Integer> floatDistances = new HashMap<>();
+    private static int whereCome = 0;
 
 
     private static final String STATE_OPEN_PLACE = "state_open_place";
@@ -101,6 +120,14 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     private static final String TAG_POINT_LAT = "point_latitude";
     private static final String TAG_POINT_LNG = "point_longitude";
     private static final String TAG_POINT_NUMBER = "point_number";
+    private static final String TAG_ITEMS = "items";
+    private static final String TAG_LOCATION = "location";
+    protected static final String TAG_IMAGES = "images";
+
+    protected static final String TAG_CITY = "place_city";
+
+    private static final String TAG_PID = "place_id";
+    private static final String TAG_NAME = "place_name";
 
     private int success = 0;
 
@@ -141,12 +168,19 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         howToGo = (Button) findViewById(R.id.howToGo);
         howToGoCard = (CardView) findViewById(R.id.howToGoCard);
         nestedScrollView =  (NestedScrollView) findViewById(R.id.nestedScroll);
+        cafeRV = (RecyclerView) findViewById(R.id.cafeRV);
+        hotelRV = (RecyclerView) findViewById(R.id.hotelRV);
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayoutRV);
+        TextView nearTV = (TextView) findViewById(R.id.near);
 
 
         DBHelper dbHelper = new DBHelper(this);
         database = dbHelper.getWritableDatabase();
 
-        getPlaceFromActivity();
+        if (modelPlace == null) {
+            getPlaceFromActivity();
+        }
+
 
         String selectQuery = "SELECT " + DBHelper.KEY_DESCRIPTION + ", "
                 + DBHelper.KEY_LAT + ", " + DBHelper.KEY_LNG +
@@ -171,6 +205,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
 
             String selectPointsQuery = "SELECT  * FROM " + DBHelper.TABLE_POINTS + " WHERE "
                     + DBHelper.KEY_PLACE_ID + " = " + id;
+
 
             Cursor cursorPoints = database.rawQuery(selectPointsQuery, null);
             if (cursorPoints.moveToFirst()) {
@@ -203,15 +238,29 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
             if (modelPlace != null && modelPlace.getDescription().length() > 3) {
                 initVariables(modelPlace);
             }
-            else {
-                updateItem();
-            }
         }
         //Если и в savedInstanceState пусто, тогда делаем запрос на сервер
-        else {
+        else if (modelPlace == null && whereCome!=1){
             initToolbar(false);
             updateItem();
         }
+
+        else {
+            initToolbar(false);
+            FullUpdateItem(id);
+
+        }
+
+        if (whereCome != 1) {
+            loadNearPlaces(true);
+            loadNearPlaces(false);
+        }
+
+        else {
+            linearLayout.setVisibility(View.GONE);
+            nearTV.setVisibility(View.GONE);
+        }
+
     }
 
     private void getPlaceFromActivity() {
@@ -222,12 +271,18 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
             city = parcelWithPlace.getCity();
             id = parcelWithPlace.getId();
             arrayImages = parcelWithPlace.getImages();
+            adapterImages = new RecyclerGalleryAdapter(this, arrayImages);
+            viewPager.setAdapter(adapterImages);
+            viewPager.setCurrentItem(RecyclerGalleryAdapter.PAGER_PAGES_MIDDLE);
         }
 
-        adapterImages = new RecyclerGalleryAdapter(this, arrayImages);
+        else {
+            id = getIntent().getStringExtra(ModelNearPlace.class.getCanonicalName());
+            title = getIntent().getStringExtra("title");
+            whereCome = 1;
+        }
 
-        viewPager.setAdapter(adapterImages);
-        viewPager.setCurrentItem(RecyclerGalleryAdapter.PAGER_PAGES_MIDDLE);
+
 
         howToGo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -241,8 +296,10 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
     private ModelPlace initVariables(ModelPlace modelPlace) {
+        List<String> mist = new ArrayList<>();
         if (modelPlace != null) {
             description = modelPlace.getDescription();
+            mist = modelPlace.getImages();
             lat = modelPlace.getLat();
             lng = modelPlace.getLng();
         }
@@ -250,12 +307,18 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         else
             updateItem();
 
-        initUI(description);
+        initUI(description, mist);
 
         return modelPlace;
     }
 
-    private void initUI(String description) {
+    private void initUI(String description, List<String> list) {
+
+        if (whereCome == 1) {
+            adapterImages = new RecyclerGalleryAdapter(this, list);
+            viewPager.setAdapter(adapterImages);
+            viewPager.setCurrentItem(RecyclerGalleryAdapter.PAGER_PAGES_MIDDLE);
+        }
         descriptionTV.setText(description);
         initMap();
     }
@@ -360,6 +423,76 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
 
     }
 
+    private void FullUpdateItem(final String ip) {
+        nestedScrollView.setVisibility(View.GONE);
+        String getItemsUrl = "http://republic.tk/api/place/";
+
+        getItemsUrl = getItemsUrl + ip;
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getItemsUrl, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    success = response.getInt(TAG_SUCCESS);
+                    if (success == 1) {
+                        modelPlace = new ModelPlace();
+                        JSONObject place = response.getJSONObject(TAG_ITEM);
+                        JSONArray images = place.getJSONArray(TAG_IMAGES);
+                        for (int j = 0; j < images.length(); j++){
+                            arrayImagesFrom1.add(images.getString(j));
+                        }
+
+                        title = place.getString(TAG_NAME);
+                        city = place.getString(TAG_CITY);
+
+                        lat = place.getDouble(TAG_LAT);
+                        lng = place.getDouble(TAG_LNG);
+                        description = place.getString(TAG_DESC);
+
+                        modelPlace.setId(ip);
+                        modelPlace.setTitle(title);
+                        modelPlace.setCity(city);
+                        modelPlace.setImages(arrayImagesFrom1);
+
+                        modelPlace.setLat(lat);
+                        modelPlace.setLng(lng);
+                        modelPlace.setDescription(description);
+
+                        initVariables(modelPlace);
+                    }
+
+                    nestedScrollView.setVisibility(View.VISIBLE);
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                textVolleyError.setVisibility(View.VISIBLE);
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    textVolleyError.setText(R.string.error_timeout);
+                } else if (error instanceof AuthFailureError) {
+                    textVolleyError.setText(R.string.error_auth);
+                } else if (error instanceof ServerError) {
+                    textVolleyError.setText(R.string.error_server);
+                } else if (error instanceof NetworkError) {
+                    textVolleyError.setText(R.string.no_network);
+                } else if (error instanceof ParseError) {
+                    textVolleyError.setText(R.string.error_server);
+                }
+            }
+        });
+
+        queue.add(jsonObjectRequest);
+    }
+
 
     private void updateItem () {
         nestedScrollView.setVisibility(View.GONE);
@@ -442,6 +575,183 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         });
 
         queue.add(jsonObjectRequest);
+
+    }
+
+    private void loadNearPlaces(boolean bool) {
+        String encodeCity = "";
+        String any = "";
+
+        try {
+            if (city != null) {
+                String[] splitedCity = city.split(" ");
+                for (int i = 0; i < splitedCity.length; i++) {
+                    if (i != splitedCity.length - 1){
+                        encodeCity = encodeCity + URLEncoder.encode(splitedCity[i], "utf-8") + "%20";
+                    }
+                    else encodeCity = encodeCity + URLEncoder.encode(splitedCity[i], "utf-8");
+                }
+            }
+            any = URLEncoder.encode("Любой", "utf-8");
+        }
+        catch (Exception e) {
+            System.out.println("Tried to encode URL. Bad luck");
+        }
+
+
+        String getItemsUrl = "";
+
+        if (bool) {
+            getItemsUrl = "http://republic.tk/api/listview/filter/" + encodeCity + "/" + any + "/2";
+        }
+
+        else {
+            getItemsUrl = "http://republic.tk/api/listview/filter/" + encodeCity + "/" + any + "/3";
+        }
+
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getItemsUrl, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    success = response.getInt(TAG_SUCCESS);
+                    if (success == 1) {
+                        JSONArray places = response.getJSONArray(TAG_ITEMS);
+
+                        for (int i = 0; i < places.length(); i++) {
+                            JSONObject nearPlace = places.getJSONObject(i);
+                            JSONObject locations = nearPlace.getJSONObject(TAG_LOCATION);
+                            ModelNearPlace place = new ModelNearPlace();
+                            place.setId(nearPlace.getString(TAG_PID));
+                            place.setTitle(nearPlace.getString(TAG_NAME));
+                            place.setLat(locations.getDouble(TAG_LAT));
+                            place.setLng(locations.getDouble(TAG_LNG));
+
+                            modelNearPlaces.add(place);
+                        }
+                        setNearPlaces(modelNearPlaces, 2);
+                    }
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                textVolleyError.setVisibility(View.VISIBLE);
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    textVolleyError.setText(R.string.error_timeout);
+                } else if (error instanceof AuthFailureError) {
+                    textVolleyError.setText(R.string.error_auth);
+                } else if (error instanceof ServerError) {
+                    textVolleyError.setText(R.string.error_server);
+                } else if (error instanceof NetworkError) {
+                    textVolleyError.setText(R.string.no_network);
+                } else if (error instanceof ParseError) {
+                    textVolleyError.setText(R.string.error_server);
+                }
+            }
+        });
+
+        queue.add(jsonObjectRequest);
+
+
+    }
+
+    private void setNearPlaces(List<ModelNearPlace> modelNearPlace, int cafeOrHotel) {
+        for (int i = 0; i < modelNearPlace.size(); i++) {
+            Location locationA = new Location("pointA");
+            locationA.setLatitude(lat);
+            locationA.setLongitude(lng);
+            Location locationB = new Location("pointB");
+            locationB.setLatitude(modelNearPlace.get(i).getLat());
+            locationB.setLongitude(modelNearPlace.get(i).getLng());
+
+            int distance = (int) locationA.distanceTo(locationB);
+            modelNearPlace.get(i).setDistance(distance);
+
+            floatDistances.put(Integer.valueOf(modelNearPlace.get(i).getId()), distance);
+        }
+        Map<Integer, Integer> sortedMap = sortByValue(floatDistances);
+
+
+        List<Integer> listIdNear = new ArrayList<>();
+
+        for (Integer key : sortedMap.keySet()) {
+            listIdNear.add(key);
+        }
+
+        setAdapters(listIdNear, modelNearPlace, cafeOrHotel);
+
+    }
+
+
+    public static <K, V extends Comparable<? super V>> Map<K, V>
+    sortByValue( Map<K, V> map )
+    {
+        List<Map.Entry<K, V>> list =
+                new LinkedList<>( map.entrySet() );
+        Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
+            @Override
+            public int compare(Map.Entry<K, V> o1, Map.Entry<K, V> o2) {
+                return (o1.getValue()).compareTo(o2.getValue());
+            }
+        });
+
+        Map<K, V> result = new LinkedHashMap<>();
+        for (Map.Entry<K, V> entry : list)
+        {
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
+    }
+
+    private void setAdapters (List<Integer> list, List<ModelNearPlace> modelNearPlaces, int cafeOrHotel) {
+        List<Integer> fiveLastCafe = new ArrayList<>();
+        final List<ModelNearPlace> fiveLastNearPlaces = new ArrayList<>();
+        for (int i = 0; i < list.size() && i < 5; i++) {
+            fiveLastCafe.add(list.get(i));
+        }
+
+        for (int i = 0; i < fiveLastCafe.size(); i++) {
+            if ( fiveLastCafe.get(i) == Integer.parseInt(modelNearPlaces.get(i).getId())) {
+                fiveLastNearPlaces.add(modelNearPlaces.get(i));
+            }
+        }
+
+        if (cafeOrHotel == 2) {
+            RecyclerAdapterEatSleep adapter = new RecyclerAdapterEatSleep(getApplicationContext(), fiveLastNearPlaces);
+            cafeRV.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            cafeRV.setAdapter(adapter);
+            cafeRV.addOnItemTouchListener(new RecyclerClickListener(getApplicationContext(), cafeRV, new ClickListener() {
+                @Override
+                public void onClick(View view, int position) {
+                    Intent intent = new Intent(OpenPlaceActivity.this, OpenPlaceActivity.class);
+                    intent.putExtra(ModelNearPlace.class.getCanonicalName(), fiveLastNearPlaces.get(position).getId());
+                    intent.putExtra("title", fiveLastNearPlaces.get(position).getTitle());
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onLongClick(View view, int position) {
+
+                }
+            }));
+        }
+
+        else {
+            RecyclerAdapterEatSleep adapter = new RecyclerAdapterEatSleep(getApplicationContext(), fiveLastNearPlaces);
+            hotelRV.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            Log.d("huita", String.valueOf(cafeOrHotel));
+            hotelRV.setAdapter(adapter);
+        }
+
 
     }
 

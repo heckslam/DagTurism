@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:clickable="true"
+    android:foreground="@drawable/ripple_bg"
+    android:background="?android:attr/selectableItemBackground">
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/namePlace"
+        android:textSize="16sp"
+        android:textColor="@color/primary_text_default_material_light"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/namePlace"
+        android:id="@+id/distance"
+        android:textSize="12sp"
+        android:textColor="@color/secondary_text_default_material_light"
+
+        />
+
+</RelativeLayout>
