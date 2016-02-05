@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -259,13 +260,6 @@ public class ViewListPlacesActivity extends AbstractMethodsActivity {
         queue.add(jsonObjectRequest);
 
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.view_map_menu, menu);
-        return true;
-    }
-
 
 
 }

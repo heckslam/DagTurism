@@ -8,6 +8,7 @@
     <color name="mainBackground">#F5F5F5</color>
     <color name="descriptionColor">#9A9A9A</color>
     <color name="dark_grey">#616161</color>
+    <color name="dark_greyTV">#55616161</color>
 
     <color name="colorPrimaryOrange">#EA5634</color>
     <color name="colorPrimaryDarkOrange">#CB3D2C</color>

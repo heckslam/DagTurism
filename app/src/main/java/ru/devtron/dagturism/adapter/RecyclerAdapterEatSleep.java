@@ -2,7 +2,6 @@ package ru.devtron.dagturism.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,7 @@ public class RecyclerAdapterEatSleep extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.model_cafe, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.model_near_place, parent, false);
         TextView placeName = (TextView) v.findViewById(R.id.namePlace);
         TextView distance = (TextView) v.findViewById(R.id.distance);
 

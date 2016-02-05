@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import ru.devtron.dagturism.MainActivity;
@@ -102,6 +103,26 @@ public abstract class AbstractMethodsActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), ViewListPlacesActivity.class);
         intent.putExtra("selectedItem", selected);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.view_map_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.mapmenu:
+                int v = viewPager.getCurrentItem();
+                if (v == 0) {
+
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

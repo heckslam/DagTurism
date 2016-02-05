@@ -164,6 +164,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:text="Поблизости"
+                    android:visibility="gone"
                     android:paddingBottom="8dp"
                     android:layout_marginTop="16dp"
                     android:textColor="?attr/colorAccent"
@@ -173,22 +174,28 @@
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:id="@+id/linearLayoutRV"
+                    android:visibility="gone"
+                    android:paddingBottom="8dp"
                     android:weightSum="2"
-                    android:layout_height="wrap_content">
+                    android:layout_height="128dp">
 
                     <android.support.v7.widget.RecyclerView
                         android:layout_weight="1"
                         android:id="@+id/cafeRV"
                         android:clipToPadding="false"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"/>
+                        android:layout_width="wrap_content"
+                        android:visibility="gone"
+                        android:background="@color/colorPrimary"
+                        android:layout_height="match_parent"/>
 
                     <android.support.v7.widget.RecyclerView
                         android:layout_weight="1"
                         android:id="@+id/hotelRV"
                         android:clipToPadding="false"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"/>
+                        android:layout_width="wrap_content"
+                        android:visibility="gone"
+                        android:background="@color/colorPrimaryGrey"
+                        android:layout_height="match_parent"/>
 
                 </LinearLayout>
             </LinearLayout>
