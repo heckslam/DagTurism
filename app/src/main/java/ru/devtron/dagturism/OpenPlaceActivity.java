@@ -177,7 +177,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
             public void onClick(View v) {
                 Intent intent = new Intent(OpenPlaceActivity.this, SprintLineActivity.class);
                 intent.putParcelableArrayListExtra("mDataList", (ArrayList<? extends Parcelable>) mDataList);
-                intent.putExtra("finalPrice", finalPrice);
+                intent.putExtra("finalPrice", String.valueOf(finalPrice));
                 startActivity(intent);
             }
         });
@@ -190,8 +190,6 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
             mist = modelPlace.getImages();
             lat = modelPlace.getLat();
             lng = modelPlace.getLng();
-
-
         }
 
         else
@@ -685,7 +683,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
                             if (hasRoute) {
                                 howToGoCard.setVisibility(View.VISIBLE);
                                 for (int i = 0; i < mDataList.size(); i++) {
-                                    WaylineModel waylineModel = new WaylineModel(id, mDataList.get(i).getPointLat(), mDataList.get(i).getPointLng(), mDataList.get(i).getPointNumber(), mDataList.get(i).getPointCaption(), finalPrice);
+                                    WaylineModel waylineModel = new WaylineModel(id, mDataList.get(i).getPointLat(), mDataList.get(i).getPointLng(), mDataList.get(i).getPointNumber(), mDataList.get(i).getPointCaption());
                                     waylineModel.save();
                                 }
                             }

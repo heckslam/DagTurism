@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -27,7 +28,7 @@ public class SprintLineActivity extends AppCompatActivity {
     private List<WaylineModel> mDataList = new ArrayList<>();
     TextView finalPrice;
     RecyclerView mRecyclerView;
-    private int price;
+    private String price;
 
     private static final String STATE_SPRINT = "state_sprint";
 
@@ -75,7 +76,7 @@ public class SprintLineActivity extends AppCompatActivity {
 
         else {
             mDataList = getIntent().getParcelableArrayListExtra("mDataList");
-            price = getIntent().getIntExtra("finalPrice", 0);
+            price = getIntent().getStringExtra("finalPrice");
             RecyclerViewSettings();
         }
 
@@ -107,9 +108,11 @@ public class SprintLineActivity extends AppCompatActivity {
         }
     }
 
-    private void setText(int price) {
-        finalPrice.setText(finalPrice.getText() + " " + String.valueOf(price) + "р");
-        finalPrice.setVisibility(View.VISIBLE);
+    private void setText(String price) {
+        if (price.length()>1) {
+            finalPrice.setText(getResources().getString(R.string.finalPrice) + " " + price + "р");
+            finalPrice.setVisibility(View.VISIBLE);
+        }
     }
 
     private void RecyclerViewSettings() {
