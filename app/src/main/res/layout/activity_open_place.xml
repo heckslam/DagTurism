@@ -172,31 +172,83 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:id="@+id/linearLayoutRV"
                     android:visibility="gone"
                     android:paddingBottom="8dp"
                     android:weightSum="2"
-                    android:layout_height="128dp">
+                    android:layout_height="wrap_content">
+
+
+
+                    <ru.devtron.dagturism.customview.RobotoTextLight
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="Кафе и рестораны"
+                        android:layout_marginLeft="5dp"/>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="120dp">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="?attr/colorPrimary"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginTop="8dp"
+                        />
+
 
                     <android.support.v7.widget.RecyclerView
                         android:layout_weight="1"
                         android:id="@+id/cafeRV"
-                        android:clipToPadding="false"
                         android:layout_width="wrap_content"
                         android:visibility="gone"
-                        android:background="@color/colorPrimary"
-                        android:layout_height="match_parent"/>
+                        android:layout_marginBottom="10dp"
+                        android:scrollbars="none"
+                        android:layout_height="120dp"
+                        android:layout_marginLeft="10dp"/>
 
-                    <android.support.v7.widget.RecyclerView
-                        android:layout_weight="1"
-                        android:id="@+id/hotelRV"
-                        android:clipToPadding="false"
-                        android:layout_width="wrap_content"
-                        android:visibility="gone"
-                        android:background="@color/colorPrimaryGrey"
-                        android:layout_height="match_parent"/>
+                </LinearLayout>
 
+                    <ru.devtron.dagturism.customview.RobotoTextLight
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="Отели и гостиницы"/>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_height="120dp">
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginBottom="12dp"
+                            android:layout_marginTop="8dp"
+                            android:background="?attr/colorPrimary"/>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:layout_weight="1"
+                            android:id="@+id/hotelRV"
+                            android:layout_width="wrap_content"
+                            android:scrollbars="none"
+                            android:visibility="gone"
+                            android:layout_height="120dp"
+                            android:layout_marginLeft="10dp"
+                            />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>

@@ -54,6 +54,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import ru.devtron.dagturism.Utils.Constants;
 import ru.devtron.dagturism.adapter.RecyclerAdapterEatSleep;
@@ -168,8 +169,6 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
             adapterImages = new RecyclerGalleryAdapter(this, arrayImages);
             viewPager.setAdapter(adapterImages);
             viewPager.setCurrentItem(RecyclerGalleryAdapter.PAGER_PAGES_MIDDLE);
-            loadNearPlaces(true);
-            loadNearPlaces(false);
         }
 
         else {
@@ -198,6 +197,8 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
             mist = modelPlace.getImages();
             lat = modelPlace.getLat();
             lng = modelPlace.getLng();
+
+
         }
 
         else
@@ -217,6 +218,8 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         ExpandableTextView descriptionTV = (ExpandableTextView) findViewById(R.id.descriptionPlace);
         descriptionTV.setText(description);
         initMap();
+        loadNearPlaces(1);
+        loadNearPlaces(2);
     }
 
 
@@ -370,7 +373,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
 
     }
 
-    private void loadNearPlaces(final boolean bool) {
+    private void loadNearPlaces(final int bool) {
         String encodeCity = "";
         String any = "";
 
@@ -393,7 +396,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
 
         String getItemsUrl;
 
-        if (bool) {
+        if (bool == 1) {
             getItemsUrl = "http://republic.tk/api/listview/filter/" + encodeCity + "/" + any + "/2";
         }
 
@@ -450,7 +453,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
 
 
 
-    private void setAdapters (List<ModelNearPlace> modelNearPlaces, boolean cafeOrHotel) {
+    private void setAdapters (List<ModelNearPlace> modelNearPlaces, int cafeOrHotel) {
         //вычисляем расстояние
         Map<Integer, Integer> floatDistances = new HashMap<>();
         for (int i = 0; i < modelNearPlaces.size(); i++) {
@@ -464,18 +467,30 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
 
             int distance = (int) locationA.distanceTo(locationB);
             currentPlace.setDistance(distance);
-            if (distance > 5 && distance < 3000)
+            if (distance > 5 && distance < 4500)
                 floatDistances.put(Integer.valueOf(currentPlace.getId()), distance);
         }
 
-        Map<Integer, Integer> sortedMap = Constants.sortMapByValue(floatDistances);
+        Map<Integer, Integer> sortedMap = Constants.sortByValue(floatDistances);
+
+
 
 
         List<Integer> listIdNear = new ArrayList<>();
 
+        int counter = 0;
+
         for (Integer key : sortedMap.keySet()) {
-            listIdNear.add(key);
+
+            if (counter < 3) {
+                listIdNear.add(key);
+                counter++;
+            }
+            else break;
+
         }
+
+
 
         if (listIdNear.size() > 0) {
             linearLayout.setVisibility(View.VISIBLE);
@@ -483,22 +498,22 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         }
 
 
-        if (cafeOrHotel) {
+        if (cafeOrHotel == 1) {
             for (int i = 0; i < listIdNear.size(); i++) {
-                if ( listIdNear.get(i) == Integer.parseInt(modelNearPlaces.get(i).getId())) {
-                    fiveLastNearCafe.add(modelNearPlaces.get(i));
+                for (int j = 0; j < modelNearPlaces.size(); j++) {
+                    if ( listIdNear.get(i) == Integer.parseInt(modelNearPlaces.get(j).getId())) {
+                        fiveLastNearCafe.add(modelNearPlaces.get(j));
+                    }
                 }
+
             }
             if (fiveLastNearCafe.size() > 0) {
                 cafeRV.setVisibility(View.VISIBLE);
             }
 
-            Log.d("hren", String.valueOf(fiveLastNearCafe.size()) + "cafe");
 
             RecyclerAdapterEatSleep adapterEat = new RecyclerAdapterEatSleep(this, fiveLastNearCafe);
             cafeRV.setAdapter(adapterEat);
-
-
 
             cafeRV.addOnItemTouchListener(new RecyclerClickListener(this, cafeRV, new ClickListener() {
                 @Override
@@ -517,30 +532,23 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
 
         }
 
-        else {
+        if (cafeOrHotel == 2) {
 
             for (int i = 0; i < listIdNear.size(); i++) {
-                if ( listIdNear.get(i) == Integer.parseInt(modelNearPlaces.get(i).getId())) {
-                    fiveLastNearHotels.add(modelNearPlaces.get(i));
+                for (int j = 0; j < modelNearPlaces.size(); j++) {
+                    if ( listIdNear.get(i) == Integer.parseInt(modelNearPlaces.get(j).getId())) {
+                        fiveLastNearHotels.add(modelNearPlaces.get(j));
+                    }
                 }
             }
 
-            ModelNearPlace modelNearPlace2 = new ModelNearPlace();
-            modelNearPlace2.setDistance(5);
-            modelNearPlace2.setTitle("Хуяк хуяк и в продакшн");
-            fiveLastNearHotels.add(modelNearPlace2);
-
-            if (fiveLastNearHotels.size() > 0) {
+            if (fiveLastNearHotels.size() > 0)
                 hotelRV.setVisibility(View.VISIBLE);
-            }
 
 
-            Log.d("hren", String.valueOf(fiveLastNearHotels.size()) + "hotel");
 
             RecyclerAdapterEatSleep adapterSleep = new RecyclerAdapterEatSleep(this, fiveLastNearHotels);
             hotelRV.setAdapter(adapterSleep);
-
-            adapterSleep.notifyDataSetChanged();
 
            hotelRV.addOnItemTouchListener(new RecyclerClickListener(this, hotelRV, new ClickListener() {
                 @Override

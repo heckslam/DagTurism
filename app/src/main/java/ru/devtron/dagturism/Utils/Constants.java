@@ -1,6 +1,7 @@
 package ru.devtron.dagturism.Utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,10 +24,13 @@ import org.json.JSONObject;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.model.ModelPlace;
@@ -75,26 +79,32 @@ public class Constants {
     public static final String TAG_PID = "place_id";
     public static final String TAG_NAME = "place_name";
 
-
     public static <K, V extends Comparable<? super V>> Map<K, V>
-    sortMapByValue(Map<K, V> map)
+    sortByValue( Map<K, V> map )
     {
         List<Map.Entry<K, V>> list =
                 new LinkedList<>( map.entrySet() );
-        Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
+        Collections.sort( list, new Comparator<Map.Entry<K, V>>()
+        {
             @Override
-            public int compare(Map.Entry<K, V> o1, Map.Entry<K, V> o2) {
-                return (o1.getValue()).compareTo(o2.getValue());
+            public int compare( Map.Entry<K, V> o1, Map.Entry<K, V> o2 )
+            {
+                return (o1.getValue()).compareTo( o2.getValue() );
             }
-        });
+        } );
 
         Map<K, V> result = new LinkedHashMap<>();
         for (Map.Entry<K, V> entry : list)
         {
-            result.put(entry.getKey(), entry.getValue());
+            result.put( entry.getKey(), entry.getValue() );
+
         }
         return result;
     }
+
+
+
+
 
 
     public static void displayErrors(TextView textVolleyError, VolleyError error) {
