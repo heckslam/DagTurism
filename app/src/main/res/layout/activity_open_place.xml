@@ -191,7 +191,7 @@
 
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:orientation="horizontal"
                     android:layout_height="120dp">
 
@@ -208,11 +208,12 @@
                     <android.support.v7.widget.RecyclerView
                         android:layout_weight="1"
                         android:id="@+id/cafeRV"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:visibility="gone"
                         android:layout_marginBottom="10dp"
                         android:scrollbars="none"
                         android:layout_height="120dp"
+                        android:overScrollMode="never"
                         android:layout_marginLeft="10dp"/>
 
                 </LinearLayout>
@@ -227,7 +228,7 @@
 
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:orientation="horizontal"
                         android:layout_height="120dp">
 
@@ -242,7 +243,8 @@
                         <android.support.v7.widget.RecyclerView
                             android:layout_weight="1"
                             android:id="@+id/hotelRV"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
+                            android:overScrollMode="never"
                             android:scrollbars="none"
                             android:visibility="gone"
                             android:layout_height="120dp"

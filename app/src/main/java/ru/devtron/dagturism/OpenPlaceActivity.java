@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -59,6 +60,7 @@ import java.util.TreeMap;
 import ru.devtron.dagturism.Utils.Constants;
 import ru.devtron.dagturism.adapter.RecyclerAdapterEatSleep;
 import ru.devtron.dagturism.adapter.RecyclerGalleryAdapter;
+import ru.devtron.dagturism.customview.CustomGridLayoutManager;
 import ru.devtron.dagturism.customview.ExpandableTextView;
 import ru.devtron.dagturism.db.DBHelper;
 import ru.devtron.dagturism.listener.ClickListener;
@@ -121,8 +123,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         nearTV = (TextView) findViewById(R.id.near);
         cafeRV = (RecyclerView) findViewById(R.id.cafeRV);
         hotelRV = (RecyclerView) findViewById(R.id.hotelRV);
-        cafeRV.setLayoutManager(new LinearLayoutManager(this));
-        hotelRV.setLayoutManager(new LinearLayoutManager(this));
+
 
 
         if (modelPlace == null) {
@@ -498,6 +499,12 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         }
 
 
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cafeRV.setNestedScrollingEnabled(false);
+            hotelRV.setNestedScrollingEnabled(false);
+        }
+
         if (cafeOrHotel == 1) {
             for (int i = 0; i < listIdNear.size(); i++) {
                 for (int j = 0; j < modelNearPlaces.size(); j++) {
@@ -511,6 +518,12 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
                 cafeRV.setVisibility(View.VISIBLE);
             }
 
+            cafeRV.setLayoutManager(new CustomGridLayoutManager(this) {
+                @Override
+                public boolean canScrollVertically() {
+                    return false;
+                }
+            });
 
             RecyclerAdapterEatSleep adapterEat = new RecyclerAdapterEatSleep(this, fiveLastNearCafe);
             cafeRV.setAdapter(adapterEat);
@@ -545,7 +558,12 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
             if (fiveLastNearHotels.size() > 0)
                 hotelRV.setVisibility(View.VISIBLE);
 
-
+            hotelRV.setLayoutManager(new CustomGridLayoutManager(this) {
+                @Override
+                public boolean canScrollVertically() {
+                    return false;
+                }
+            });
 
             RecyclerAdapterEatSleep adapterSleep = new RecyclerAdapterEatSleep(this, fiveLastNearHotels);
             hotelRV.setAdapter(adapterSleep);
