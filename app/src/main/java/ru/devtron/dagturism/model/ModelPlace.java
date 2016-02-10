@@ -3,10 +3,13 @@ package ru.devtron.dagturism.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.orm.SugarRecord;
+
 import java.util.List;
 
-public class ModelPlace implements Parcelable {
-    private String id;
+public class ModelPlace extends SugarRecord implements Parcelable {
+
+    private String placeId;
     private String title;
     private String city;
     private List<String> images;
@@ -22,7 +25,7 @@ public class ModelPlace implements Parcelable {
     }
 
     public ModelPlace (Parcel input) {
-        id = input.readString();
+        placeId = input.readString();
         title = input.readString();
         city = input.readString();
         images = input.createStringArrayList();
@@ -33,22 +36,21 @@ public class ModelPlace implements Parcelable {
 
 
 
-    public ModelPlace(String id, String title, String city, List<String> images, Double lat, double lng, String description) {
-        this.id = id;
+    public ModelPlace(String placeId, String title, String city, double lat, double lng, String description) {
+        this.placeId = placeId;
         this.title = title;
         this.city = city;
-        this.images = images;
         this.lat = lat;
         this.lng = lng;
         this.description = description;
     }
 
-    public String getId() {
-        return id;
+    public String getPlaceId() {
+        return placeId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPlaceId(String id) {
+        this.placeId = id;
     }
 
     public String getTitle() {
@@ -107,7 +109,7 @@ public class ModelPlace implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
+        dest.writeString(placeId);
         dest.writeString(title);
         dest.writeString(city);
         dest.writeStringList(images);
@@ -125,4 +127,19 @@ public class ModelPlace implements Parcelable {
             return new ModelPlace[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "ModelPlace{" +
+                "placeId='" + placeId + '\'' +
+                ", title='" + title + '\'' +
+                ", city='" + city + '\'' +
+                ", images=" + images +
+                ", lat=" + lat +
+                ", lng=" + lng +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
+
 }

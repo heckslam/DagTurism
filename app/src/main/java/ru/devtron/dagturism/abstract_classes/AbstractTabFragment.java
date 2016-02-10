@@ -141,11 +141,6 @@ public abstract class AbstractTabFragment extends Fragment {
                 try {
                     success = response.getInt(TAG_SUCCESS);
                     if (success == 1) {
-
-                        String title = Constants.NA;
-                        String id = Constants.NA;
-                        String city = Constants.NA;
-
                         textVolleyError.setVisibility(View.GONE);
 
                         JSONArray places = response.getJSONArray(TAG_ITEMS);
@@ -161,15 +156,9 @@ public abstract class AbstractTabFragment extends Fragment {
                             }
 
                             ModelPlace place = new ModelPlace();
-
-                            id = currentPlace.getString(TAG_PID);
-                            title = currentPlace.getString(TAG_NAME);
-                            city = currentPlace.getString(TAG_CITY);
-
-
-                            place.setId(id);
-                            place.setTitle(title);
-                            place.setCity(city);
+                            place.setPlaceId(currentPlace.getString(TAG_PID));
+                            place.setTitle(currentPlace.getString(TAG_NAME));
+                            place.setCity(currentPlace.getString(TAG_CITY));
                             place.setImages(arrayImages);
 
                             listPlaces.add(place);

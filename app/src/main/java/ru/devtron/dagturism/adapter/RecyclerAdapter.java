@@ -56,7 +56,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerItemViewHolder
 
 
         try {
-            recyclerItemViewHolder.id.setText(modelPlaces.getId());
             recyclerItemViewHolder.title.setText(modelPlaces.getTitle());
             recyclerItemViewHolder.city.setText(modelPlaces.getCity());
 

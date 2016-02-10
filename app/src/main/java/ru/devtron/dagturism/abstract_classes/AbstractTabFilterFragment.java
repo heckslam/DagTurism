@@ -196,7 +196,7 @@ public abstract class AbstractTabFilterFragment extends Fragment {
 
                             ModelPlace place = new ModelPlace();
 
-                            place.setId(post.getString(TAG_PID));
+                            place.setPlaceId(post.getString(TAG_PID));
                             place.setTitle(post.getString(TAG_NAME));
                             place.setCity(post.getString(TAG_CITY));
                             place.setImages(arrayImages);

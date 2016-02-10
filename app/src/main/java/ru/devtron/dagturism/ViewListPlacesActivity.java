@@ -219,7 +219,7 @@ public class ViewListPlacesActivity extends AbstractMethodsActivity {
                             city = currentPlace.getString(TAG_CITY);
 
 
-                            place.setId(id);
+                            place.setPlaceId(id);
                             place.setTitle(title);
                             place.setCity(city);
                             place.setImages(arrayImages);

@@ -1,10 +1,7 @@
 package ru.devtron.dagturism;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
@@ -15,14 +12,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,16 +49,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import ru.devtron.dagturism.Utils.Constants;
 import ru.devtron.dagturism.adapter.RecyclerAdapterEatSleep;
 import ru.devtron.dagturism.adapter.RecyclerGalleryAdapter;
 import ru.devtron.dagturism.customview.CustomGridLayoutManager;
 import ru.devtron.dagturism.customview.ExpandableTextView;
-import ru.devtron.dagturism.db.DBHelper;
 import ru.devtron.dagturism.listener.ClickListener;
 import ru.devtron.dagturism.listener.RecyclerClickListener;
+import ru.devtron.dagturism.model.ModelImages;
 import ru.devtron.dagturism.model.ModelNearPlace;
 import ru.devtron.dagturism.model.ModelPlace;
 import ru.devtron.dagturism.model.WaylineModel;
@@ -82,7 +75,6 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     private String title, id, description, city;
     SharedPreferences sp;
     NestedScrollView nestedScrollView;
-    private SQLiteDatabase database;
     List<String> arrayImages = new ArrayList<>();
     List<String> arrayImagesFrom1 = new ArrayList<>();
     private double pointLat, pointLng;
@@ -144,13 +136,13 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
                 initVariables(modelPlace);
             }
         }
-        //Если и в savedInstanceState пусто, тогда делаем запрос на сервер при условии что мы перешли из списка мест
+        //Если и в savedInstanceState пусто, тогда делаем запрос на сервер при условии что мы перешли из списка ближних мест
         else if (modelPlace == null && hasImages){
             initToolbar(false);
             updateItem();
         }
         // //Если и в savedInstanceState пусто, тогда делаем запрос на сервер ПОЛНЫЙ
-        else {
+        else if (modelPlace == null){
             initToolbar(false);
             FullUpdateItem(id);
         }
@@ -164,7 +156,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         if (parcelWithPlace != null) {
             title = parcelWithPlace.getTitle();
             city = parcelWithPlace.getCity();
-            id = parcelWithPlace.getId();
+            id = parcelWithPlace.getPlaceId();
             arrayImages = parcelWithPlace.getImages();
             hasImages = true;
             adapterImages = new RecyclerGalleryAdapter(this, arrayImages);
@@ -270,7 +262,7 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
                         lng = place.getDouble(Constants.TAG_LNG);
                         description = place.getString(Constants.TAG_DESC);
 
-                        modelPlace.setId(ip);
+                        modelPlace.setPlaceId(ip);
                         modelPlace.setTitle(title);
                         modelPlace.setCity(city);
                         modelPlace.setImages(arrayImagesFrom1);
@@ -473,16 +465,9 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
         }
 
         Map<Integer, Integer> sortedMap = Constants.sortByValue(floatDistances);
-
-
-
-
         List<Integer> listIdNear = new ArrayList<>();
-
         int counter = 0;
-
         for (Integer key : sortedMap.keySet()) {
-
             if (counter < 3) {
                 listIdNear.add(key);
                 counter++;
@@ -490,15 +475,10 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
             else break;
 
         }
-
-
-
         if (listIdNear.size() > 0) {
             linearLayout.setVisibility(View.VISIBLE);
             nearTV.setVisibility(View.VISIBLE);
         }
-
-
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             cafeRV.setNestedScrollingEnabled(false);
@@ -626,58 +606,18 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
     private ModelPlace getDataFromDB() {
-        DBHelper dbHelper = new DBHelper(this);
-        database = dbHelper.getWritableDatabase();
-        ModelPlace place = new ModelPlace();
-
-        String selectQuery = "SELECT " + DBHelper.KEY_DESCRIPTION + ", "
-                + DBHelper.KEY_LAT + ", " + DBHelper.KEY_LNG +
-                " FROM " + DBHelper.TABLE_PLACES + " WHERE "
-                + DBHelper.KEY_PLACE_ID + " = " + id;
+        List<ModelPlace> places = ModelPlace.find(ModelPlace.class, "place_Id = ?", id + "");
+        mDataList.clear();
 
         //Сначала смотрим есть ли место в бд
-        Cursor c = database.rawQuery(selectQuery, null);
-        if(c.moveToFirst()){
-
-            String desc = c.getString(c.getColumnIndex(DBHelper.KEY_DESCRIPTION));
-            double lat = Double.parseDouble(c.getString(c.getColumnIndex(DBHelper.KEY_LAT)));
-            double lng = Double.parseDouble(c.getString(c.getColumnIndex(DBHelper.KEY_LNG)));
-
-            place.setDescription(desc);
-            place.setLat(lat);
-            place.setLng(lng);
-
-            String selectPointsQuery = "SELECT  * FROM " + DBHelper.TABLE_POINTS + " WHERE "
-                    + DBHelper.KEY_PLACE_ID + " = " + id;
-
-
-            Cursor cursorPoints = database.rawQuery(selectPointsQuery, null);
-            if (cursorPoints.moveToFirst()) {
-                howToGoCard.setVisibility(View.VISIBLE);
-                do {
-                    String caption = cursorPoints.getString((cursorPoints.getColumnIndex(DBHelper.KEY_POINT_CAPTION)));
-                    int pointNumber = cursorPoints.getInt((cursorPoints.getColumnIndex(DBHelper.KEY_POINT_NUMBER)));
-                    double pointLng = cursorPoints.getDouble((cursorPoints.getColumnIndex(DBHelper.KEY_POINT_LAT)));
-                    double pointLat = cursorPoints.getDouble((cursorPoints.getColumnIndex(DBHelper.KEY_POINT_LNG)));
-
-                    WaylineModel model = new WaylineModel();
-                    model.setPointCaption(caption);
-                    model.setPointLat(pointLat);
-                    model.setPointLng(pointLng);
-                    model.setPointNumber(pointNumber);
-                    finalPrice = cursorPoints.getInt((cursorPoints.getColumnIndex(DBHelper.KEY_POINTS_PRICE)));
-
-                    mDataList.add(model);
-                }
-                while (cursorPoints.moveToNext());
-            }
-            cursorPoints.close();
-
-            c.close();
-            return place;
+        mDataList = WaylineModel.find(WaylineModel.class, "place_Id = ?", id + "");
+        if (!mDataList.isEmpty())
+            howToGoCard.setVisibility(View.VISIBLE);
+        if (places.size()>0) {
+            return places.get(0);
         }
-
         else return null;
+
     }
 
     @Override
@@ -733,58 +673,30 @@ public class OpenPlaceActivity extends AppCompatActivity implements OnMapReadyCa
                     @Override
                     public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
                         if (favorite) {
-                            ContentValues contentValuesPlace = new ContentValues();
-                            contentValuesPlace.put(DBHelper.KEY_PLACE_ID, id);
-                            contentValuesPlace.put(DBHelper.KEY_TITLE, title);
-                            contentValuesPlace.put(DBHelper.KEY_CITY, city);
-                            contentValuesPlace.put(DBHelper.KEY_LAT, modelPlace.getLat());
-                            contentValuesPlace.put(DBHelper.KEY_LNG, modelPlace.getLng());
-                            contentValuesPlace.put(DBHelper.KEY_DESCRIPTION, modelPlace.getDescription());
-
-                            database.insert(DBHelper.TABLE_PLACES, null, contentValuesPlace);
-
-                            ContentValues contentValuesImages = new ContentValues();
-
+                            ModelPlace modelPlaceDB = new ModelPlace(id, title, city, modelPlace.getLat(), modelPlace.getLng(), modelPlace.getDescription());
+                            modelPlaceDB.save();
+                            Toast toast = Toast.makeText(getApplicationContext(),
+                                    "Добавлено в избранные", Toast.LENGTH_SHORT);
+                            toast.show();
                             for (int i = 0; i < arrayImages.size(); i++) {
-                                contentValuesImages.put(DBHelper.KEY_PLACE_ID, id);
-                                contentValuesImages.put(DBHelper.KEY_IMAGE_URL, arrayImages.get(i));
-                                database.insert(DBHelper.TABLE_IMAGES, null, contentValuesImages);
+                                ModelImages modelImagesDB = new ModelImages(id, arrayImages.get(i));
+                                modelImagesDB.save();
                             }
-
                             if (hasRoute) {
-                                ContentValues contentValuesPoints = new ContentValues();
                                 howToGoCard.setVisibility(View.VISIBLE);
-
                                 for (int i = 0; i < mDataList.size(); i++) {
-                                    contentValuesPoints.put(DBHelper.KEY_PLACE_ID, id);
-                                    contentValuesPoints.put(DBHelper.KEY_POINT_CAPTION, mDataList.get(i).getPointCaption());
-                                    contentValuesPoints.put(DBHelper.KEY_POINT_NUMBER, mDataList.get(i).getPointNumber());
-                                    contentValuesPoints.put(DBHelper.KEY_POINT_LAT, mDataList.get(i).getPointLat());
-                                    contentValuesPoints.put(DBHelper.KEY_POINT_LNG, mDataList.get(i).getPointLng());
-                                    contentValuesPoints.put(DBHelper.KEY_POINTS_PRICE, finalPrice);
-                                    database.insert(DBHelper.TABLE_POINTS, null, contentValuesPoints);
+                                    WaylineModel waylineModel = new WaylineModel(id, mDataList.get(i).getPointLat(), mDataList.get(i).getPointLng(), mDataList.get(i).getPointNumber(), mDataList.get(i).getPointCaption(), finalPrice);
+                                    waylineModel.save();
                                 }
-
                             }
 
-                            Cursor cursor = database.query(DBHelper.TABLE_IMAGES, null, null, null, null, null, null);
-                            if (cursor.getCount() > 0) {
-                                Toast toast = Toast.makeText(getApplicationContext(),
-                                        "Добавлено в избранные", Toast.LENGTH_SHORT);
-                                toast.show();
-                            }
-
-                            cursor.close();
                         } else {
-                            database.delete(DBHelper.TABLE_PLACES, DBHelper.KEY_PLACE_ID + " = ? ", new String[]{id});
-                            database.delete(DBHelper.TABLE_IMAGES, DBHelper.KEY_PLACE_ID + " = ? ", new String[]{id});
 
-                            Cursor cursorPoints = database.query(DBHelper.TABLE_POINTS, null, null, null, null, null, null);
-                            if (cursorPoints.getCount() > 0) {
-                                database.delete(DBHelper.TABLE_POINTS, DBHelper.KEY_PLACE_ID + " = ? ", new String[]{id});
-                            }
+                            ModelPlace.deleteAll(ModelPlace.class, "place_id = ?", id);
 
-                            cursorPoints.close();
+                            ModelImages.deleteAll(ModelImages.class, "place_id = ?", id);
+
+                            WaylineModel.deleteAll(WaylineModel.class, "place_id = ?", id);
                             Toast toast = Toast.makeText(getApplicationContext(),
                                     "Удалено из избранных", Toast.LENGTH_SHORT);
                             toast.show();

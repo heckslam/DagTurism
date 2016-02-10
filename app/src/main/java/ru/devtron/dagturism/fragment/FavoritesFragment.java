@@ -23,12 +23,12 @@ import ru.devtron.dagturism.adapter.RecyclerAdapter;
 import ru.devtron.dagturism.db.DBHelper;
 import ru.devtron.dagturism.listener.ClickListener;
 import ru.devtron.dagturism.listener.RecyclerClickListener;
+import ru.devtron.dagturism.model.ModelImages;
 import ru.devtron.dagturism.model.ModelPlace;
 
 
 public class FavoritesFragment extends AbstractTabFragment {
     private static final int LAYOUT = R.layout.fragment_favorites;
-    SQLiteDatabase database;
 
     List<ModelPlace> listFavorites = new ArrayList<>();
 
@@ -68,6 +68,20 @@ public class FavoritesFragment extends AbstractTabFragment {
             setAdapters();
         }
 
+        mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(context, mRecyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(context, OpenPlaceActivity.class);
+                intent.putExtra(ModelPlace.class.getCanonicalName(), listFavorites.get(position));
+                context.startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
         return view;
     }
 
@@ -95,60 +109,20 @@ public class FavoritesFragment extends AbstractTabFragment {
     private void setAdapters() {
         adapter = new RecyclerAdapter(context, listFavorites);
         mRecyclerView.setAdapter(adapter);
-
-        mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(context, mRecyclerView, new ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Intent intent = new Intent(context, OpenPlaceActivity.class);
-                intent.putExtra(ModelPlace.class.getCanonicalName(), listFavorites.get(position));
-                context.startActivity(intent);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
     }
 
     private void loadFromDataBase () {
-        DBHelper dbHelper = new DBHelper(getContext());
-        database = dbHelper.getReadableDatabase();
+        listFavorites = ModelPlace.listAll(ModelPlace.class);
 
-        Cursor cursorPlace = database.query(DBHelper.TABLE_PLACES, null, null, null, null, null, null);
-        if(cursorPlace.moveToFirst()){
-            do {
-                ModelPlace place = new ModelPlace();
-                String place_id = cursorPlace.getString(cursorPlace.getColumnIndex(DBHelper.KEY_PLACE_ID));
-                place.setId(place_id);
-                String title = cursorPlace.getString(cursorPlace.getColumnIndex(DBHelper.KEY_TITLE));
-                place.setTitle(title);
-                String city = cursorPlace.getString(cursorPlace.getColumnIndex(DBHelper.KEY_CITY));
-                place.setCity(city);
-
-                String selectImagesQuery = "SELECT  * FROM " + DBHelper.TABLE_IMAGES + " WHERE "
-                        + DBHelper.KEY_PLACE_ID + " = " + place_id;
-
-                Cursor cursorImages = database.rawQuery(selectImagesQuery, null);
-                List<String> listImages = new ArrayList<>();
-                if (cursorImages.moveToFirst()) {
-                    do {
-                        String image = cursorImages.getString((cursorImages.getColumnIndex(DBHelper.KEY_IMAGE_URL)));
-                        listImages.add(image);
-                    }
-                    while (cursorImages.moveToNext());
-
-                }
-                cursorImages.close();
-
-                place.setImages(listImages);
-
-                listFavorites.add(place);
+        for (ModelPlace modelPlace : listFavorites) {
+            List<ModelImages> images = ModelImages.find(ModelImages.class, "place_Id = ?", modelPlace.getPlaceId());
+            List<String> listImages = new ArrayList<>();
+            for (ModelImages images1 : images) {
+                listImages.add(images1.getUrl());
             }
-            while (cursorPlace.moveToNext());
+
+            modelPlace.setImages(listImages);
         }
-        cursorPlace.close();
-        database.close();
     }
 }
 
