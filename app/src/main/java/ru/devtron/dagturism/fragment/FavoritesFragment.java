@@ -3,8 +3,6 @@ package ru.devtron.dagturism.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -20,7 +18,6 @@ import ru.devtron.dagturism.OpenPlaceActivity;
 import ru.devtron.dagturism.R;
 import ru.devtron.dagturism.abstract_classes.AbstractTabFragment;
 import ru.devtron.dagturism.adapter.RecyclerAdapter;
-import ru.devtron.dagturism.db.DBHelper;
 import ru.devtron.dagturism.listener.ClickListener;
 import ru.devtron.dagturism.listener.RecyclerClickListener;
 import ru.devtron.dagturism.model.ModelImages;
