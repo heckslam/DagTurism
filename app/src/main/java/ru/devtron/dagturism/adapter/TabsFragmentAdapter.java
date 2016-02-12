@@ -12,6 +12,7 @@ import java.util.Map;
 import ru.devtron.dagturism.abstract_classes.AbstractTabFragment;
 import ru.devtron.dagturism.fragment.FavoritesFragment;
 import ru.devtron.dagturism.fragment.PopularFragment;
+import ru.devtron.dagturism.fragment.RootFragment;
 
 /**
  *Адаптер для работы с табами. Хранит назвнаия табов, их обработчики на нажатие
@@ -54,7 +55,7 @@ public class TabsFragmentAdapter extends FragmentPagerAdapter {
 
     private void initTabsMap(Context context) {
         tabs = new HashMap<>();
-        tabs.put(0, PopularFragment.getInstance(context));
+        tabs.put(0, RootFragment.getInstance(context));
         tabs.put(1, FavoritesFragment.getInstance(context));
     }
 }

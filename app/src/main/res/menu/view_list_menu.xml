@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <group android:id="@+id/menumap">
-        <item android:id="@+id/mapmenu"
+    <group android:id="@+id/listmap">
+        <item android:id="@+id/listmenu"
             android:title="@string/menu_item_places"
-            android:orderInCategory="1"
-            android:icon="@drawable/ic_map_white_24dp"
+            android:orderInCategory="2"
+            android:icon="@drawable/ic_filter_list_white_24dp"
             app:showAsAction="ifRoom"
             />
     </group>

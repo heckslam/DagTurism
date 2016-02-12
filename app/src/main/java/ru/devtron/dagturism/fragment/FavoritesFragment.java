@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,6 +32,7 @@ public class FavoritesFragment extends AbstractTabFragment {
 
     public FavoritesFragment() {
         // Required empty public constructor
+        setHasOptionsMenu(true);
     }
 
     public static FavoritesFragment getInstance(Context context){
@@ -120,6 +122,14 @@ public class FavoritesFragment extends AbstractTabFragment {
 
             modelPlace.setImages(listImages);
         }
+    }
+
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.setGroupVisible(R.id.listmap, false);
+
+        super.onPrepareOptionsMenu(menu);
     }
 }
 

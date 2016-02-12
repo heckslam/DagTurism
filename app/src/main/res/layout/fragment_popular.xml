@@ -5,7 +5,6 @@
     android:paddingTop="4dp"
     android:layout_height="match_parent">
 
-
     <android.support.v4.widget.ContentLoadingProgressBar
         android:id="@+id/progressbar"
         style="?android:attr/progressBarStyleLarge"
@@ -13,13 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="visible" />
-
-
-    <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
     <TextView
         android:id="@+id/textVolleyError"
@@ -31,6 +23,14 @@
         android:layout_width="match_parent"
         android:visibility="visible"
         android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"

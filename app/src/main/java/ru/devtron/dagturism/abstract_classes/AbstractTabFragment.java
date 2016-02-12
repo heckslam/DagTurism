@@ -53,26 +53,10 @@ public abstract class AbstractTabFragment extends Fragment {
     protected RecyclerView mRecyclerView;
     protected RecyclerAdapter adapter;
 
-    protected static final String getItemsUrl = "http://republic.tk/api/listview/";
-    protected static final String STATE_PLACES = "state_places";
-
-    protected BroadcastReceiver networkStateReceiver;
-
-    protected TextView textVolleyError;
-    protected ProgressBar progressBar;
-
-    protected int success = 0;
     protected int numberOfColumns = 1;
 
-    protected RequestQueue queue;
 
-    // JSON Node names
-    protected static final String TAG_SUCCESS = "success";
-    protected static final String TAG_ITEMS = "items";
-    protected static final String TAG_PID = "place_id";
-    protected static final String TAG_NAME = "place_name";
-    protected static final String TAG_CITY = "place_city";
-    protected static final String TAG_IMAGES = "images";
+
 
     public String getTitle() {
         return title;
@@ -128,72 +112,5 @@ public abstract class AbstractTabFragment extends Fragment {
         fab.attachToRecyclerView(mRecyclerView);
     }
 
-    protected void updateList () {
-        progressBar.setVisibility(View.VISIBLE);
-        queue = Volley.newRequestQueue(getContext());
 
-        setClickListenerForCards();
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getItemsUrl, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-                try {
-                    success = response.getInt(TAG_SUCCESS);
-                    if (success == 1) {
-                        textVolleyError.setVisibility(View.GONE);
-
-                        JSONArray places = response.getJSONArray(TAG_ITEMS);
-
-
-
-                        for (int i = 0; i < places.length(); i++) {
-                            JSONObject currentPlace = places.getJSONObject(i);
-                            JSONArray images = currentPlace.getJSONArray(TAG_IMAGES);
-                            List<String> arrayImages = new ArrayList<>();
-                            for (int j = 0; j < images.length(); j++){
-                                arrayImages.add(images.getString(j));
-                            }
-
-                            ModelPlace place = new ModelPlace();
-                            place.setPlaceId(currentPlace.getString(TAG_PID));
-                            place.setTitle(currentPlace.getString(TAG_NAME));
-                            place.setCity(currentPlace.getString(TAG_CITY));
-                            place.setImages(arrayImages);
-
-                            listPlaces.add(place);
-                        }
-                    }
-
-                    progressBar.setVisibility(View.GONE);
-                }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                adapter.notifyDataSetChanged();
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                textVolleyError.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.GONE);
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    textVolleyError.setText(R.string.error_timeout);
-                } else if (error instanceof AuthFailureError) {
-                    textVolleyError.setText(R.string.error_auth);
-                } else if (error instanceof ServerError) {
-                    textVolleyError.setText(R.string.error_server);
-                } else if (error instanceof NetworkError) {
-                    textVolleyError.setText(R.string.no_network);
-                } else if (error instanceof ParseError) {
-                    textVolleyError.setText(R.string.error_server);
-                }
-            }
-        });
-
-        queue.add(jsonObjectRequest);
-
-    }
 }
